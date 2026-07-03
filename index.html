@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cinematic">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#14100C" />
+
+  <!-- ── SEO ─────────────────────────────────────────────────────────── -->
+  <title>Do Step Inn Home — Your calm home base in Vienna | Hotel & Hostel near Westbahnhof</title>
+  <meta name="description" content="Feel at home. Step into Vienna. A calm, well-connected home base opposite Westbahnhof, one block off Mariahilfer Straße. Private rooms & dorms, self check-in, rooms for every budget." />
+  <meta name="keywords" content="hotel near Westbahnhof Vienna, cheap central Vienna hotel, hostel Mariahilfer Straße, self check-in Vienna, private rooms and dorms Vienna, Do Step Inn Home" />
+  <link rel="canonical" href="https://dostepinn.com/" />
+  <meta name="robots" content="index,follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="business.business" />
+  <meta property="og:title" content="Do Step Inn Home — Your calm home base in Vienna" />
+  <meta property="og:description" content="Feel at home. Step into Vienna. Opposite Westbahnhof, one block off Mariahilfer Straße. Rooms for every budget, self check-in, the whole city at your door." />
+  <meta property="og:locale" content="en" />
+  <meta property="og:site_name" content="Do Step Inn Home" />
+
+  <!-- ── Fonts (with graceful system fallback) ───────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- Three.js as an ES module import map (gated + fallback in scene.js) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <!-- ── Structured data: LodgingBusiness ────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": "Do Step Inn Home — Hotel & Hostel",
+    "description": "A calm, well-connected home base in Vienna. Private rooms and dorms opposite Westbahnhof, one block from Mariahilfer Straße. Self check-in, rooms for every budget.",
+    "slogan": "Feel at home. Step into Vienna.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Felberstraße 20",
+      "addressLocality": "Vienna",
+      "postalCode": "1150",
+      "addressCountry": "AT"
+    },
+    "amenityFeature": [
+      { "@type": "LocationFeatureSpecification", "name": "Free WiFi", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Self check-in", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Guest kitchen", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Luggage storage", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Garden courtyard", "value": true },
+      { "@type": "LocationFeatureSpecification", "name": "Parking", "value": true }
+    ],
+    "checkinTime": "15:00",
+    "checkoutTime": "11:00",
+    "petsAllowed": "Please contact the hotel team for confirmation.",
+    "publicAccess": true,
+    "nearbyAttractions": ["Westbahnhof", "Mariahilfer Straße", "Stephansdom", "Belvedere Palace"]
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#chapter-rooms">Skip to rooms &amp; booking</a>
+
+  <!-- Grain + vignette overlays (pure CSS, non-interactive) -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ══ NAV ══════════════════════════════════════════════════════════ -->
+  <header class="nav" id="nav">
+    <a class="nav__brand" href="#top" aria-label="Do Step Inn Home — home">
+      <span class="nav__mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="26" height="26" fill="none">
+          <path d="M6 26V13.5L16 6l10 7.5V26" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M13 26v-6.5h6V26" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="nav__word">Do Step Inn <em>Home</em></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#chapter-base">Home base</a>
+      <a href="#chapter-rooms">Rooms</a>
+      <a href="#chapter-explore">Explore Vienna</a>
+      <a href="#chapter-easy">Easy stay</a>
+    </nav>
+
+    <button class="nav__cta" data-open-booking type="button">Check availability</button>
+    <button class="nav__burger" data-toggle-menu type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+
+    <!-- ══ CHAPTER 1 — ARRIVAL ═══════════════════════════════════════ -->
+    <section class="hero" id="chapter-arrival" data-chapter aria-label="Arrival">
+      <!-- 3D canvas mounts here; static image is the fallback beneath it -->
+      <div class="hero__scene" id="scene-mount" aria-hidden="true"></div>
+      <div class="hero__fallback" aria-hidden="true"></div>
+      <div class="hero__veil" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <p class="eyebrow reveal" data-reveal>Vienna · 1150 · opposite Westbahnhof</p>
+        <h1 class="hero__title">
+          <span class="reveal" data-reveal>Feel at home.</span>
+          <span class="reveal hero__title--gold" data-reveal data-delay="1">Step into Vienna.</span>
+        </h1>
+        <p class="hero__lede reveal" data-reveal data-delay="2">
+          Off the train, up the step, and you’re home. Your calm base in the middle of
+          everything — rooms for every budget, the whole city at your door.
+        </p>
+        <div class="hero__actions reveal" data-reveal data-delay="3">
+          <button class="btn btn--gold" data-open-booking type="button">Start your stay</button>
+          <button class="btn btn--ghost" data-open-concierge="vienna" type="button">
+            <span class="btn__orb" aria-hidden="true"></span> Ask your concierge
+          </button>
+        </div>
+      </div>
+
+      <div class="hero__scroll reveal" data-reveal data-delay="4" aria-hidden="true">
+        <span>Scroll to arrive</span>
+        <span class="hero__scroll-line"></span>
+      </div>
+    </section>
+
+    <!-- ══ CHAPTER 2 — YOUR HOME BASE ════════════════════════════════ -->
+    <section class="section base" id="chapter-base" data-chapter data-mood="warm" aria-label="Your home base">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>Chapter II · Your home base</p>
+        <h2 class="section__title" data-reveal>
+          Drop your bag.<br /><span class="ital">Breathe.</span>
+        </h2>
+        <p class="section__lede" data-reveal>
+          Not a party hostel. Not a faceless budget hotel. A warm, easy place to land —
+          with a kitchen to cook in, a courtyard to slow down in, and your own quiet corner
+          whenever you want it.
+        </p>
+      </div>
+
+      <ul class="base__grid" role="list">
+        <li class="base-card base-card--tall" data-reveal>
+          <div class="base-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><path d="M8 34V12l12-7 12 7v22M16 34V24h8v10" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>A calm home base</h3>
+          <p>Private singles, doubles, triples and quads — or a bed in a bright dorm. Every room its own bathroom, linen and fast WiFi. Your space, your budget.</p>
+        </li>
+        <li class="base-card" data-reveal>
+          <div class="base-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><path d="M6 30h28M10 30V16h20v14M14 16v-4h12v4M17 22h6" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Two guest kitchens</h3>
+          <p>Cook like a local, share a table, save your euros for the city.</p>
+        </li>
+        <li class="base-card" data-reveal>
+          <div class="base-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><path d="M20 6C13 12 10 17 10 23a10 10 0 0 0 20 0c0-6-3-11-10-17Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Garden courtyard</h3>
+          <p>A quiet outdoor corner to catch your breath between adventures.</p>
+        </li>
+        <li class="base-card" data-reveal>
+          <div class="base-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="13" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M20 7v26M7 20h26" stroke="currentColor" stroke-width="1.4"/></svg>
+          </div>
+          <h3>House bar &amp; games</h3>
+          <p>Billiards, darts, giant chess and a small bar for easy evenings in.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ══ CHAPTER 3 — ROOMS MADE SIMPLE ═════════════════════════════ -->
+    <section class="section rooms" id="chapter-rooms" data-chapter data-mood="warm" aria-label="Rooms made simple">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>Chapter III · Rooms made simple</p>
+        <h2 class="section__title" data-reveal>Choose by how you travel.</h2>
+        <p class="section__lede" data-reveal>
+          No confusing grid of tiles. Tell us who’s arriving — we’ll show you where you’ll feel at home.
+          Honest prices, every budget under one roof.
+        </p>
+      </div>
+
+      <div class="rooms__tabs" role="tablist" aria-label="Who's arriving">
+        <button role="tab" class="rooms__tab is-active" data-room-tab="solo" aria-selected="true">Solo</button>
+        <button role="tab" class="rooms__tab" data-room-tab="couple" aria-selected="false">Couple</button>
+        <button role="tab" class="rooms__tab" data-room-tab="friends" aria-selected="false">Friends</button>
+        <button role="tab" class="rooms__tab" data-room-tab="family" aria-selected="false">Family</button>
+        <button role="tab" class="rooms__tab" data-room-tab="budget" aria-selected="false">Best value</button>
+      </div>
+
+      <div class="rooms__stage" data-reveal>
+        <div class="rooms__panel is-active" data-room-panel="solo">
+          <div class="rooms__art" data-art="single" aria-hidden="true"></div>
+          <div class="rooms__copy">
+            <h3>The Single</h3>
+            <p>Your own quiet room and private bathroom, one block from the city’s biggest street. Perfect for a focused solo trip.</p>
+            <ul class="rooms__spec" role="list">
+              <li>Private bathroom</li><li>Sat-TV &amp; fast WiFi</li><li>Self check-in</li>
+            </ul>
+            <button class="btn btn--gold btn--sm" data-open-booking type="button">Check dates &amp; price</button>
+          </div>
+        </div>
+
+        <div class="rooms__panel" data-room-panel="couple" hidden>
+          <div class="rooms__art" data-art="double" aria-hidden="true"></div>
+          <div class="rooms__copy">
+            <h3>The Double / Twin</h3>
+            <p>A warm private room for two — double or twin beds, your own bathroom, soft morning light. City evenings, quiet nights.</p>
+            <ul class="rooms__spec" role="list">
+              <li>Double or twin</li><li>Private bathroom</li><li>Sat-TV &amp; WiFi</li>
+            </ul>
+            <button class="btn btn--gold btn--sm" data-open-booking type="button">Check dates &amp; price</button>
+          </div>
+        </div>
+
+        <div class="rooms__panel" data-room-panel="friends" hidden>
+          <div class="rooms__art" data-art="triple" aria-hidden="true"></div>
+          <div class="rooms__copy">
+            <h3>Triple &amp; Quad</h3>
+            <p>Travelling as a crew? Private rooms for three or four, own bathroom, room to spread out — without splitting up.</p>
+            <ul class="rooms__spec" role="list">
+              <li>3–4 beds, private</li><li>Private bathroom</li><li>Lockers &amp; WiFi</li>
+            </ul>
+            <button class="btn btn--gold btn--sm" data-open-booking type="button">Check dates &amp; price</button>
+          </div>
+        </div>
+
+        <div class="rooms__panel" data-room-panel="family" hidden>
+          <div class="rooms__art" data-art="quad" aria-hidden="true"></div>
+          <div class="rooms__copy">
+            <h3>Family Room</h3>
+            <p>Keep everyone together in a private quad with its own bathroom — steps from trams, trains and the shopping street.</p>
+            <ul class="rooms__spec" role="list">
+              <li>Up to 4 together</li><li>Private bathroom</li><li>Kitchen access</li>
+            </ul>
+            <button class="btn btn--gold btn--sm" data-open-booking type="button">Check dates &amp; price</button>
+          </div>
+        </div>
+
+        <div class="rooms__panel" data-room-panel="budget" hidden>
+          <div class="rooms__art" data-art="dorm" aria-hidden="true"></div>
+          <div class="rooms__copy">
+            <h3>Bright Dorm Bed</h3>
+            <p>The smartest way to stay central. A bed in a clean, bright dorm — private bathroom, fresh linen, a locker of your own.</p>
+            <ul class="rooms__spec" role="list">
+              <li>Private bathroom</li><li>Linen &amp; towel included</li><li>Personal locker</li>
+            </ul>
+            <button class="btn btn--gold btn--sm" data-open-booking type="button">Check dates &amp; price</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CHAPTER 4 & 5 — CONCIERGE + ASSISTANT ═════════════════════ -->
+    <section class="section concierge-intro" id="chapter-concierge" data-chapter aria-label="Your concierge and assistant">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>Chapter IV &amp; V · Two guides, one tap</p>
+        <h2 class="section__title" data-reveal>Never wonder what’s next.</h2>
+        <p class="section__lede" data-reveal>
+          Two calm minds travel with you. One knows Vienna. One knows your stay.
+          Ask either, any time — day or night.
+        </p>
+      </div>
+
+      <div class="guides">
+        <article class="guide-card guide-card--vienna" data-reveal>
+          <span class="guide-card__tag">Explore Vienna</span>
+          <h3>Vienna Concierge</h3>
+          <p>Your stylish local guide. First-day plans, rainy-day ideas, coffee nearby, free things to do, a romantic evening — it maps them out for you.</p>
+          <ul class="guide-card__prompts" role="list">
+            <li><button data-open-concierge="vienna" data-prompt="Plan my first day in Vienna" type="button">Plan my first day</button></li>
+            <li><button data-open-concierge="vienna" data-prompt="What can I do on a rainy day?" type="button">Rainy-day ideas</button></li>
+            <li><button data-open-concierge="vienna" data-prompt="Best free things to do near the hotel" type="button">Best free things</button></li>
+          </ul>
+          <button class="btn btn--gold btn--sm" data-open-concierge="vienna" type="button">Ask Vienna Concierge</button>
+        </article>
+
+        <article class="guide-card guide-card--home" data-reveal>
+          <span class="guide-card__tag">Your stay</span>
+          <h3>Home Assistant</h3>
+          <p>Everything about your stay, answered calmly. Self check-in, late arrival, luggage, getting here, what’s included — no waiting on a front desk.</p>
+          <ul class="guide-card__prompts" role="list">
+            <li><button data-open-concierge="home" data-prompt="How does self check-in work?" type="button">How does self check-in work?</button></li>
+            <li><button data-open-concierge="home" data-prompt="I arrive late — what now?" type="button">I arrive late</button></li>
+            <li><button data-open-concierge="home" data-prompt="Can I store my luggage?" type="button">Store my luggage</button></li>
+          </ul>
+          <button class="btn btn--ghost btn--sm" data-open-concierge="home" type="button">Ask Home Assistant</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ══ CHAPTER 6 — EXPLORE VIENNA ════════════════════════════════ -->
+    <section class="section explore" id="chapter-explore" data-chapter aria-label="Explore Vienna">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>Chapter VI · From your door</p>
+        <h2 class="section__title" data-reveal>Vienna starts on the doorstep.</h2>
+        <p class="section__lede" data-reveal>
+          Opposite Westbahnhof, one block off Mariahilfer Straße. Trams, trains and the
+          airport bus are a two-minute walk. Here’s the city, measured from your bed.
+        </p>
+      </div>
+
+      <ul class="explore__list" role="list">
+        <li class="explore-row" data-reveal>
+          <span class="explore-row__name">Westbahnhof station</span>
+          <span class="explore-row__line" aria-hidden="true"></span>
+          <span class="explore-row__meta"><b>4 min</b> walk · U3 · U6</span>
+        </li>
+        <li class="explore-row" data-reveal>
+          <span class="explore-row__name">Mariahilfer Straße shopping</span>
+          <span class="explore-row__line" aria-hidden="true"></span>
+          <span class="explore-row__meta"><b>1 block</b> · ~6 min walk</span>
+        </li>
+        <li class="explore-row" data-reveal>
+          <span class="explore-row__name">Stephansdom &amp; old town</span>
+          <span class="explore-row__line" aria-hidden="true"></span>
+          <span class="explore-row__meta"><b>~10 min</b> by U3</span>
+        </li>
+        <li class="explore-row" data-reveal>
+          <span class="explore-row__name">Schönbrunn Palace</span>
+          <span class="explore-row__line" aria-hidden="true"></span>
+          <span class="explore-row__meta"><b>~8 min</b> by U-Bahn</span>
+        </li>
+        <li class="explore-row" data-reveal>
+          <span class="explore-row__name">Belvedere Palace</span>
+          <span class="explore-row__line" aria-hidden="true"></span>
+          <span class="explore-row__meta"><b>~15 min</b> by transit</span>
+        </li>
+        <li class="explore-row" data-reveal>
+          <span class="explore-row__name">Vienna Airport</span>
+          <span class="explore-row__line" aria-hidden="true"></span>
+          <span class="explore-row__meta"><b>direct</b> airport bus &amp; CAT</span>
+        </li>
+      </ul>
+
+      <p class="explore__cta" data-reveal>
+        Want it planned for you?
+        <button class="link-gold" data-open-concierge="vienna" data-prompt="Plan my first 24 hours in Vienna from the hotel" type="button">Ask the Vienna Concierge to plan your first 24 hours →</button>
+      </p>
+    </section>
+
+    <!-- ══ CHAPTER 7 — EASY STAY ═════════════════════════════════════ -->
+    <section class="section easy" id="chapter-easy" data-chapter data-mood="warm" aria-label="An easy stay">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>Chapter VII · An easy stay</p>
+        <h2 class="section__title" data-reveal>Arrive on your own time.</h2>
+        <p class="section__lede" data-reveal>
+          No queue, no stress. Self check-in, a late-arrival path, and a place for your bags
+          before check-in or after you leave. Simple, by design.
+        </p>
+      </div>
+
+      <div class="easy__grid">
+        <article class="easy-card" data-reveal>
+          <span class="easy-card__num">15:00</span>
+          <h3>Self check-in</h3>
+          <p>Contactless arrival — collect your access and settle in on your schedule. Late arrival possible until midnight.</p>
+        </article>
+        <article class="easy-card" data-reveal>
+          <span class="easy-card__num">11:00</span>
+          <h3>Easy check-out</h3>
+          <p>Quick and contactless. Store your bags in the access-card luggage room and keep exploring.</p>
+        </article>
+        <article class="easy-card" data-reveal>
+          <span class="easy-card__num" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="30" height="30"><path d="M6 14h28l-2 20H8L6 14ZM14 14v-3a6 6 0 0 1 12 0v3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg>
+          </span>
+          <h3>Luggage &amp; more</h3>
+          <p>Secure luggage room, free WiFi throughout, parking, and bikes to borrow. Breakfast buffet available each morning.</p>
+        </article>
+      </div>
+
+      <p class="easy__note" data-reveal>
+        Exact policies?
+        <button class="link-gold" data-open-concierge="home" data-prompt="What are your house rules and cancellation policy?" type="button">Ask the Home Assistant →</button>
+      </p>
+    </section>
+
+    <!-- ══ CHAPTER 8 — BOOK YOUR STAY ════════════════════════════════ -->
+    <section class="section book" id="chapter-book" data-chapter aria-label="Book your stay">
+      <div class="book__inner" data-reveal>
+        <p class="eyebrow">Chapter VIII · Book your stay</p>
+        <h2 class="book__title">Your step into Vienna<br /><span class="ital">starts here.</span></h2>
+        <p class="book__lede">Rooms for every budget, in the middle of everything. Take the step — your calm home base is waiting.</p>
+        <button class="btn btn--gold btn--lg" data-open-booking type="button">Check availability</button>
+        <p class="book__reassure">Best rate direct · Free cancellation options · Instant confirmation</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══ FOOTER ═══════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer__brand">
+      <span class="nav__word">Do Step Inn <em>Home</em></span>
+      <p>Felberstraße 20, 1150 Vienna, Austria · Opposite Westbahnhof</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="#chapter-base">Home base</a>
+      <a href="#chapter-rooms">Rooms</a>
+      <a href="#chapter-explore">Explore Vienna</a>
+      <a href="#chapter-easy">Easy stay</a>
+      <button class="link-gold" data-open-concierge="home" type="button">Ask the Home Assistant</button>
+    </nav>
+    <p class="footer__legal">© <span id="year">2026</span> Do Step Inn Home · Feel at home. Step into Vienna.</p>
+  </footer>
+
+  <!-- ══ STICKY BOOKING BAR ═══════════════════════════════════════════ -->
+  <div class="stickybar" id="stickybar" aria-hidden="true">
+    <span class="stickybar__label">Rooms for every budget · from your calm base in Vienna</span>
+    <button class="btn btn--gold btn--sm" data-open-booking type="button">Check availability</button>
+  </div>
+
+  <!-- ══ FLOATING CONCIERGE LAUNCHER ══════════════════════════════════ -->
+  <button class="fab" id="fab" data-open-concierge="vienna" type="button" aria-label="Ask your concierge">
+    <span class="fab__orb" aria-hidden="true"></span>
+    <span class="fab__label">Ask your concierge</span>
+  </button>
+
+  <!-- ══ BOOKING PANEL ════════════════════════════════════════════════ -->
+  <div class="modal" id="booking" role="dialog" aria-modal="true" aria-label="Check availability" hidden>
+    <div class="modal__backdrop" data-close-booking></div>
+    <div class="modal__card booking-card" role="document">
+      <button class="modal__close" data-close-booking aria-label="Close">&times;</button>
+      <p class="eyebrow">Check availability</p>
+      <h2 class="booking-card__title">Find your room</h2>
+      <form class="booking-form" id="booking-form">
+        <label>Check-in<input type="date" name="checkin" required /></label>
+        <label>Check-out<input type="date" name="checkout" required /></label>
+        <label>Guests
+          <select name="guests">
+            <option>1 guest</option><option>2 guests</option><option>3 guests</option>
+            <option>4 guests</option><option>5+ guests</option>
+          </select>
+        </label>
+        <button class="btn btn--gold" type="submit">Search rooms</button>
+      </form>
+      <p class="booking-card__note">You’ll continue to our secure booking engine for live prices and instant confirmation.</p>
+    </div>
+  </div>
+
+  <!-- ══ CONCIERGE CHAT PANEL ═════════════════════════════════════════ -->
+  <div class="chat" id="chat" role="dialog" aria-modal="true" aria-label="Concierge chat" hidden>
+    <div class="modal__backdrop" data-close-chat></div>
+    <div class="chat__panel">
+      <div class="chat__header">
+        <div class="chat__switch" role="tablist" aria-label="Choose a guide">
+          <button role="tab" class="chat__mode is-active" data-mode="vienna" aria-selected="true">
+            <span class="chat__mode-dot"></span> Vienna Concierge
+          </button>
+          <button role="tab" class="chat__mode" data-mode="home" aria-selected="false">
+            <span class="chat__mode-dot"></span> Home Assistant
+          </button>
+        </div>
+        <button class="chat__close" data-close-chat aria-label="Close chat">&times;</button>
+      </div>
+
+      <div class="chat__body" id="chat-body" aria-live="polite"></div>
+
+      <div class="chat__prompts" id="chat-prompts"></div>
+
+      <form class="chat__input" id="chat-form">
+        <input type="text" id="chat-text" autocomplete="off"
+               placeholder="Ask anything…" aria-label="Type your question" />
+        <button type="submit" aria-label="Send">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l16-8-6 8 6 8-16-8Z" fill="currentColor"/></svg>
+        </button>
+      </form>
+      <p class="chat__disclaimer" id="chat-disclaimer"></p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/concierge.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+  <script type="module" src="assets/js/scene.js"></script>
+</body>
+</html>
