@@ -166,10 +166,16 @@ ul { list-style: none; padding: 0; }
 /* Static golden-hour fallback (also the mobile / reduced-motion visual) */
 .hero__fallback {
   position: absolute; inset: 0; z-index: 0;
-  background:
+  background-color: #14100c;
+  background-image:
+    /* warm scrim keeps the headline legible over the photo */
+    linear-gradient(180deg, rgba(16,12,8,.3) 0%, rgba(16,12,8,.5) 100%),
+    url("../img/hero.jpg"),
+    /* fallbacks if hero.jpg is absent */
     radial-gradient(120% 90% at 72% 18%, rgba(224,192,120,.34), transparent 55%),
     radial-gradient(80% 70% at 20% 85%, rgba(56,73,59,.5), transparent 60%),
     linear-gradient(180deg, #1a140d 0%, #14100c 55%, #100c08 100%);
+  background-size: cover; background-position: center;
 }
 /* faint skyline silhouette under everything */
 .hero__fallback::after {
@@ -240,7 +246,11 @@ ul { list-style: none; padding: 0; }
 }
 .base-card:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -30px rgba(42,32,22,.28); background: rgba(255,255,255,.75); }
 .base-card--tall { grid-row: span 2; grid-column: span 2; display: flex; flex-direction: column; justify-content: flex-end;
-  background: linear-gradient(150deg, var(--green) 0%, var(--green-deep) 100%); color: var(--stone); border-color: transparent; }
+  color: var(--stone); border-color: transparent; overflow: hidden;
+  background-color: var(--green);
+  /* green scrim over a real photo (falls back to the gradient if photo missing) */
+  background-image: linear-gradient(150deg, rgba(42,54,44,.72) 0%, rgba(30,38,30,.9) 100%), url("../img/room-cozy.jpg"), linear-gradient(150deg, var(--green) 0%, var(--green-deep) 100%);
+  background-size: cover; background-position: center; }
 .base-card--tall h3, .base-card--tall p { color: var(--stone) !important; }
 .base-card--tall .base-card__icon { color: var(--gold-soft); }
 .base-card__icon { width: 44px; height: 44px; color: #8a6a2a; margin-bottom: 1.4rem; }
@@ -265,28 +275,26 @@ ul { list-style: none; padding: 0; }
   align-items: stretch;
 }
 .rooms__panel[hidden] { display: none; }
+/* Real photography with a crafted gradient as automatic fallback.
+   The photo is the first background layer; if the file is missing it is
+   simply skipped and the warm gradient below shows through — no broken image. */
 .rooms__art {
   border-radius: var(--radius); min-height: 340px; position: relative; overflow: hidden;
   box-shadow: var(--shadow);
-  background: linear-gradient(150deg, #3a2c1c, #221913);
+  background-color: #221913;
+  background-image: linear-gradient(150deg, #3a2c1c, #221913);
+  background-size: cover; background-position: center;
 }
-/* Each room "art" is a distinct crafted gradient scene (no stock photos required) */
-.rooms__art::before {
-  content: ""; position: absolute; inset: 0;
-  background:
-    radial-gradient(80% 60% at 78% 22%, rgba(224,192,120,.55), transparent 60%),
-    radial-gradient(60% 50% at 25% 80%, rgba(56,73,59,.6), transparent 65%);
-}
+.rooms__art[data-art="single"] { background-image: url("../img/room-single.jpg"), linear-gradient(150deg,#3a2c1c,#221913); }
+.rooms__art[data-art="double"] { background-image: url("../img/room-double.jpg"), linear-gradient(150deg,#3a2c1c,#221913); }
+.rooms__art[data-art="triple"] { background-image: url("../img/room-friends.jpg"), linear-gradient(150deg,#3a2c1c,#221913); }
+.rooms__art[data-art="quad"]   { background-image: url("../img/room-family.jpg"), linear-gradient(150deg,#3a2c1c,#221913); }
+.rooms__art[data-art="dorm"]   { background-image: url("../img/room-dorm.jpg"),   linear-gradient(150deg,#3a2c1c,#221913); }
+/* Soft cinematic vignette for depth + consistency across photos */
 .rooms__art::after {
-  content: ""; position: absolute; inset: 0; opacity: .9;
-  background:
-    linear-gradient(115deg, transparent 40%, rgba(255,240,210,.12) 50%, transparent 60%),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 2px, transparent 2px 60px);
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(20,14,8,.12) 0%, transparent 30%, transparent 60%, rgba(20,14,8,.42) 100%);
 }
-.rooms__art[data-art="double"]::before { background: radial-gradient(90% 70% at 30% 25%, rgba(224,192,120,.5), transparent 60%), radial-gradient(70% 60% at 85% 85%, rgba(56,73,59,.55), transparent 60%); }
-.rooms__art[data-art="triple"]::before { background: radial-gradient(70% 70% at 60% 20%, rgba(200,170,120,.5), transparent 60%), radial-gradient(60% 50% at 15% 90%, rgba(42,54,44,.6), transparent 60%); }
-.rooms__art[data-art="quad"]::before  { background: radial-gradient(90% 60% at 50% 15%, rgba(224,192,120,.45), transparent 60%), radial-gradient(60% 60% at 90% 90%, rgba(56,73,59,.5), transparent 60%); }
-.rooms__art[data-art="dorm"]::before  { background: radial-gradient(70% 60% at 80% 30%, rgba(150,190,160,.4), transparent 60%), radial-gradient(70% 60% at 20% 80%, rgba(224,192,120,.35), transparent 60%); }
 .rooms__copy {
   background: rgba(255,255,255,.55); border: 1px solid rgba(42,32,22,.1);
   border-radius: var(--radius); padding: clamp(1.8rem, 4vw, 3rem);
