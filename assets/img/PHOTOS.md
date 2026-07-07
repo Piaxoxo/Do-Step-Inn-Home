@@ -15,6 +15,8 @@ Upload JPGs with **exactly these names** into this folder (`assets/img/`):
 | `room-family.jpg` | Rooms → **Family** tab | A calm private room (reading-in-chair works well) |
 | `room-dorm.jpg` | Rooms → **Best value** tab | Smiling guest on the bunk bed |
 | `room-cozy.jpg` | Chapter II “Your home base” feature card (green scrim over it) | The moody reading-by-window shot |
+| `bar.jpg` | Chapter II “House bar & coffee” card (dark scrim over it) | The bartender at the bar, or a coffee/drink pour |
+| `coffee.jpg` | *(optional, spare)* good alternative for `hero.jpg` | The close-up coffee/espresso pour |
 
 Fewer photos than slots? Reuse freely — e.g. use the same file for `hero.jpg`
 and `room-cozy.jpg`.

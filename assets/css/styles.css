@@ -253,6 +253,16 @@ ul { list-style: none; padding: 0; }
   background-size: cover; background-position: center; }
 .base-card--tall h3, .base-card--tall p { color: var(--stone) !important; }
 .base-card--tall .base-card__icon { color: var(--gold-soft); }
+/* Photo card (e.g. House bar & coffee) — dark scrim over a real photo, light text */
+.base-card--photo {
+  color: var(--stone); border-color: transparent; overflow: hidden;
+  background-color: var(--espresso-3);
+  background-image: linear-gradient(160deg, rgba(20,14,8,.55) 0%, rgba(16,12,8,.85) 100%), url("../img/bar.jpg"), linear-gradient(150deg, #2a2016, #14100c);
+  background-size: cover; background-position: center;
+}
+.base-card--photo h3, .base-card--photo p { color: var(--stone) !important; }
+.base-card--photo .base-card__icon { color: var(--gold-soft); }
+.base-card--photo:hover { background-color: var(--espresso-2); box-shadow: 0 30px 60px -30px rgba(0,0,0,.5); }
 .base-card__icon { width: 44px; height: 44px; color: #8a6a2a; margin-bottom: 1.4rem; }
 .base-card__icon svg { width: 100%; height: 100%; }
 .base-card h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; margin-bottom: .6rem; }
