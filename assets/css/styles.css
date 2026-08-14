@@ -372,6 +372,40 @@ ul { list-style: none; padding: 0; }
 .easy-card h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; margin-bottom: .6rem; }
 .easy__note { text-align: center; margin-top: 2.5rem; max-width: var(--max); margin-inline: auto; }
 
+/* ── Groups & partnerships (glassmorphism) ───────────────────────────── */
+.groups { position: relative; overflow: hidden; }
+.groups__glow {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(50% 60% at 15% 20%, rgba(201,162,75,.18), transparent 60%),
+    radial-gradient(45% 55% at 85% 90%, rgba(56,73,59,.5), transparent 60%);
+}
+.groups .section__head, .groups__grid, .groups__mail { position: relative; z-index: 1; }
+.groups__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; max-width: var(--max); margin: 0 auto; }
+.group-card {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start;
+  padding: clamp(1.8rem, 4vw, 2.8rem); border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(150deg, rgba(244,236,223,.08), rgba(244,236,223,.02));
+  backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 30px 60px -40px rgba(0,0,0,.6);
+  transition: transform .5s var(--ease), border-color .4s, box-shadow .5s var(--ease);
+}
+.group-card::before {
+  content: ""; position: absolute; top: -40%; right: -20%; width: 55%; height: 80%;
+  background: radial-gradient(circle, rgba(224,192,120,.28), transparent 70%);
+  filter: blur(34px); pointer-events: none;
+}
+.group-card--partner::before { background: radial-gradient(circle, rgba(127,176,138,.3), transparent 70%); }
+.group-card:hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 40px 70px -40px rgba(0,0,0,.7); }
+.group-card__icon { width: 46px; height: 46px; color: var(--gold-soft); margin-bottom: 1.3rem; position: relative; }
+.group-card__icon svg { width: 100%; height: 100%; }
+.group-card h3 { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 400; margin-bottom: .7rem; }
+.group-card p { color: var(--stone-soft); margin-bottom: 1.6rem; max-width: 42ch; line-height: 1.6; }
+.group-card__cta { margin-top: auto; color: var(--gold-soft); font-weight: 500; display: inline-flex; gap: .5rem; align-items: center; transition: gap .3s var(--ease); }
+.group-card:hover .group-card__cta { gap: .9rem; }
+.groups__mail { text-align: center; margin-top: 2.4rem; color: var(--stone-soft); }
+
 /* ── Chapter VIII · Book ─────────────────────────────────────────────── */
 .book { text-align: center; overflow: hidden; }
 .book::before {
