@@ -75,6 +75,18 @@
     });
   }));
 
+  /* ── Locations: link card hover to its map pin ─────────────────────── */
+  $$("[data-loccard]").forEach(card => {
+    const pin = $(`.loc__pin[data-pin="${card.dataset.loccard}"]`);
+    if (!pin) return;
+    const on = () => pin.classList.add("is-active");
+    const off = () => pin.classList.remove("is-active");
+    card.addEventListener("mouseenter", on);
+    card.addEventListener("mouseleave", off);
+    card.addEventListener("focus", on);
+    card.addEventListener("blur", off);
+  });
+
   /* ══ MODAL PLUMBING ════════════════════════════════════════════════ */
   let lastFocus = null;
   function openModal(el) {

@@ -360,6 +360,49 @@ ul { list-style: none; padding: 0; }
 .explore-row__meta b { color: var(--gold-soft); font-weight: 600; }
 .explore__cta { max-width: var(--max); margin: 2.5rem auto 0; color: var(--stone-soft); }
 
+/* ── Our Vienna locations ────────────────────────────────────────────── */
+.loc__layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; max-width: var(--max); margin: 0 auto; align-items: stretch; }
+.loc__map {
+  position: relative; border-radius: var(--radius); overflow: hidden; min-height: 380px;
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(160deg, rgba(28,22,15,.9), rgba(16,12,8,.95));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+}
+.loc__mapsvg { width: 100%; height: 100%; }
+.loc__pin circle { fill: var(--gold); stroke: rgba(20,16,12,.8); stroke-width: 2; filter: drop-shadow(0 0 6px rgba(224,192,120,.7)); transition: r .3s var(--ease); }
+.loc__pin text { fill: #241a0c; font: 700 8px var(--sans); text-anchor: middle; }
+.loc__pin[data-pin="home"] circle { fill: var(--gold-soft); r: 9; }
+.loc__pin.is-active circle { r: 11; }
+.loc__pin { animation: locpulse 3s var(--ease-soft) infinite; transform-box: fill-box; transform-origin: center; }
+.loc__pin:nth-child(2){ animation-delay:.4s } .loc__pin:nth-child(3){ animation-delay:.8s }
+.loc__pin:nth-child(4){ animation-delay:1.2s } .loc__pin:nth-child(5){ animation-delay:1.6s }
+@keyframes locpulse { 0%,100%{ opacity:.85 } 50%{ opacity:1 } }
+.loc__maptag {
+  position: absolute; left: 1rem; bottom: 1rem; font-size: .72rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--stone-dim);
+}
+.loc__list { display: flex; flex-direction: column; gap: .6rem; }
+.loc-card {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem;
+  padding: 1.1rem 1.3rem; border-radius: 14px; border: 1px solid var(--line);
+  background: linear-gradient(150deg, rgba(244,236,223,.05), rgba(244,236,223,.015));
+  backdrop-filter: blur(8px); transition: transform .4s var(--ease), border-color .3s, background .3s; height: 100%;
+}
+.loc-card:hover { transform: translateX(5px); border-color: var(--gold); background: linear-gradient(150deg, rgba(201,162,75,.1), rgba(244,236,223,.02)); }
+.loc-card__no {
+  width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--serif); font-style: italic; color: var(--gold-soft);
+  border: 1px solid var(--line-strong); flex-shrink: 0;
+}
+.loc-card.is-home .loc-card__no { background: linear-gradient(135deg, var(--gold-soft), var(--gold)); color: #241a0c; border-color: transparent; }
+.loc-card__body { display: flex; flex-direction: column; min-width: 0; }
+.loc-card__body b { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; }
+.loc-card__body span { font-size: .84rem; color: var(--stone-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.loc-card__go { color: var(--gold-soft); font-size: .85rem; font-weight: 500; white-space: nowrap; display: inline-flex; gap: .4rem; transition: gap .3s var(--ease); }
+.loc-card:hover .loc-card__go { gap: .8rem; }
+@media (max-width: 860px) { .loc__layout { grid-template-columns: 1fr; } .loc__map { min-height: 300px; order: 2; } }
+
 /* ── Chapter VII · Easy stay ─────────────────────────────────────────── */
 .easy__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; max-width: var(--max); margin: 0 auto; }
 .easy-card {

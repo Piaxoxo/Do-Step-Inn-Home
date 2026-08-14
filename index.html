@@ -348,6 +348,78 @@
       </p>
     </section>
 
+    <!-- ══ OUR VIENNA LOCATIONS ══════════════════════════════════════ -->
+    <section class="section locations" id="chapter-locations" data-chapter aria-label="Our Vienna locations">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>Our houses in Vienna</p>
+        <h2 class="section__title" data-reveal>One family.<br /><span class="ital">Five ways to stay.</span></h2>
+        <p class="section__lede" data-reveal>
+          Do Step Inn Home is part of a small Vienna family of stays — all central, all well
+          connected. Pick a pin, get the route.
+        </p>
+      </div>
+
+      <div class="loc__layout">
+        <!-- Stylised Vienna map -->
+        <div class="loc__map" data-reveal aria-hidden="true">
+          <svg viewBox="0 0 400 460" class="loc__mapsvg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <radialGradient id="locglow" cx="50%" cy="40%" r="70%">
+                <stop offset="0%" stop-color="rgba(201,162,75,.18)"/><stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+            <rect width="400" height="460" fill="url(#locglow)"/>
+            <!-- Danube canal -->
+            <path d="M40 60 C140 120 180 150 230 210 C280 270 300 340 360 410" fill="none" stroke="rgba(120,150,180,.35)" stroke-width="10" stroke-linecap="round"/>
+            <!-- Ringstrasse ring -->
+            <ellipse cx="245" cy="245" rx="70" ry="60" fill="none" stroke="rgba(216,203,182,.18)" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <!-- faint street grid -->
+            <g stroke="rgba(216,203,182,.08)" stroke-width="1">
+              <path d="M0 160 H400 M0 250 H400 M0 340 H400 M120 0 V460 M220 0 V460 M310 0 V460"/>
+            </g>
+            <!-- pins (data-loc matches cards) -->
+            <g class="loc__pins">
+              <g class="loc__pin" data-pin="home"><circle cx="120" cy="235" r="7"/><text x="120" y="222">1</text></g>
+              <g class="loc__pin" data-pin="befree"><circle cx="100" cy="270" r="7"/><text x="100" y="257">2</text></g>
+              <g class="loc__pin" data-pin="central"><circle cx="300" cy="345" r="7"/><text x="300" y="332">3</text></g>
+              <g class="loc__pin" data-pin="living"><circle cx="322" cy="330" r="7"/><text x="322" y="317">4</text></g>
+              <g class="loc__pin" data-pin="innsider"><circle cx="140" cy="200" r="7"/><text x="140" y="187">5</text></g>
+            </g>
+          </svg>
+          <span class="loc__maptag">Vienna · your family of stays</span>
+        </div>
+
+        <!-- Location cards -->
+        <ul class="loc__list" role="list">
+          <li><a class="loc-card is-home" data-loccard="home" href="https://www.google.com/maps/dir/?api=1&amp;destination=Felberstra%C3%9Fe%2020%2C%201150%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__no">1</span>
+            <span class="loc-card__body"><b>Do Step Inn Home</b><span>Felberstraße 20 · 1150 · opposite Westbahnhof</span></span>
+            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
+          </a></li>
+          <li><a class="loc-card" data-loccard="befree" href="https://www.google.com/maps/dir/?api=1&amp;destination=Beingasse%2013%2C%201150%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__no">2</span>
+            <span class="loc-card__body"><b>Be Free Hostel</b><span>Beingasse 13 · 1150 · near Westbahnhof</span></span>
+            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
+          </a></li>
+          <li><a class="loc-card" data-loccard="central" href="https://www.google.com/maps/dir/?api=1&amp;destination=S%C3%BCdtiroler%20Platz%203%2C%201040%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__no">3</span>
+            <span class="loc-card__body"><b>Do Step Inn Central</b><span>Südtiroler Platz 3 · 1040 · at Hauptbahnhof</span></span>
+            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
+          </a></li>
+          <li><a class="loc-card" data-loccard="living" href="https://www.google.com/maps/dir/?api=1&amp;destination=S%C3%BCdtiroler%20Platz%203%2C%201040%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__no">4</span>
+            <span class="loc-card__body"><b>Do Step Inn Living</b><span>Südtiroler Platz 3 · 1040 · at Hauptbahnhof</span></span>
+            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
+          </a></li>
+          <li><a class="loc-card" data-loccard="innsider" href="https://www.google.com/maps/dir/?api=1&amp;destination=Wurmbstra%C3%9Fe%2020%2C%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__no">5</span>
+            <span class="loc-card__body"><b>Innsider</b><span>Wurmbstraße 20 · Wien</span></span>
+            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
+          </a></li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ══ CHAPTER 7 — EASY STAY ═════════════════════════════════════ -->
     <section class="section easy" id="chapter-easy" data-chapter data-mood="warm" aria-label="An easy stay">
       <div class="section__head">
