@@ -169,12 +169,12 @@ ul { list-style: none; padding: 0; }
   background-color: #14100c;
   background-image:
     /* warm scrim keeps the headline legible over the photo */
-    linear-gradient(180deg, rgba(16,12,8,.3) 0%, rgba(16,12,8,.5) 100%),
+    linear-gradient(180deg, rgba(30,22,14,.28) 0%, rgba(30,22,14,.45) 100%),
     url("../img/hero.jpg"),
-    /* fallbacks if hero.jpg is absent */
-    radial-gradient(120% 90% at 72% 18%, rgba(224,192,120,.34), transparent 55%),
-    radial-gradient(80% 70% at 20% 85%, rgba(56,73,59,.5), transparent 60%),
-    linear-gradient(180deg, #1a140d 0%, #14100c 55%, #100c08 100%);
+    /* warm golden-hour fallback if hero.jpg is absent */
+    radial-gradient(120% 90% at 74% 16%, rgba(224,192,120,.5), transparent 58%),
+    radial-gradient(90% 80% at 15% 90%, rgba(120,90,58,.55), transparent 62%),
+    linear-gradient(165deg, #6b4f34 0%, #4a3826 45%, #33271a 100%);
   background-size: cover; background-position: center;
 }
 /* faint skyline silhouette under everything */
@@ -183,7 +183,7 @@ ul { list-style: none; padding: 0; }
   background:
     linear-gradient(180deg, transparent, rgba(0,0,0,.55)),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='320' preserveAspectRatio='xMidYMax slice'%3E%3Cg fill='%23000' fill-opacity='.5'%3E%3Crect x='60' y='180' width='90' height='140'/%3E%3Crect x='170' y='140' width='60' height='180'/%3E%3Cpath d='M250 320V150l40-70 40 70v170z'/%3E%3Crect x='360' y='170' width='120' height='150'/%3E%3Cpath d='M520 320V120l30-120 30 120v200z'/%3E%3Crect x='620' y='160' width='80' height='160'/%3E%3Crect x='720' y='190' width='140' height='130'/%3E%3Cpath d='M900 320V150l50-40 50 40v170z'/%3E%3Crect x='1040' y='170' width='90' height='150'/%3E%3Crect x='1160' y='150' width='70' height='170'/%3E%3Crect x='1260' y='185' width='120' height='135'/%3E%3C/g%3E%3C/svg%3E") bottom center / cover no-repeat;
-  opacity: .8;
+  opacity: .3;
 }
 .hero__veil {
   position: absolute; inset: 0; z-index: 1;
@@ -628,4 +628,124 @@ ul { list-style: none; padding: 0; }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
   .hero__scene { display: none !important; }   /* static fallback only */
   .btn__orb, .fab__orb { animation: none; }
+  [data-parallax] { transform: none !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LIGHT / WARM THEME v2 — cream · taupe · mocha (Awwwards editorial)
+   Overrides the dark base to a bright, luxurious gallery look.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root{
+  --bg:        #EAE3D6;   /* warm greige ground        */
+  --surface:   #FBF8F2;   /* near-white warm card      */
+  --surface-2: #F2ECE0;   /* soft cream                */
+  --ink:       #33291E;   /* deep warm brown text      */
+  --ink-soft:  #6E6155;   /* taupe brown               */
+  --ink-dim:   rgba(51,41,30,.5);
+  --accent:    #A6763F;   /* caramel / bronze          */
+  --accent-soft:#C0904F;
+  --mocha-a:   #9A7452;   /* mocha gradient cards      */
+  --mocha-b:   #6E5238;
+  --muted:     #6E6155;
+  --line:      rgba(51,41,30,.12);
+  --line-strong: rgba(51,41,30,.22);
+  --radius:    26px;
+  --shadow:    0 30px 70px -40px rgba(51,32,14,.4), 0 10px 24px -16px rgba(51,32,14,.28);
+}
+body{ background: var(--bg); color: var(--ink); }
+.grain{ opacity:.03; mix-blend-mode:multiply; }
+
+/* Nav — light on scroll, light over the hero */
+.nav__word{ color: var(--stone); }
+.nav__cta{ color: var(--stone); }
+.nav.is-scrolled{ background: rgba(251,248,242,.85); border-bottom-color: var(--line); }
+.nav.is-scrolled .nav__word{ color: var(--ink); }
+.nav.is-scrolled .nav__links a{ color: var(--ink-soft); }
+.nav.is-scrolled .nav__links a:hover{ color: var(--ink); }
+.nav.is-scrolled .nav__cta{ color: var(--ink); border-color: var(--line-strong); }
+.nav.is-scrolled .nav__cta:hover{ color: #fff; background: var(--accent); border-color: var(--accent); }
+.nav.is-scrolled .nav__burger span{ background: var(--ink); }
+.nav.is-menu-open .nav__links{ background: rgba(251,248,242,.98); border-bottom-color: var(--line); }
+.nav.is-menu-open .nav__links a{ color: var(--ink-soft); }
+
+/* Hero — softer veil so the warm photo breathes */
+.hero__veil{ background: linear-gradient(90deg, rgba(28,20,12,.6) 0%, rgba(28,20,12,.24) 46%, transparent 78%); }
+.hero .btn--ghost{ color: var(--stone); border-color: rgba(244,236,223,.4); background: rgba(244,236,223,.06); }
+
+/* Section ledes / primitives */
+.section__lede{ color: var(--ink-soft); }
+.eyebrow{ color: var(--accent); }
+.link-gold{ color: var(--accent); border-bottom-color: rgba(166,118,63,.4); }
+.link-gold:hover{ color: var(--ink); border-bottom-color: var(--accent); }
+
+/* Guides */
+.guide-card{ background: var(--surface); border-color: var(--line); box-shadow: 0 24px 55px -34px rgba(51,32,14,.3); }
+.guide-card--vienna{ background: linear-gradient(155deg,#EEEBE0,var(--surface)); }
+.guide-card--home{ background: linear-gradient(155deg,#F4E9D6,var(--surface)); }
+.guide-card::before{ opacity:.45; }
+.guide-card h3{ color: var(--ink); }
+.guide-card p{ color: var(--ink-soft); }
+.guide-card__tag{ color: var(--accent); border-color: var(--line-strong); }
+.guide-card__prompts button{ border-color: var(--line); background: rgba(51,41,30,.03); color: var(--ink-soft); }
+.guide-card__prompts button:hover{ border-color: var(--accent); color: var(--ink); }
+
+/* Explore */
+.explore__list, .explore-row{ border-color: var(--line); }
+.explore-row__meta{ color: var(--ink-soft); }
+.explore-row__meta b{ color: var(--accent); }
+.explore-row__line{ background: linear-gradient(90deg,var(--line-strong),transparent); }
+.explore__cta{ color: var(--ink-soft); }
+
+/* Locations cards */
+.loc-card{ background: var(--surface); border-color: var(--line); box-shadow: 0 18px 44px -34px rgba(51,32,14,.28); }
+.loc-card:hover{ border-color: var(--accent); background: var(--surface); }
+.loc-card__body span{ color: var(--ink-soft); }
+.loc-card__go{ color: var(--accent); }
+.loc-card__no{ color: var(--accent); border-color: var(--line-strong); }
+
+/* Groups */
+.group-card{ background: var(--surface); border-color: var(--line); box-shadow: 0 24px 55px -34px rgba(51,32,14,.3); }
+.group-card h3{ color: var(--ink); }
+.group-card p{ color: var(--ink-soft); }
+.group-card__cta{ color: var(--accent); }
+.group-card__icon{ color: var(--accent); }
+.groups__mail{ color: var(--ink-soft); }
+.groups__glow{ opacity:.55; }
+
+/* Book */
+.book__lede{ color: var(--ink-soft); }
+.book__reassure{ color: var(--ink-dim); }
+.book::before{ background: radial-gradient(80% 90% at 50% 120%, rgba(166,118,63,.2), transparent 60%); }
+
+/* Footer */
+.footer{ border-color: var(--line); }
+.footer__brand p{ color: var(--ink-soft); }
+.footer__nav a, .footer__nav button{ color: var(--ink-soft); }
+.footer__nav a:hover{ color: var(--accent); }
+.footer__legal{ color: var(--ink-dim); border-color: var(--line); }
+
+/* ── Real interactive map (Leaflet) ──────────────────────────────────── */
+#loc-map{
+  min-height: 420px; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--line); box-shadow: var(--shadow); z-index: 0;
+  background: #E9E4DA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23e9e4da'/%3E%3Cpath d='M0 20h40M20 0v40' stroke='%23d8cfc0' stroke-width='1'/%3E%3C/svg%3E");
+}
+.leaflet-container{ font-family: var(--sans); background:#E9E4DA !important; }
+.loc-marker{
+  width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+  border: 2px solid #fff; box-shadow: 0 4px 10px rgba(51,32,14,.4);
+  display: grid; place-items: center;
+}
+.loc-marker.is-home{ background: linear-gradient(135deg,#D9B36B,var(--accent)); width:36px; height:36px; }
+.loc-marker span{ transform: rotate(45deg); color:#fff; font-weight:700; font-size:.8rem; }
+.leaflet-popup-content-wrapper{ border-radius: 12px; }
+.leaflet-popup-content{ font-family: var(--sans); }
+.loc-pop b{ font-family: var(--serif); font-size:1.05rem; color:var(--ink); display:block; }
+.loc-pop span{ font-size:.82rem; color:var(--ink-soft); }
+.loc-pop a{ display:inline-block; margin-top:.5rem; color:var(--accent); font-weight:600; font-size:.85rem; }
+@media (max-width: 860px){ #loc-map{ min-height: 320px; order: 2; } }
+
+/* ── Parallax ────────────────────────────────────────────────────────── */
+[data-parallax]{ will-change: transform; }
+

@@ -75,17 +75,61 @@
     });
   }));
 
-  /* ── Locations: link card hover to its map pin ─────────────────────── */
-  $$("[data-loccard]").forEach(card => {
-    const pin = $(`.loc__pin[data-pin="${card.dataset.loccard}"]`);
-    if (!pin) return;
-    const on = () => pin.classList.add("is-active");
-    const off = () => pin.classList.remove("is-active");
-    card.addEventListener("mouseenter", on);
-    card.addEventListener("mouseleave", off);
-    card.addEventListener("focus", on);
-    card.addEventListener("blur", off);
-  });
+  /* ── Locations: real interactive map (Leaflet) ─────────────────────── */
+  (function initLocMap() {
+    const el = document.getElementById("loc-map");
+    if (!el || typeof L === "undefined") return;   // CDN blocked → styled fallback stays
+    const cards = $$("[data-loccard]");
+    const pts = cards.map(c => ({
+      key: c.dataset.loccard, lat: parseFloat(c.dataset.lat), lng: parseFloat(c.dataset.lng),
+      name: c.querySelector("b").textContent,
+      addr: c.querySelector(".loc-card__body span").textContent,
+      href: c.getAttribute("href"), home: c.classList.contains("is-home"),
+    })).filter(p => !isNaN(p.lat));
+    if (!pts.length) return;
+
+    const map = L.map(el, { scrollWheelZoom: false }).setView([48.190, 16.352], 13);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      maxZoom: 19, subdomains: "abcd",
+      attribution: '&copy; OpenStreetMap &copy; CARTO',
+    }).addTo(map);
+
+    const markers = {}, bounds = [];
+    pts.forEach((p, i) => {
+      const icon = L.divIcon({
+        className: "", iconSize: [30, 30], iconAnchor: [15, 30], popupAnchor: [0, -28],
+        html: `<div class="loc-marker${p.home ? " is-home" : ""}"><span>${i + 1}</span></div>`,
+      });
+      const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
+      m.bindPopup(`<div class="loc-pop"><b>${p.name}</b><span>${p.addr}</span><br><a href="${p.href}" target="_blank" rel="noopener">Route öffnen →</a></div>`);
+      markers[p.key] = m; bounds.push([p.lat, p.lng]);
+    });
+    map.fitBounds(bounds, { padding: [45, 45], maxZoom: 14 });
+    cards.forEach(c => {
+      const m = markers[c.dataset.loccard];
+      if (m) c.addEventListener("mouseenter", () => m.openPopup());
+    });
+    setTimeout(() => map.invalidateSize(), 300);
+  })();
+
+  /* ── Parallax (lightweight, rAF, reduced-motion aware) ─────────────── */
+  (function parallax() {
+    const els = $$("[data-parallax]");
+    if (reduce || !els.length) return;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      els.forEach(el => {
+        const speed = parseFloat(el.dataset.parallax) || 0.2;
+        el.style.transform = `translate3d(0, ${(y * speed).toFixed(1)}px, 0)`;
+      });
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
 
   /* ══ MODAL PLUMBING ════════════════════════════════════════════════ */
   let lastFocus = null;
