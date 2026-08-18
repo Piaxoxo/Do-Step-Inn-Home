@@ -112,22 +112,26 @@
     setTimeout(() => map.invalidateSize(), 300);
   })();
 
-  /* ── Parallax (lightweight, rAF, reduced-motion aware) ─────────────── */
+  /* ── Parallax (viewport-relative, rAF, reduced-motion aware) ───────── */
   (function parallax() {
     const els = $$("[data-parallax]");
     if (reduce || !els.length) return;
     let ticking = false;
     const update = () => {
-      const y = window.scrollY;
+      const vh = window.innerHeight || 1;
       els.forEach(el => {
-        const speed = parseFloat(el.dataset.parallax) || 0.2;
-        el.style.transform = `translate3d(0, ${(y * speed).toFixed(1)}px, 0)`;
+        const speed = parseFloat(el.dataset.parallax) || 0.15;
+        const r = el.getBoundingClientRect();
+        const center = r.top + r.height / 2;
+        const offset = center - vh / 2;               // +below / -above viewport centre
+        const shift = Math.max(-140, Math.min(140, -offset * speed));
+        el.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
       });
       ticking = false;
     };
-    window.addEventListener("scroll", () => {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
+    const onScroll = () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     update();
   })();
 
