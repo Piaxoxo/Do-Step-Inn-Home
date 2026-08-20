@@ -401,6 +401,10 @@ ul { list-style: none; padding: 0; }
 .loc-card__body span { font-size: .84rem; color: var(--stone-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .loc-card__go { color: var(--gold-soft); font-size: .85rem; font-weight: 500; white-space: nowrap; display: inline-flex; gap: .4rem; transition: gap .3s var(--ease); }
 .loc-card:hover .loc-card__go { gap: .8rem; }
+.loc-card__links { display: flex; flex-direction: column; gap: .3rem; align-items: flex-end; white-space: nowrap; }
+.loc-card__link { color: var(--gold); font-size: .86rem; font-weight: 600; display: inline-flex; gap: .35rem; transition: gap .3s var(--ease), color .3s; }
+.loc-card__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.loc-card:hover .loc-card__link { gap: .7rem; }
 @media (max-width: 860px) { .loc__layout { grid-template-columns: 1fr; } .loc__map { min-height: 300px; order: 2; } }
 
 /* ── Chapter VII · Easy stay ─────────────────────────────────────────── */
@@ -701,6 +705,7 @@ body{ background: var(--bg); color: var(--ink); }
 .loc-card:hover{ border-color: var(--accent); background: var(--surface); }
 .loc-card__body span{ color: var(--ink-soft); }
 .loc-card__go{ color: var(--accent); }
+.loc-card__link{ color: var(--accent); }
 .loc-card__no{ color: var(--accent); border-color: var(--line-strong); }
 
 /* Groups */

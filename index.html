@@ -435,33 +435,48 @@
             src="https://maps.google.com/maps?q=Felberstra%C3%9Fe%2020,%201150%20Wien&z=13&output=embed"></iframe>
         </div>
 
-        <!-- Location cards (also feed the map markers) -->
+        <!-- Location cards: each links to the house website + live directions -->
         <ul class="loc__list" role="list">
-          <li><a class="loc-card is-home" data-loccard="home" data-lat="48.19685" data-lng="16.33472" href="https://www.google.com/maps/dir/?api=1&amp;destination=Felberstra%C3%9Fe%2020%2C%201150%20Wien" target="_blank" rel="noopener" data-reveal>
+          <li><div class="loc-card is-home" data-loccard="home" data-lat="48.19685" data-lng="16.33472" data-reveal>
             <span class="loc-card__no">1</span>
             <span class="loc-card__body"><b>Do Step Inn Home</b><span>Felberstraße 20 · 1150 · opposite Westbahnhof</span></span>
-            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
-          </a></li>
-          <li><a class="loc-card" data-loccard="befree" data-lat="48.19431" data-lng="16.33262" href="https://www.google.com/maps/dir/?api=1&amp;destination=Beingasse%2013%2C%201150%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__links">
+              <a class="loc-card__link" href="https://www.dostepinn.com/home/" target="_blank" rel="noopener">Website <span aria-hidden="true">↗</span></a>
+              <a class="loc-card__go" href="https://www.google.com/maps/dir/?api=1&amp;destination=Felberstra%C3%9Fe%2020%2C%201150%20Wien" target="_blank" rel="noopener">Route <span aria-hidden="true">→</span></a>
+            </span>
+          </div></li>
+          <li><div class="loc-card" data-loccard="befree" data-lat="48.19431" data-lng="16.33262" data-reveal>
             <span class="loc-card__no">2</span>
             <span class="loc-card__body"><b>Be Free Hostel</b><span>Beingasse 13 · 1150 · near Westbahnhof</span></span>
-            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
-          </a></li>
-          <li><a class="loc-card" data-loccard="central" data-lat="48.18533" data-lng="16.37490" href="https://www.google.com/maps/dir/?api=1&amp;destination=S%C3%BCdtiroler%20Platz%203%2C%201040%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__links">
+              <a class="loc-card__link" href="https://www.google.com/search?q=befree+hostel" target="_blank" rel="noopener">Website <span aria-hidden="true">↗</span></a>
+              <a class="loc-card__go" href="https://www.google.com/maps/dir/?api=1&amp;destination=Beingasse%2013%2C%201150%20Wien" target="_blank" rel="noopener">Route <span aria-hidden="true">→</span></a>
+            </span>
+          </div></li>
+          <li><div class="loc-card" data-loccard="central" data-lat="48.18533" data-lng="16.37490" data-reveal>
             <span class="loc-card__no">3</span>
             <span class="loc-card__body"><b>Do Step Inn Central</b><span>Südtiroler Platz 3 · 1040 · at Hauptbahnhof</span></span>
-            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
-          </a></li>
-          <li><a class="loc-card" data-loccard="living" data-lat="48.18548" data-lng="16.37525" href="https://www.google.com/maps/dir/?api=1&amp;destination=S%C3%BCdtiroler%20Platz%203%2C%201040%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__links">
+              <a class="loc-card__link" href="https://www.dostepinn.com/central-hostel/" target="_blank" rel="noopener">Website <span aria-hidden="true">↗</span></a>
+              <a class="loc-card__go" href="https://www.google.com/maps/dir/?api=1&amp;destination=S%C3%BCdtiroler%20Platz%203%2C%201040%20Wien" target="_blank" rel="noopener">Route <span aria-hidden="true">→</span></a>
+            </span>
+          </div></li>
+          <li><div class="loc-card" data-loccard="living" data-lat="48.18548" data-lng="16.37525" data-reveal>
             <span class="loc-card__no">4</span>
             <span class="loc-card__body"><b>Do Step Inn Living</b><span>Südtiroler Platz 3 · 1040 · at Hauptbahnhof</span></span>
-            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
-          </a></li>
-          <li><a class="loc-card" data-loccard="innsider" data-lat="48.19050" data-lng="16.33230" href="https://www.google.com/maps/dir/?api=1&amp;destination=Wurmbstra%C3%9Fe%2020%2C%20Wien" target="_blank" rel="noopener" data-reveal>
+            <span class="loc-card__links">
+              <a class="loc-card__link" href="https://dostepinn-living.at/#/booking/search" target="_blank" rel="noopener">Book <span aria-hidden="true">↗</span></a>
+              <a class="loc-card__go" href="https://www.google.com/maps/dir/?api=1&amp;destination=S%C3%BCdtiroler%20Platz%203%2C%201040%20Wien" target="_blank" rel="noopener">Route <span aria-hidden="true">→</span></a>
+            </span>
+          </div></li>
+          <li><div class="loc-card" data-loccard="innsider" data-lat="48.19050" data-lng="16.33230" data-reveal>
             <span class="loc-card__no">5</span>
-            <span class="loc-card__body"><b>Innsider</b><span>Wurmbstraße 20 · Wien</span></span>
-            <span class="loc-card__go">Route <span aria-hidden="true">→</span></span>
-          </a></li>
+            <span class="loc-card__body"><b>Innsider</b><span>Wurmbstraße 20 · Wien · bar &amp; restaurant</span></span>
+            <span class="loc-card__links">
+              <a class="loc-card__link" href="https://innsider-restaurant.at/" target="_blank" rel="noopener">Restaurant <span aria-hidden="true">↗</span></a>
+              <a class="loc-card__go" href="https://www.google.com/maps/dir/?api=1&amp;destination=Wurmbstra%C3%9Fe%2020%2C%20Wien" target="_blank" rel="noopener">Route <span aria-hidden="true">→</span></a>
+            </span>
+          </div></li>
         </ul>
       </div>
     </section>
