@@ -98,6 +98,47 @@
     update();
   })();
 
+  /* ── Scroll progress bar ───────────────────────────────────────────── */
+  (function progress() {
+    const bar = $("#scrollbar");
+    if (!bar) return;
+    const upd = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + "%";
+    };
+    window.addEventListener("scroll", upd, { passive: true });
+    window.addEventListener("resize", upd, { passive: true });
+    upd();
+  })();
+
+  /* ── Horizontal-scroll gallery (pinned; vertical scroll → sideways) ── */
+  (function hGallery() {
+    const sec = $("#chapter-gallery");
+    const track = $("#hgtrack");
+    if (!sec || !track) return;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    if (reduce || coarse || window.innerWidth < 760) { sec.classList.add("is-static"); return; }
+
+    let maxX = 0, start = 0, ticking = false;
+    const measure = () => {
+      maxX = Math.max(0, track.scrollWidth - window.innerWidth);
+      sec.style.height = (window.innerHeight + maxX) + "px";
+      start = sec.offsetTop;
+    };
+    const update = () => {
+      const x = Math.max(0, Math.min(maxX, window.scrollY - start));
+      track.style.transform = `translate3d(${-x}px,0,0)`;
+      ticking = false;
+    };
+    const onScroll = () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } };
+    measure(); update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", () => { measure(); update(); }, { passive: true });
+    window.addEventListener("load", () => { measure(); update(); });
+    // remeasure once images have loaded (widths are fixed, but be safe)
+    track.querySelectorAll("img").forEach(img => img.addEventListener("load", () => { measure(); update(); }, { once: true }));
+  })();
+
   /* ── Group booking request → email to reservierung@dostepinn.at ────── */
   const groupForm = $("#group-form");
   if (groupForm) {

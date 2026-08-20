@@ -73,6 +73,7 @@
 
   <!-- Grain + vignette overlays (pure CSS, non-interactive) -->
   <div class="grain" aria-hidden="true"></div>
+  <div class="scrollbar" id="scrollbar" aria-hidden="true"></div>
 
   <!-- ══ NAV ══════════════════════════════════════════════════════════ -->
   <header class="nav" id="nav">
@@ -181,41 +182,36 @@
       </ul>
     </section>
 
-    <!-- ══ GALLERY — A LOOK INSIDE ═══════════════════════════════════ -->
-    <section class="section gallery" id="chapter-gallery" data-chapter aria-label="A look inside">
-      <div class="section__head">
-        <p class="eyebrow" data-reveal>A look inside</p>
-        <h2 class="section__title" data-reveal>Warm, colourful,<br /><span class="ital">unmistakably ours.</span></h2>
-        <p class="section__lede" data-reveal>
-          Brick walls, painted furniture, a proper Viennese coffee and a courtyard to slow
-          down in — a real home base, not a faceless budget hotel.
-        </p>
-      </div>
-      <div class="gallery__grid">
-        <figure class="gallery__item gallery__item--tall" data-label="Wiener Espresso" data-reveal><img src="assets/img/DSC06286.jpg" alt="An espresso pouring into an Original Wiener cup" loading="lazy" /></figure>
-        <figure class="gallery__item gallery__item--wide" data-label="Breakfast buffet" data-reveal><img src="assets/img/IMG_9695_Lightroom.JPG" alt="Fresh bread, rolls and gugelhupf at the breakfast buffet" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="A proper coffee" data-reveal><img src="assets/img/DSC06272.jpg" alt="A milky Viennese coffee" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="An easy evening in" data-reveal><img src="assets/img/_DSC8180.jpg" alt="A couple with wine in a brick-walled room" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Breakfast room" data-reveal><img src="assets/img/_MG_0229_Lightroom.jpg" alt="Colourful breakfast room with brick walls" loading="lazy" /></figure>
-        <figure class="gallery__item gallery__item--wide" data-label="The house bar" data-reveal><img src="assets/img/_MG_0217_Lightroom.jpg" alt="The house bar with vintage signs and glasses" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Fresh juice" data-reveal><img src="assets/img/IMG_9717_Lightroom.JPG" alt="Fresh orange juice at the breakfast buffet" loading="lazy" /></figure>
-        <figure class="gallery__item gallery__item--tall" data-label="Arrival" data-reveal><img src="assets/img/_DSC8075.jpg" alt="A couple arriving in their room with luggage" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Cereals &amp; fruit" data-reveal><img src="assets/img/IMG_9667_Lightroom.JPG" alt="Cereals and a bowl of fresh fruit" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Your floor" data-reveal><img src="assets/img/_MG_0170_Lightroom.jpg" alt="Bright hallway to the rooms" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="A glass of red" data-reveal><img src="assets/img/DSC06192.jpg" alt="Red wine poured at the house bar" loading="lazy" /></figure>
-        <figure class="gallery__item gallery__item--wide" data-label="Festive courtyard" data-reveal><img src="assets/img/DSC06332.jpg" alt="Christmas tree in the courtyard at night" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Bright dorms" data-reveal><img src="assets/img/_DSC7942.jpg" alt="A guest on a bunk bed in a bright dorm" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Fresh fruit" data-reveal><img src="assets/img/IMG_9702_Lightroom.JPG" alt="A basket of fresh fruit" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Guest kitchen" data-reveal><img src="assets/img/_MG_0231_Lightroom.jpg" alt="The stainless-steel guest kitchen" loading="lazy" /></figure>
-        <figure class="gallery__item gallery__item--tall" data-label="Brick &amp; stairs" data-reveal><img src="assets/img/_MG_0165_Lightroom.jpg" alt="The brick staircase" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Time to unwind" data-reveal><img src="assets/img/_DSC8167.jpg" alt="A couple relaxing with wine on the bed" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Fresh bread" data-reveal><img src="assets/img/IMG_9713_Lightroom.JPG" alt="Slicing fresh bread at breakfast" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Festive touches" data-reveal><img src="assets/img/DSC06312.jpg" alt="Christmas ornaments on a branch" loading="lazy" /></figure>
-        <figure class="gallery__item gallery__item--wide" data-label="Kitchen &amp; lounge" data-reveal><img src="assets/img/_MG_0232_Lightroom.jpg" alt="Guest kitchen and lounge with brick walls" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Make friends" data-reveal><img src="assets/img/DSC06383.jpg" alt="Two guests chatting on a dorm bed" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Meet &amp; greet" data-reveal><img src="assets/img/_DSC8091.jpg" alt="A couple settling into their room" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Decorating time" data-reveal><img src="assets/img/DSC06299.jpg" alt="The team decorating the courtyard tree" loading="lazy" /></figure>
-        <figure class="gallery__item" data-label="Second kitchen corner" data-reveal><img src="assets/img/_MG_0234_Lightroom.jpg" alt="The guest kitchen with cooktops and pots" loading="lazy" /></figure>
+    <!-- ══ GALLERY — HORIZONTAL SCROLL ("A LOOK INSIDE") ═════════════ -->
+    <section class="hgallery" id="chapter-gallery" data-chapter aria-label="A look inside">
+      <div class="hgallery__pin">
+        <div class="hgallery__head">
+          <p class="eyebrow">A look inside</p>
+          <h2 class="hgallery__title">Warm, colourful, <span class="ital">unmistakably ours.</span></h2>
+          <p class="hgallery__hint" aria-hidden="true">Keep scrolling →</p>
+        </div>
+        <div class="hgallery__track" id="hgtrack">
+          <figure class="hg-item" data-label="Wiener Espresso"><img src="assets/img/DSC06286.jpg" alt="An espresso pouring into an Original Wiener cup" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="An easy evening in"><img src="assets/img/_DSC8180.jpg" alt="A couple with wine in a brick-walled room" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Breakfast buffet"><img src="assets/img/IMG_9695_Lightroom.JPG" alt="Fresh bread and gugelhupf at the breakfast buffet" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="The house bar"><img src="assets/img/_MG_0217_Lightroom.jpg" alt="The house bar with vintage signs and glasses" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="A proper coffee"><img src="assets/img/DSC06272.jpg" alt="A milky Viennese coffee" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Arrival"><img src="assets/img/_DSC8075.jpg" alt="A couple arriving in their room with luggage" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Breakfast room"><img src="assets/img/_MG_0229_Lightroom.jpg" alt="Colourful breakfast room with brick walls" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Fresh juice"><img src="assets/img/IMG_9717_Lightroom.JPG" alt="Fresh orange juice at the breakfast buffet" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Your floor"><img src="assets/img/_MG_0170_Lightroom.jpg" alt="Bright hallway to the rooms" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="A glass of red"><img src="assets/img/DSC06192.jpg" alt="Red wine poured at the house bar" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Festive courtyard"><img src="assets/img/DSC06332.jpg" alt="Christmas tree in the courtyard at night" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Bright dorms"><img src="assets/img/_DSC7942.jpg" alt="A guest on a bunk bed in a bright dorm" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Cereals &amp; fruit"><img src="assets/img/IMG_9667_Lightroom.JPG" alt="Cereals and fresh fruit" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Guest kitchen"><img src="assets/img/_MG_0231_Lightroom.jpg" alt="The stainless-steel guest kitchen" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Brick &amp; stairs"><img src="assets/img/_MG_0165_Lightroom.jpg" alt="The brick staircase" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Time to unwind"><img src="assets/img/_DSC8167.jpg" alt="A couple relaxing with wine" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Fresh bread"><img src="assets/img/IMG_9713_Lightroom.JPG" alt="Slicing fresh bread at breakfast" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Make friends"><img src="assets/img/DSC06383.jpg" alt="Two guests chatting on a dorm bed" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Fresh fruit"><img src="assets/img/IMG_9702_Lightroom.JPG" alt="A basket of fresh fruit" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Kitchen &amp; lounge"><img src="assets/img/_MG_0232_Lightroom.jpg" alt="Guest kitchen and lounge" loading="lazy" /></figure>
+        </div>
       </div>
     </section>
 
