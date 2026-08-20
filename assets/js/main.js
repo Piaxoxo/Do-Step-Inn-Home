@@ -7,24 +7,27 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  document.getElementById("year").textContent = new Date().getFullYear();
+  const yearEl = document.getElementById("year"); if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ── Nav: scroll state ─────────────────────────────────────────────── */
+  /* ── Nav: scroll state + mobile menu (skipped if header is absent) ──── */
   const nav = $("#nav");
-  const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
+  if (nav) {
+    const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-  /* ── Mobile menu ───────────────────────────────────────────────────── */
-  const burger = $("[data-toggle-menu]");
-  burger.addEventListener("click", () => {
-    const open = nav.classList.toggle("is-menu-open");
-    burger.setAttribute("aria-expanded", String(open));
-  });
-  $$(".nav__links a").forEach(a => a.addEventListener("click", () => {
-    nav.classList.remove("is-menu-open");
-    burger.setAttribute("aria-expanded", "false");
-  }));
+    const burger = $("[data-toggle-menu]");
+    if (burger) {
+      burger.addEventListener("click", () => {
+        const open = nav.classList.toggle("is-menu-open");
+        burger.setAttribute("aria-expanded", String(open));
+      });
+    }
+    $$(".nav__links a").forEach(a => a.addEventListener("click", () => {
+      nav.classList.remove("is-menu-open");
+      if (burger) burger.setAttribute("aria-expanded", "false");
+    }));
+  }
 
   /* ── Reveal on scroll ──────────────────────────────────────────────── */
   const reveals = $$("[data-reveal]");

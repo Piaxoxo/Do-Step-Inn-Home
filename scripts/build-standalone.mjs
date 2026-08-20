@@ -46,6 +46,21 @@ idx = idx.replace(
   () => `<script type="module">\n${scene}\n</script>`
 );
 idx = rewriteHtmlAssets(idx);
+
+// ── Elementor variant: drop the built-in header + footer (WordPress/Elementor supplies its own) ──
+idx = idx.replace(/\n\s*<!-- ══ NAV[\s\S]*?<\/header>\n/, '\n');
+idx = idx.replace(/\n\s*<!-- ══ FOOTER[\s\S]*?<\/footer>\n/, '\n');
+
+// ── Elementor variant: break out of the column so it fills the page ─────
+idx = idx.replace('</head>', `  <style>
+    /* Full-bleed fit for Elementor: break out of the column to full viewport width */
+    #top{ width: 100vw; margin-left: calc(50% - 50vw); }
+    .bookbar{ width: 100vw; margin-left: calc(50% - 50vw); }
+    /* No built-in fixed header in this build — reclaim the hero's top space */
+    .hero{ padding-top: clamp(3rem, 8vh, 6rem); }
+  </style>
+</head>`);
+
 fs.writeFileSync(path.join(OUT, 'index.html'), idx);
 
 // ---- LEGAL PAGES ----

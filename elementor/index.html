@@ -1009,6 +1009,13 @@ body{ background: var(--bg); color: var(--ink); }
     "nearbyAttractions": ["Westbahnhof", "Mariahilfer Straße", "Stephansdom", "Belvedere Palace"]
   }
   </script>
+  <style>
+    /* Full-bleed fit for Elementor: break out of the column to full viewport width */
+    #top{ width: 100vw; margin-left: calc(50% - 50vw); }
+    .bookbar{ width: 100vw; margin-left: calc(50% - 50vw); }
+    /* No built-in fixed header in this build — reclaim the hero's top space */
+    .hero{ padding-top: clamp(3rem, 8vh, 6rem); }
+  </style>
 </head>
 
 <body>
@@ -1017,25 +1024,6 @@ body{ background: var(--bg); color: var(--ink); }
   <!-- Grain + vignette overlays (pure CSS, non-interactive) -->
   <div class="grain" aria-hidden="true"></div>
   <div class="scrollbar" id="scrollbar" aria-hidden="true"></div>
-
-  <!-- ══ NAV ══════════════════════════════════════════════════════════ -->
-  <header class="nav" id="nav">
-    <a class="nav__brand" href="#top" aria-label="Do Step Inn Home — home">
-      <img class="nav__logo" src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSI_Home_schwarz_transparent.png" alt="Do Step Inn Home" width="150" height="72" />
-    </a>
-
-    <nav class="nav__links" aria-label="Primary">
-      <a href="#chapter-base">Home base</a>
-      <a href="#chapter-rooms">Rooms</a>
-      <a href="#chapter-explore">Explore Vienna</a>
-      <a href="#chapter-easy">Easy stay</a>
-    </nav>
-
-    <button class="nav__cta" data-open-booking type="button">Check availability</button>
-    <button class="nav__burger" data-toggle-menu type="button" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span>
-    </button>
-  </header>
 
   <main id="top">
 
@@ -1542,41 +1530,6 @@ body{ background: var(--bg); color: var(--ink); }
     </section>
   </main>
 
-  <!-- ══ FOOTER ═══════════════════════════════════════════════════════ -->
-  <footer class="footer">
-    <div class="footer__brand">
-      <img class="footer__logo" src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSI_Home_schwarz_transparent.png" alt="Do Step Inn Home" width="180" height="86" />
-      <p>Felberstraße 20, 1150 Vienna, Austria · Opposite Westbahnhof</p>
-      <div class="footer__social">
-        <a class="social" href="https://www.instagram.com/dostepinnhome/" target="_blank" rel="noopener noreferrer" aria-label="Do Step Inn Home on Instagram">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
-            <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/>
-          </svg>
-          <span>Instagram</span>
-        </a>
-        <a class="social" href="https://www.facebook.com/DoStepInn/" target="_blank" rel="noopener noreferrer" aria-label="Do Step Inn on Facebook">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M13.5 21v-7.3h2.45l.37-2.85H13.5V9.03c0-.82.23-1.38 1.4-1.38h1.5V5.1c-.26-.03-1.15-.11-2.19-.11-2.16 0-3.64 1.32-3.64 3.75v2.09H8.1v2.85h2.47V21h2.93Z"/>
-          </svg>
-          <span>Facebook</span>
-        </a>
-      </div>
-    </div>
-    <nav class="footer__nav" aria-label="Footer">
-      <a href="#chapter-base">Home base</a>
-      <a href="#chapter-rooms">Rooms</a>
-      <a href="#chapter-explore">Explore Vienna</a>
-      <a href="#chapter-easy">Easy stay</a>
-      <button class="link-gold" data-open-concierge="home" type="button">Ask the Home Assistant</button>
-    </nav>
-    <p class="footer__legal">
-      <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a><br />
-      © <span id="year">2026</span> Do Step Inn Home · Kern Beherbergungsbetriebs GmbH · Feel at home. Step into Vienna.
-    </p>
-  </footer>
-
   <!-- ══ STICKY BOOKING BAR ═══════════════════════════════════════════ -->
   <div class="stickybar" id="stickybar" aria-hidden="true">
     <span class="stickybar__label">Rooms for every budget · from your calm base in Vienna</span>
@@ -1815,24 +1768,27 @@ body{ background: var(--bg); color: var(--ink); }
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  document.getElementById("year").textContent = new Date().getFullYear();
+  const yearEl = document.getElementById("year"); if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ── Nav: scroll state ─────────────────────────────────────────────── */
+  /* ── Nav: scroll state + mobile menu (skipped if header is absent) ──── */
   const nav = $("#nav");
-  const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
+  if (nav) {
+    const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-  /* ── Mobile menu ───────────────────────────────────────────────────── */
-  const burger = $("[data-toggle-menu]");
-  burger.addEventListener("click", () => {
-    const open = nav.classList.toggle("is-menu-open");
-    burger.setAttribute("aria-expanded", String(open));
-  });
-  $$(".nav__links a").forEach(a => a.addEventListener("click", () => {
-    nav.classList.remove("is-menu-open");
-    burger.setAttribute("aria-expanded", "false");
-  }));
+    const burger = $("[data-toggle-menu]");
+    if (burger) {
+      burger.addEventListener("click", () => {
+        const open = nav.classList.toggle("is-menu-open");
+        burger.setAttribute("aria-expanded", String(open));
+      });
+    }
+    $$(".nav__links a").forEach(a => a.addEventListener("click", () => {
+      nav.classList.remove("is-menu-open");
+      if (burger) burger.setAttribute("aria-expanded", "false");
+    }));
+  }
 
   /* ── Reveal on scroll ──────────────────────────────────────────────── */
   const reveals = $$("[data-reveal]");
