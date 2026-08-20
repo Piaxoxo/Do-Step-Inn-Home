@@ -122,7 +122,11 @@
   const booking = $("#booking");
   document.addEventListener("click", (e) => {
     const opener = e.target.closest("[data-open-booking]");
-    if (opener) { e.preventDefault(); openModal(booking); }
+    if (opener) {
+      e.preventDefault();
+      const target = document.getElementById("book-top") || document.getElementById("chapter-book");
+      if (target) target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    }
     if (e.target.closest("[data-close-booking]")) closeModal(booking);
   });
   // sensible default dates

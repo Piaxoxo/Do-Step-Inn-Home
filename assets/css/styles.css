@@ -780,3 +780,21 @@ body{ background: var(--bg); color: var(--ink); }
   .gallery__grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; }
   .gallery__item--tall{ grid-row: span 1; }
 }
+
+/* ── Logo (nav + footer) ─────────────────────────────────────────────── */
+.nav__logo{ height: 42px; width: auto; display: block; transition: height .4s var(--ease); }
+.nav.is-scrolled .nav__logo{ height: 34px; }
+.footer__logo{ height: 54px; width: auto; display: block; margin-bottom: .2rem; }
+@media (max-width: 560px){ .nav__logo{ height: 30px; } }
+
+/* ── Booking band (UP Hotel IBE) ─────────────────────────────────────── */
+.bookbar{ position: relative; z-index: 3; padding: 0 var(--gutter) clamp(2rem,5vw,3.5rem); margin-top: clamp(-5.5rem, -6vw, -3rem); }
+.bookbar__inner{
+  max-width: var(--max); margin: 0 auto; background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: clamp(1.4rem, 3vw, 2.4rem);
+}
+.bookbar__title{ font-family: var(--serif); font-size: clamp(1.3rem,2.5vw,1.7rem); color: var(--ink); margin-bottom: 1rem; }
+.bookbar__note{ margin-top: 1rem; font-size: .84rem; color: var(--ink-dim); letter-spacing: .03em; }
+.ibe-wrap{ width: 100%; min-height: 64px; }
+.ibe-wrap--book{ margin: 1.8rem auto; max-width: 860px; }

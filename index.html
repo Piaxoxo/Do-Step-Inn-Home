@@ -77,13 +77,7 @@
   <!-- ══ NAV ══════════════════════════════════════════════════════════ -->
   <header class="nav" id="nav">
     <a class="nav__brand" href="#top" aria-label="Do Step Inn Home — home">
-      <span class="nav__mark" aria-hidden="true">
-        <svg viewBox="0 0 32 32" width="26" height="26" fill="none">
-          <path d="M6 26V13.5L16 6l10 7.5V26" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-          <path d="M13 26v-6.5h6V26" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <span class="nav__word">Do Step Inn <em>Home</em></span>
+      <img class="nav__logo" src="assets/img/DSI_Home_schwarz_transparent.png" alt="Do Step Inn Home" width="150" height="72" />
     </a>
 
     <nav class="nav__links" aria-label="Primary">
@@ -129,6 +123,15 @@
       <div class="hero__scroll reveal" data-reveal data-delay="4" aria-hidden="true">
         <span>Scroll to arrive</span>
         <span class="hero__scroll-line"></span>
+      </div>
+    </section>
+
+    <!-- ══ BOOKING WIDGET (UP Hotel IBE) ═════════════════════════════ -->
+    <section class="bookbar" id="book-top" aria-label="Check availability">
+      <div class="bookbar__inner">
+        <p class="bookbar__title">Check availability &amp; book direct</p>
+        <div class="ibe-wrap"><ibe-up ibe-key="35b41b51-d117-4319-8ccd-11eafa2a07bc" language="en"></ibe-up></div>
+        <p class="bookbar__note">Best rate direct · free cancellation options · instant confirmation</p>
       </div>
     </section>
 
@@ -501,7 +504,7 @@
         <p class="eyebrow">Chapter VIII · Book your stay</p>
         <h2 class="book__title">Your step into Vienna<br /><span class="ital">starts here.</span></h2>
         <p class="book__lede">Rooms for every budget, in the middle of everything. Take the step — your calm home base is waiting.</p>
-        <button class="btn btn--gold btn--lg" data-open-booking type="button">Check availability</button>
+        <div class="ibe-wrap ibe-wrap--book"><ibe-up ibe-key="35b41b51-d117-4319-8ccd-11eafa2a07bc" language="en"></ibe-up></div>
         <p class="book__reassure">Best rate direct · Free cancellation options · Instant confirmation</p>
       </div>
     </section>
@@ -510,7 +513,7 @@
   <!-- ══ FOOTER ═══════════════════════════════════════════════════════ -->
   <footer class="footer">
     <div class="footer__brand">
-      <span class="nav__word">Do Step Inn <em>Home</em></span>
+      <img class="footer__logo" src="assets/img/DSI_Home_schwarz_transparent.png" alt="Do Step Inn Home" width="180" height="86" />
       <p>Felberstraße 20, 1150 Vienna, Austria · Opposite Westbahnhof</p>
     </div>
     <nav class="footer__nav" aria-label="Footer">
@@ -587,6 +590,10 @@
       <p class="chat__disclaimer" id="chat-disclaimer"></p>
     </div>
   </div>
+
+  <!-- Booking engine (UP Hotel IBE) -->
+  <link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
+  <script type="text/javascript" src="https://ibe.uphotel.agency/ibe.min.js"></script>
 
   <!-- Scripts -->
   <script src="assets/js/concierge.js" defer></script>
