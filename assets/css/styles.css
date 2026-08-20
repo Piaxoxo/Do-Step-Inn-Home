@@ -859,3 +859,62 @@ body{ background: var(--bg); color: var(--ink); }
   .hgallery__pin{ position: static; height: auto; padding: 3rem 0; }
   .hgallery__track{ overflow-x: auto; }
 }
+
+/* ═══ INTERACTIONS: TILT · WORD-REVEAL · STORY · 3D FLY ════════════════ */
+
+/* 3D tilt on cards (set via JS) */
+[data-tilt]{ transition: transform .5s var(--ease); transform-style: preserve-3d; will-change: transform; }
+[data-tilt]:hover{ transition: transform .12s ease-out; }
+
+/* Word-by-word heading reveal */
+.word{ display: inline-block; opacity: 0; transform: translateY(.5em) rotate(2deg);
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+  transition-delay: calc(var(--wd, 0) * 45ms); }
+[data-reveal].is-in .word, .is-in .word{ opacity: 1; transform: none; }
+
+/* Sticky story */
+.story{ position: relative; height: 260vh; background: linear-gradient(180deg, var(--surface-2), var(--bg)); }
+.story__pin{ position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; gap: 1.4rem; overflow: hidden; }
+.story__eyebrow{ font-size: .74rem; letter-spacing: .3em; text-transform: uppercase; color: var(--accent); }
+.story__lines{ display: flex; flex-direction: column; gap: .2rem; }
+.story__line{ font-family: var(--serif); font-weight: 300; color: var(--ink);
+  font-size: clamp(2.2rem, 8vw, 5.5rem); line-height: 1.02; opacity: .12; transform: translateY(.3em);
+  transition: opacity .5s var(--ease), transform .5s var(--ease); }
+.story__line.is-lit{ opacity: 1; transform: none; }
+.story__bar{ position: absolute; bottom: 12vh; width: min(260px, 60vw); height: 2px; background: var(--line-strong); border-radius: 2px; overflow: hidden; }
+.story__bar span{ display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-soft), var(--accent)); }
+
+/* 3D fly-through of the five houses */
+.fly{ position: relative; height: 460vh; background: radial-gradient(80% 60% at 50% 30%, #241c12, var(--espresso)); }
+.fly__pin{ position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; perspective: 900px; }
+.fly__head{ position: absolute; top: clamp(5rem, 12vh, 8rem); left: var(--gutter); right: var(--gutter); z-index: 6; }
+.fly__head .eyebrow{ color: var(--accent-soft); }
+.fly__title{ font-family: var(--serif); font-weight: 300; color: var(--stone);
+  font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.02; margin-top: .3rem; }
+.fly__space{ position: absolute; inset: 0; transform-style: preserve-3d; }
+.fly__panel{
+  position: absolute; left: 50%; top: 50%; width: min(560px, 82vw);
+  transform: translate(-50%, -50%) translateZ(calc(var(--i) * -900px - 900px));
+  padding: clamp(1.8rem, 4vw, 3rem); border-radius: 26px; text-align: left;
+  background: linear-gradient(155deg, rgba(201,162,75,.16), rgba(20,16,12,.55));
+  border: 1px solid var(--line-strong); backdrop-filter: blur(6px);
+  box-shadow: 0 40px 90px -40px rgba(0,0,0,.8); will-change: opacity;
+}
+.fly__panel .fly__no{ font-family: var(--serif); font-style: italic; color: var(--gold-soft); font-size: 1.4rem; }
+.fly__panel h3{ font-family: var(--serif); font-weight: 400; color: var(--stone); font-size: clamp(1.8rem, 4vw, 2.8rem); margin: .3rem 0 .5rem; }
+.fly__panel p{ color: var(--stone-soft); font-size: 1.02rem; }
+.fly__hint{ position: absolute; bottom: 8vh; left: 0; right: 0; text-align: center; z-index: 6;
+  font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; color: var(--stone-dim); }
+
+@media (prefers-reduced-motion: reduce){
+  .story{ height: auto; } .story__pin{ position: static; height: auto; padding: 5rem 0; }
+  .story__line{ opacity: 1; transform: none; }
+  .fly{ height: auto; } .fly__pin{ position: static; height: auto; padding: 5rem 0; perspective: none; min-height: auto; }
+  .fly__space{ position: static; transform: none !important; }
+  .fly__panel{ position: relative; left: auto; top: auto; transform: none !important; opacity: 1 !important; width: auto; max-width: 640px; margin: 1rem auto; }
+  .fly__head{ position: static; margin-bottom: 1.5rem; }
+  .fly__hint{ display: none; }
+  .word{ opacity: 1 !important; transform: none !important; }
+  [data-tilt]{ transform: none !important; }
+}

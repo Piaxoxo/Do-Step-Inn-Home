@@ -139,6 +139,100 @@
     track.querySelectorAll("img").forEach(img => img.addEventListener("load", () => { measure(); update(); }, { once: true }));
   })();
 
+  /* ── 3D tilt on cards (pointer-driven) ─────────────────────────────── */
+  (function tilt() {
+    if (reduce || window.matchMedia("(pointer: coarse)").matches) return;
+    $$(".hg-item, .guide-card, .group-card").forEach(el => el.setAttribute("data-tilt", ""));
+    $$("[data-tilt]").forEach(el => {
+      let raf = null;
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          el.style.transform = `perspective(800px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
+        });
+      });
+      el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+    });
+  })();
+
+  /* ── Word-by-word heading reveal ───────────────────────────────────── */
+  (function words() {
+    let wi = 0;
+    const split = (node) => {
+      [...node.childNodes].forEach(child => {
+        if (child.nodeType === 3) {
+          if (!child.textContent.trim()) return;
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach(tok => {
+            if (tok === "") return;
+            if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(tok)); return; }
+            const s = document.createElement("span");
+            s.className = "word"; s.style.setProperty("--wd", wi++); s.textContent = tok;
+            frag.appendChild(s);
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === 1 && child.tagName !== "BR") {
+          split(child);
+        }
+      });
+    };
+    $$(".section__title, .book__title").forEach(t => { wi = 0; split(t); });
+  })();
+
+  /* ── Sticky story: reveal lines as you scroll through ──────────────── */
+  (function story() {
+    const sec = $("#chapter-story");
+    if (!sec) return;
+    const lines = $$(".story__line", sec);
+    const fill = $("#story-fill");
+    if (reduce) { lines.forEach(l => l.classList.add("is-lit")); return; }
+    let ticking = false;
+    const update = () => {
+      const total = sec.offsetHeight - window.innerHeight || 1;
+      const p = Math.max(0, Math.min(1, -sec.getBoundingClientRect().top / total));
+      lines.forEach((l, i) => l.classList.toggle("is-lit", p >= i / lines.length));
+      if (fill) fill.style.width = (p * 100) + "%";
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    update();
+  })();
+
+  /* ── 3D fly-through of the five houses ─────────────────────────────── */
+  (function fly() {
+    const sec = $("#chapter-family");
+    const space = $("#flyspace");
+    if (!sec || !space) return;
+    if (reduce || window.matchMedia("(pointer: coarse)").matches) { sec.classList.add("is-static"); return; }
+    const panels = $$(".fly__panel", sec);
+    const gap = 900, n = panels.length;
+    let ticking = false;
+    const update = () => {
+      const total = sec.offsetHeight - window.innerHeight || 1;
+      const p = Math.max(0, Math.min(1, -sec.getBoundingClientRect().top / total));
+      const cam = p * (n + 1) * gap;
+      space.style.transform = `translateZ(${cam}px)`;
+      panels.forEach((pan, i) => {
+        const eff = cam - (i + 1) * gap;
+        let op;
+        if (eff < -1400 || eff > 780) op = 0;
+        else if (eff > 500) op = Math.max(0, (780 - eff) / 280);
+        else if (eff < -900) op = Math.max(0, (eff + 1400) / 500);
+        else op = 1;
+        pan.style.opacity = op.toFixed(2);
+        pan.style.pointerEvents = op > 0.5 ? "auto" : "none";
+      });
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    update();
+  })();
+
   /* ── Group booking request → email to reservierung@dostepinn.at ────── */
   const groupForm = $("#group-form");
   if (groupForm) {
