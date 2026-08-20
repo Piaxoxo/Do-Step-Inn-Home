@@ -787,6 +787,20 @@ body{ background: var(--bg); color: var(--ink); }
 .footer__logo{ height: 54px; width: auto; display: block; margin-bottom: .2rem; }
 @media (max-width: 560px){ .nav__logo{ height: 30px; } }
 
+/* ── Footer social links ─────────────────────────────────────────────── */
+.footer__social{ display: flex; gap: .7rem; margin-top: 1.1rem; flex-wrap: wrap; }
+.footer__social .social{
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .5rem .9rem .5rem .7rem; border: 1px solid var(--line);
+  border-radius: 999px; color: var(--ink-soft); font-size: .9rem; font-weight: 500;
+  background: var(--surface); transition: color .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease);
+}
+.footer__social .social svg{ display: block; }
+.footer__social .social:hover{
+  color: var(--accent); border-color: var(--accent); transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce){ .footer__social .social:hover{ transform: none; } }
+
 /* ── Booking band (UP Hotel IBE) ─────────────────────────────────────── */
 .bookbar{ position: relative; z-index: 3; padding: 0 var(--gutter) clamp(2rem,5vw,3.5rem); margin-top: clamp(-5.5rem, -6vw, -3rem); }
 .bookbar__inner{
