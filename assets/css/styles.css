@@ -798,3 +798,25 @@ body{ background: var(--bg); color: var(--ink); }
 .bookbar__note{ margin-top: 1rem; font-size: .84rem; color: var(--ink-dim); letter-spacing: .03em; }
 .ibe-wrap{ width: 100%; min-height: 64px; }
 .ibe-wrap--book{ margin: 1.8rem auto; max-width: 860px; }
+
+/* ── Group booking request form ──────────────────────────────────────── */
+.groups__layout{ display:grid; grid-template-columns:1.6fr 1fr; gap:1.4rem; max-width:var(--max); margin:0 auto; position:relative; z-index:1; align-items:start; }
+.group-form{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:clamp(1.6rem,3.5vw,2.6rem); box-shadow:0 24px 55px -34px rgba(51,32,14,.3); }
+.group-form h3{ font-family:var(--serif); font-size:clamp(1.5rem,2.6vw,2rem); font-weight:400; color:var(--ink); }
+.group-form h3 span{ color:var(--accent); font-size:.62em; font-style:italic; }
+.group-form__sub{ color:var(--ink-soft); margin:.5rem 0 1.6rem; font-size:.98rem; }
+.group-form__grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem 1.1rem; }
+.group-form label{ display:flex; flex-direction:column; gap:.4rem; font-size:.76rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); }
+.group-form .opt{ text-transform:none; letter-spacing:0; opacity:.6; }
+.group-form input, .group-form textarea{ font:inherit; font-size:1rem; text-transform:none; letter-spacing:0; padding:.75rem .9rem; border-radius:12px; border:1px solid var(--line-strong); background:#fff; color:var(--ink); transition:border-color .3s; }
+.group-form input:focus, .group-form textarea:focus{ outline:none; border-color:var(--accent); }
+.group-form__full{ margin-top:1rem; }
+.group-form__field{ border:0; padding:0; margin:1.3rem 0 0; }
+.group-form__field legend{ font-size:.76rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:.7rem; }
+.group-form .chk{ display:inline-flex; flex-direction:row; align-items:center; gap:.5rem; text-transform:none; letter-spacing:0; font-size:.95rem; color:var(--ink); margin:0 1.3rem .55rem 0; cursor:pointer; }
+.group-form .chk input{ width:auto; accent-color:var(--accent); }
+.group-form__ok{ margin-top:1.1rem; color:#2e6b3f; font-size:.96rem; background:rgba(56,107,63,.08); border:1px solid rgba(56,107,63,.28); padding:.85rem 1.05rem; border-radius:12px; }
+.group-side{ display:flex; flex-direction:column; gap:1.1rem; }
+.group-side .group-card{ height:auto; }
+.group-side .groups__mail{ margin:0; text-align:left; }
+@media(max-width:860px){ .groups__layout{ grid-template-columns:1fr; } .group-form__grid{ grid-template-columns:1fr; } }

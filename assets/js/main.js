@@ -98,6 +98,46 @@
     update();
   })();
 
+  /* ── Group booking request → email to reservierung@dostepinn.at ────── */
+  const groupForm = $("#group-form");
+  if (groupForm) {
+    groupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const f = groupForm;
+      const val = (n) => (f.elements[n]?.value || "").trim();
+      const name = val("name"), email = val("email"), people = val("people");
+      if (!name || !email || !people) {
+        [["name", name], ["email", email], ["people", people]].forEach(([n, v]) => {
+          if (!v && f.elements[n]) { f.elements[n].style.borderColor = "#b4462f"; }
+        });
+        return;
+      }
+      const rooms = [...f.querySelectorAll('input[name="rooms"]:checked')].map(x => x.value).join(", ") || "—";
+      const board = f.querySelector('input[name="board"]:checked')?.value || "—";
+      const lines = [
+        "Group booking request", "",
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Organisation / school: ${val("org") || "—"}`,
+        `Phone: ${val("phone") || "—"}`,
+        `Check-in: ${val("checkin") || "—"}`,
+        `Check-out: ${val("checkout") || "—"}`,
+        `Number of people: ${people}`,
+        `Gender split: ${val("genders") || "—"}`,
+        `Preferred room split: ${rooms}`,
+        `Board: ${board}`, "",
+        "Message:", (val("message") || "—"), "",
+        "— sent from dostepinn.at",
+      ];
+      const subject = `Group booking request — ${people} people`;
+      const href = `mailto:reservierung@dostepinn.at?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+      const ok = $("#group-ok");
+      if (ok) ok.hidden = false;
+      // open the guest's email client with everything pre-filled
+      window.location.href = href;
+    });
+  }
+
   /* ══ MODAL PLUMBING ════════════════════════════════════════════════ */
   let lastFocus = null;
   function openModal(el) {

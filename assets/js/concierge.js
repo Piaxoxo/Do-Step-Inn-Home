@@ -27,9 +27,9 @@
     { k: ["parking", "car", "garage", "park"], a:
       "There is <strong>parking available</strong> for guests. For spaces and current rates, " + CONTACT.toLowerCase() },
     { k: ["kitchen", "cook", "cooking"], a:
-      "You’re welcome to cook — there are <strong>two guest kitchens</strong>, great for saving your euros for the city." },
+      "You’re welcome to cook — there’s a <strong>guest kitchen</strong>, great for saving your euros for the city." },
     { k: ["facilit", "amenit", "included", "what do you have", "games", "bar", "billiard", "bike", "bicycle"], a:
-      "Your home base includes <strong>two guest kitchens</strong>, a garden courtyard, a small house bar, <strong>billiards, darts and giant chess</strong>, bikes to borrow, vending, free WiFi and a luggage room. Rooms have private bathrooms, linen and Sat-TV." },
+      "Your home base includes a <strong>guest kitchen</strong>, a garden courtyard, a small house bar, <strong>billiards, darts and giant chess</strong>, bikes to borrow, vending, free WiFi and a luggage room. Rooms have private bathrooms, linen and Sat-TV." },
     { k: ["room", "private", "dorm", "double", "single", "family", "bathroom"], a:
       "We’re a hotel <em>and</em> hostel — <strong>rooms for every budget</strong>. Private singles, doubles/twins, triples and quads (each with private bathroom, Sat-TV, WiFi), or a bed in a bright dorm with private bathroom, linen and a locker. " + BOOKING },
     { k: ["where", "address", "location", "how do i get", "get there", "directions", "from airport", "airport", "westbahnhof", "station", "transport", "u-bahn", "ubahn", "tram"], a:
