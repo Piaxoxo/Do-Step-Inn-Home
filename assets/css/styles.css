@@ -727,7 +727,9 @@ body{ background: var(--bg); color: var(--ink); }
 .footer__brand p{ color: var(--ink-soft); }
 .footer__nav a, .footer__nav button{ color: var(--ink-soft); }
 .footer__nav a:hover{ color: var(--accent); }
-.footer__legal{ color: var(--ink-dim); border-color: var(--line); }
+.footer__legal{ color: var(--ink-dim); border-color: var(--line); line-height: 1.9; }
+.footer__legal a{ color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; transition: color .3s; }
+.footer__legal a:hover{ color: var(--accent); }
 
 /* ── Real Google Map (keyless iframe) ────────────────────────────────── */
 .loc__map{

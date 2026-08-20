@@ -1,0 +1,61 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   LEGAL PAGES — Impressum · Datenschutz · AGB
+   Calm, readable long-form layout reusing the site's warm tokens.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+body.legal { background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── Slim top bar ─────────────────────────────────────────────────────── */
+.legal-nav {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: 1rem clamp(1.2rem, 5vw, 3.5rem);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+}
+.legal-nav__brand { display: inline-flex; align-items: center; }
+.legal-nav__brand img { height: 38px; width: auto; display: block; }
+.legal-nav__back { color: var(--ink-soft); font-size: .92rem; font-weight: 500; display: inline-flex; gap: .45rem; transition: color .3s, gap .3s var(--ease); }
+.legal-nav__back:hover { color: var(--accent); gap: .75rem; }
+
+/* ── Article ──────────────────────────────────────────────────────────── */
+.legal-wrap { flex: 1; width: 100%; max-width: 860px; margin: 0 auto; padding: clamp(2.5rem, 6vw, 5rem) clamp(1.2rem, 5vw, 2rem) 4rem; }
+.legal-wrap .eyebrow { color: var(--accent); font-size: .74rem; letter-spacing: .3em; text-transform: uppercase; margin-bottom: .8rem; }
+.legal-wrap h1 { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.08; letter-spacing: -.01em; margin-bottom: .6rem; }
+.legal-wrap h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.25rem, 3vw, 1.6rem); margin: 2.4rem 0 .7rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
+.legal-wrap h2:first-of-type { border-top: none; padding-top: 0; }
+.legal-wrap h3 { font-family: var(--serif); font-weight: 500; font-size: 1.1rem; margin: 1.4rem 0 .4rem; }
+.legal-wrap p, .legal-wrap li { color: var(--ink-soft); line-height: 1.75; font-size: 1rem; }
+.legal-wrap p { margin-bottom: .9rem; }
+.legal-wrap ul, .legal-wrap ol { margin: 0 0 1rem 1.3rem; display: flex; flex-direction: column; gap: .35rem; }
+.legal-wrap li { padding-left: .2rem; }
+.legal-wrap strong { color: var(--ink); font-weight: 600; }
+.legal-wrap a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.legal-wrap a:hover { text-decoration-thickness: 2px; }
+.legal-wrap address { font-style: normal; line-height: 1.7; color: var(--ink-soft); }
+.legal__updated { color: var(--ink-dim); font-size: .86rem; margin-bottom: 2rem; }
+
+/* Highlighted "please complete" note for data we don't have yet */
+.legal-note {
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 2rem;
+  color: var(--ink-soft); font-size: .92rem; line-height: 1.65;
+}
+.legal-note strong { color: var(--accent); }
+.legal-fill { color: var(--accent); font-weight: 600; background: color-mix(in srgb, var(--accent) 12%, transparent); padding: 0 .3em; border-radius: 4px; }
+
+.legal-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 1.4rem 1.5rem; margin: 0 0 1.4rem; }
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+.legal-foot { border-top: 1px solid var(--line); padding: 2rem clamp(1.2rem, 5vw, 3.5rem); display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; justify-content: space-between; }
+.legal-foot__links { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+.legal-foot a { color: var(--ink-soft); font-size: .9rem; transition: color .3s; }
+.legal-foot a:hover { color: var(--accent); }
+.legal-foot a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+.legal-foot__legal { color: var(--ink-dim); font-size: .82rem; }
+
+@media (max-width: 560px) {
+  .legal-nav__brand img { height: 32px; }
+  .legal-foot { flex-direction: column; align-items: flex-start; }
+}
