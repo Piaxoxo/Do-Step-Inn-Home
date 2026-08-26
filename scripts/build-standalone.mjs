@@ -139,7 +139,9 @@ fs.writeFileSync(path.join(OUT, 'recht.html'), recht);
 
 // ---- HEADER SNIPPET (nav HTML + CSS + minimal JS) ----
 const srcIndex = read('index.html');
-const headerHtml = srcIndex.match(/<header class="nav"[\s\S]*?<\/header>/)[0];
+// strip the brand logo from the header snippet (WordPress header supplies its own)
+const headerHtml = srcIndex.match(/<header class="nav"[\s\S]*?<\/header>/)[0]
+  .replace(/\s*<a class="nav__brand"[\s\S]*?<\/a>\s*/, '\n    ');
 const headerJs = `<script>
 (function(){
   var nav = document.getElementById('nav');
