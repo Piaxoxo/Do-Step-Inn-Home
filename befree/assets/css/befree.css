@@ -353,6 +353,14 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 }
 .lb__btn--x{background:var(--pink)}
 
+/* ═══ BOOKING WIDGET (UP Hotel IBE) ═══════════════════════════════ */
+.ibe{
+  width:100%;max-width:900px;min-height:64px;
+  background:var(--card);border:2px solid var(--ink);border-radius:22px;
+  padding:clamp(14px,2vw,20px);box-shadow:var(--shadow-sm);
+}
+.ibe[hidden]{display:none}
+
 /* ═══ CONTACT ═════════════════════════════════════════════════════ */
 .contact{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .ccard{

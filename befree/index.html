@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Be Free Hostel Vienna — Be Free. Be You. Be Here.</title>
 
-<meta name="description" content="Colorful, affordable hostel near Westbahnhof in Vienna. Self check-in with your phone, no reception, no curfew. Capsule beds, dorms and private rooms at Beingasse 13, 1150 Wien." />
-<meta name="keywords" content="hostel Vienna, cheap hostel Vienna, self check-in hostel Vienna, hostel near Westbahnhof, Beingasse 13, Be Free Hostel, capsule beds Vienna, dorm Vienna" />
+<meta name="description" content="Colorful, affordable hostel near Westbahnhof in Vienna. Self check-in with your phone, no reception, no curfew. Private double rooms and lockable capsule beds at Beingasse 13, 1150 Wien." />
+<meta name="keywords" content="hostel Vienna, cheap hostel Vienna, self check-in hostel Vienna, hostel near Westbahnhof, Beingasse 13, Be Free Hostel, capsule beds Vienna, private room hostel Vienna" />
 <link rel="canonical" href="https://befree-hostel.com/" />
 <link rel="alternate" hreflang="en" href="https://befree-hostel.com/" />
 <link rel="alternate" hreflang="de" href="https://befree-hostel.com/?lang=de" />
@@ -170,31 +170,23 @@
     <div class="sec__head">
       <span class="eyebrow" style="--dot:var(--pink)" data-i18n="room.eyebrow">Rooms</span>
       <h2 class="t-dsp" data-i18n="room.h">Sleep your way</h2>
-      <p class="lede" data-i18n="room.lede">Pick by what you need tonight, not by a category name. Every room is freshly renovated, bathrooms are shared, and linen is included.</p>
+      <p class="lede" data-i18n="room.lede">Two ways to sleep: behind your own door, or behind your own lock. Everything is freshly renovated, bathrooms are shared throughout the house, and linen is included.</p>
     </div>
-    <div class="grid g3">
-      <article class="pcard" style="--bg:var(--pink-soft)" data-reveal>
-        <img src="assets/img/room-capsule.jpg" alt="" loading="lazy" width="1000" height="750" />
-        <div class="pcard__b">
-          <h3 data-i18n="room.c1t">Capsule bed</h3>
-          <p data-i18n="room.c1d">A dorm bed that locks. Your own light, your own socket, a curtain you can close. The quietest and most private way to sleep cheaply.</p>
-          <span class="pcard__m" data-i18n="room.c1m">Lockable · Own light · Own socket</span>
-        </div>
-      </article>
-      <article class="pcard" style="--bg:var(--turq)" data-reveal>
-        <img src="assets/img/room-dorm.jpg" alt="" loading="lazy" width="1000" height="750" />
-        <div class="pcard__b">
-          <h3 data-i18n="room.c2t">Classic dorm</h3>
-          <p data-i18n="room.c2d">Open bunks, the lowest price in the house, and the easiest way to meet the people you will end up exploring the city with.</p>
-          <span class="pcard__m" data-i18n="room.c2m">Bunk beds · Lockers · Most social</span>
-        </div>
-      </article>
+    <div class="grid g2">
       <article class="pcard" style="--bg:var(--gold)" data-reveal>
         <img src="assets/img/room-private.jpg" alt="" loading="lazy" width="1000" height="750" />
         <div class="pcard__b">
-          <h3 data-i18n="room.c3t">Private room</h3>
-          <p data-i18n="room.c3d">Double, twin, triple or quad. A door that closes behind you, at a price that still belongs in a hostel.</p>
-          <span class="pcard__m" data-i18n="room.c3m">2 to 4 people · Own door</span>
+          <h3 data-i18n="room.c1t">Private room</h3>
+          <p data-i18n="room.c1d">A wide double bed on a solid wood platform, a window onto the street, and a graffiti mural painted straight onto the wall. Your own door closes behind you.</p>
+          <span class="pcard__m" data-i18n="room.c1m">Double bed · Own door · Shared bathroom</span>
+        </div>
+      </article>
+      <article class="pcard" style="--bg:var(--pink-soft)" data-reveal>
+        <img src="assets/img/room-capsule.jpg" alt="" loading="lazy" width="1000" height="750" />
+        <div class="pcard__b">
+          <h3 data-i18n="room.c2t">Capsule bed</h3>
+          <p data-i18n="room.c2d">A bed that locks. Your own light, your own socket, a door you pull shut. The cheapest way to sleep here and still have somewhere private to put your things.</p>
+          <span class="pcard__m" data-i18n="room.c2m">Lockable · Own light · Own socket</span>
         </div>
       </article>
     </div>
@@ -297,11 +289,20 @@
     <span class="eyebrow" data-i18n="bk.eyebrow">Book your stay</span>
     <h2 class="t-dsp" data-i18n-html="bk.h">Be Free. Be You.<br />Be Here.</h2>
     <p class="lede" data-i18n="bk.lede">Pick your dates, pay online, and your key arrives on your phone. That is the whole process.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:12px">
-      <a class="pill" href="mailto:befree-hostel@dostepinn.at" style="--pc:#FFFFFF"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
-      <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
+    <!-- UP Hotel IBE. Drop Be Free's own key into ibe-key and the widget
+         replaces the fallback below on its own. Do NOT reuse another
+         house's key — guests would book the wrong hotel. -->
+    <div class="ibe" id="ibe" hidden>
+      <ibe-up ibe-key="" language="en"></ibe-up>
     </div>
-    <p class="small" style="color:rgba(11,11,12,.72)" data-i18n="bk.note">The live booking engine is not connected yet — until it is, mail or call us and we will confirm your bed by hand.</p>
+
+    <div id="book-fallback" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a class="pill" href="mailto:befree-hostel@dostepinn.at" style="--pc:#FFFFFF"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
+        <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
+      </div>
+      <p class="small" style="color:rgba(11,11,12,.72)" data-i18n="bk.note">The live booking engine is not connected yet — until it is, mail or call us and we will confirm your bed by hand.</p>
+    </div>
   </div>
 </section>
 
@@ -377,6 +378,10 @@
     <button class="lb__btn lb__btn--x" id="lb-x" data-i18n="lb.close">Close</button>
   </div>
 </div>
+
+<!-- Booking engine (UP Hotel IBE) — loaded only when a key is configured -->
+<link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
+<script src="https://ibe.uphotel.agency/ibe.min.js"></script>
 
 <script src="assets/js/befree.js"></script>
 <script type="module" src="assets/js/flower.js"></script>

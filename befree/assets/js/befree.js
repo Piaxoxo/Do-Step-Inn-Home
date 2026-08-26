@@ -58,16 +58,13 @@
 
     "room.eyebrow": "Zimmer",
     "room.h": "Schlaf, wie es dir passt",
-    "room.lede": "Wähl danach, was du heute Nacht brauchst, nicht nach einem Kategorienamen. Alle Zimmer sind frisch renoviert, die Bäder werden geteilt, Bettwäsche ist inklusive.",
-    "room.c1t": "Capsule-Bett",
-    "room.c1d": "Ein Dorm-Bett, das sich absperren lässt. Eigenes Licht, eigene Steckdose, ein Vorhang, den du zuziehst. Die leiseste und privateste Art, günstig zu schlafen.",
-    "room.c1m": "Absperrbar · Eigenes Licht · Eigene Steckdose",
-    "room.c2t": "Klassisches Dorm",
-    "room.c2d": "Offene Stockbetten, der günstigste Preis im Haus, und der einfachste Weg, die Leute zu treffen, mit denen du am Ende durch die Stadt ziehst.",
-    "room.c2m": "Stockbetten · Spinde · Am geselligsten",
-    "room.c3t": "Privatzimmer",
-    "room.c3d": "Doppel, Twin, Dreibett oder Vierbett. Eine Tür, die hinter dir zugeht, zu einem Preis, der immer noch in ein Hostel gehört.",
-    "room.c3m": "2 bis 4 Personen · Eigene Tür",
+    "room.lede": "Zwei Arten zu schlafen: hinter der eigenen Tür oder hinter dem eigenen Schloss. Alles frisch renoviert, die Bäder werden im ganzen Haus geteilt, Bettwäsche ist inklusive.",
+    "room.c1t": "Privatzimmer",
+    "room.c1d": "Ein breites Doppelbett auf massivem Holzpodest, ein Fenster zur Straße und ein Graffiti-Mural direkt auf die Wand gemalt. Deine eigene Tür geht hinter dir zu.",
+    "room.c1m": "Doppelbett · Eigene Tür · Geteiltes Bad",
+    "room.c2t": "Capsule-Bett",
+    "room.c2d": "Ein Bett, das sich absperren lässt. Eigenes Licht, eigene Steckdose, eine Tür, die du zuziehst. Die günstigste Art, hier zu schlafen — und trotzdem einen privaten Platz für deine Sachen zu haben.",
+    "room.c2m": "Absperrbar · Eigenes Licht · Eigene Steckdose",
 
     "why.eyebrow": "Warum Be Free",
     "why.h": "Unkompliziert, gesellig, bunt.",
@@ -419,6 +416,20 @@
     els.forEach(function (e) { io.observe(e); });
   }
 
+  /* The booking widget only appears once Be Free's own IBE key is set;
+     until then the mail/phone fallback stays, so nobody is ever sent to
+     another house's booking engine. */
+  function bookingWidget() {
+    var box = document.getElementById("ibe");
+    if (!box) return;
+    var el = box.querySelector("ibe-up");
+    var key = el && el.getAttribute("ibe-key");
+    if (!key || !key.trim()) return;
+    box.hidden = false;
+    var fb = document.getElementById("book-fallback");
+    if (fb) fb.hidden = true;
+  }
+
   function menu() {
     var b = document.getElementById("burger"), l = document.getElementById("navlinks");
     if (!b || !l) return;
@@ -443,6 +454,7 @@
   heroField();
   reveals();
   menu();
+  bookingWidget();
 
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());

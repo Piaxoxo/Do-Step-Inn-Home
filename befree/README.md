@@ -19,7 +19,7 @@ python3 -m http.server 8080     # from the repo root
 | Ticker | TOP DESTINATION · VIENNA · BEINGASSE 13 · BE FREE HOSTEL, endless |
 | Location | Turquoise band — the neighbourhood, four markers, distances as stickers |
 | Check-in | Pink band — the three steps, plus the phone number for when the QR fails |
-| Rooms | Capsule · Classic dorm · Private room, as pastel cards |
+| Rooms | Private room · Capsule bed, as pastel cards |
 | Why Be Free | Freedom, together, clean, colour |
 | Flower gallery | Scroll-driven 3D: every petal is a photograph with its own depth map |
 | Gallery | Plain grid, click to enlarge, keyboard-navigable lightbox |
@@ -93,7 +93,7 @@ nothing gracefully, and the gallery labels live in `PHOTOS` in `befree.js`.
 | Flower petals | `petal-1-capsule.jpg` … `petal-8-hangout.jpg` | 700 × 1130, portrait |
 | Petal depth maps | `petal-N-*-depth.png` | 224 × 360, greyscale |
 | Gallery | `gallery-01-room.jpg` … `gallery-12-evening.jpg` | 1400 × 1000, landscape |
-| Room cards | `room-capsule.jpg` `room-dorm.jpg` `room-private.jpg` | 1000 × 750 |
+| Room cards | `room-capsule.jpg` `room-private.jpg` | 1000 × 750 |
 
 ### Regenerating the depth maps
 
@@ -123,11 +123,20 @@ Legal links are rewritten to WordPress slugs (`/impressum/`, `/datenschutz/`,
 
 ## Still open
 
-- [ ] **Facts to confirm.** Prices, bed counts, exact quiet hours, what is
-      included, and whether luggage storage exists. Anything unconfirmed is
-      phrased cautiously or left out — see the copy in `index.html`.
-- [ ] **Booking engine.** `Book now` currently opens an email. Point it at the
-      real engine once the property ID is known.
+- [ ] **Room types — unresolved.** The page currently shows two: a private
+      room with a double bed, and lockable capsule beds. Both are backed by
+      the client's own photographs. The booking listings additionally
+      advertise classic dorms with open bunks and private twin, triple and
+      quadruple rooms; there is no photograph of any of those, and the
+      operator believes only private doubles exist. This has to be settled
+      before the site goes live.
+- [ ] **Other facts to confirm.** Prices, bed counts, exact quiet hours, what
+      is included, and whether luggage storage exists.
+- [ ] **Booking engine.** The UP Hotel IBE is wired into the Book section but
+      has no key. Put Be Free's own `ibe-key` on the `<ibe-up>` element in
+      `index.html` and the widget replaces the mail/phone fallback by itself.
+      Never reuse another house's key — Do Step Inn Home's is
+      `35b41b51-…`, and using it would send guests to the wrong hotel.
 - [ ] **Legal pages.** `impressum.html`, `datenschutz.html` and `agb.html` are
       linked from the footer but not written yet. They must name the correct
       operating company and be reviewed by the operator — not something to
