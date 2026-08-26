@@ -19,6 +19,14 @@ function rewriteHtmlAssets(html) {
     .replace(/url\((['"]?)assets\//g, `url($1${BASE}assets/`)
     .replace(/"\.\/assets\/vendor\/three\.module\.min\.js"/g, `"${BASE}assets/vendor/three.module.min.js"`);
 }
+// rewrite legal cross-links (impressum.html -> /impressum/) for WordPress pages
+function rewriteLegalLinks(html) {
+  return html
+    .replace(/href="impressum\.html"/g, 'href="/impressum/"')
+    .replace(/href="datenschutz\.html"/g, 'href="/datenschutz/"')
+    .replace(/href="agb\.html"/g, 'href="/agb/"')
+    .replace(/href="index\.html"/g, 'href="/"');
+}
 
 const styles = rewriteCss(read('assets/css/styles.css'));
 const legal  = rewriteCss(read('assets/css/legal.css'));
@@ -71,7 +79,7 @@ idx = idx.replace('</head>', `  <script>window.__DSI_STATIC = true;</script>
   </style>
 </head>`);
 
-fs.writeFileSync(path.join(OUT, 'index.html'), idx);
+fs.writeFileSync(path.join(OUT, 'index.html'), rewriteLegalLinks(idx));
 
 // ---- LEGAL PAGES ----
 for (const pg of ['impressum', 'datenschutz', 'agb']) {
@@ -79,7 +87,7 @@ for (const pg of ['impressum', 'datenschutz', 'agb']) {
   h = h.replace('<link rel="stylesheet" href="assets/css/styles.css" />', () => `<style>\n${styles}\n</style>`);
   h = h.replace('<link rel="stylesheet" href="assets/css/legal.css" />', () => `<style>\n${legal}\n</style>`);
   h = rewriteHtmlAssets(h);
-  fs.writeFileSync(path.join(OUT, `${pg}.html`), h);
+  fs.writeFileSync(path.join(OUT, `${pg}.html`), rewriteLegalLinks(h));
 }
 
 // ---- SELF-CONTAINED DOC HELPER (fonts + inlined CSS) ----
@@ -166,7 +174,7 @@ const footerHtml = srcIndex.match(/<footer class="footer"[\s\S]*?<\/footer>/)[0]
 const footerJs = `<script>var y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();</script>`;
 let footer = doc({ title: 'Footer — Do Step Inn Home', body: footerHtml + '\n' + footerJs });
 footer = rewriteHtmlAssets(footer);
-fs.writeFileSync(path.join(OUT, 'footer.html'), footer);
+fs.writeFileSync(path.join(OUT, 'footer.html'), rewriteLegalLinks(footer));
 
 // report sizes
 for (const f of ['index.html','impressum.html','datenschutz.html','agb.html','recht.html','header.html','footer.html']) {
