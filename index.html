@@ -83,9 +83,10 @@
 
     <nav class="nav__links" aria-label="Primary">
       <a href="#chapter-base">Home base</a>
+      <a href="#chapter-spaces">Kitchen &amp; garden</a>
       <a href="#chapter-rooms">Rooms</a>
       <a href="#chapter-explore">Explore Vienna</a>
-      <a href="#chapter-easy">Easy stay</a>
+      <a href="#chapter-groups">Group reservation</a>
     </nav>
 
     <button class="nav__cta" data-open-booking type="button">Check availability</button>
@@ -115,9 +116,7 @@
         </p>
         <div class="hero__actions reveal" data-reveal data-delay="3">
           <button class="btn btn--gold" data-open-booking type="button">Start your stay</button>
-          <button class="btn btn--ghost" data-open-concierge="vienna" type="button">
-            <span class="btn__orb" aria-hidden="true"></span> Ask your concierge
-          </button>
+          <a class="btn btn--ghost" href="#chapter-base">Explore the house</a>
         </div>
       </div>
 
@@ -182,6 +181,50 @@
       </ul>
     </section>
 
+    <!-- ══ SPACES — KITCHEN · GARDEN · LOUNGES ═══════════════════════ -->
+    <section class="section spaces" id="chapter-spaces" data-chapter aria-label="Kitchen, garden and lounges">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>More than a bed</p>
+        <h2 class="section__title" data-reveal>Room to live, <span class="ital">not just sleep.</span></h2>
+        <p class="section__lede" data-reveal>
+          A guest kitchen to cook in, a green courtyard to breathe in, and warm lounges to
+          gather in — all included with every stay, for guests of every room.
+        </p>
+      </div>
+
+      <div class="spaces__grid">
+        <article class="space-card" data-reveal>
+          <div class="space-card__img" style="background-image:url('assets/img/kitchen.jpg')" role="img" aria-label="The guest kitchen"></div>
+          <div class="space-card__body">
+            <span class="space-card__tag">Guest kitchen</span>
+            <h3>Cook like a local</h3>
+            <p>A full guest kitchen with hobs, fridge space and a big table — cook a proper
+              meal, share it with new friends, and keep your euros for the city.</p>
+          </div>
+        </article>
+
+        <article class="space-card space-card--reverse" data-reveal>
+          <div class="space-card__img" style="background-image:url('assets/img/courtyard.jpg')" role="img" aria-label="The garden courtyard"></div>
+          <div class="space-card__body">
+            <span class="space-card__tag">Garden courtyard</span>
+            <h3>A green place to breathe</h3>
+            <p>Step out into a calm planted courtyard — morning coffee in the sun, a quiet
+              read in the afternoon, easy evenings outside between adventures.</p>
+          </div>
+        </article>
+
+        <article class="space-card" data-reveal>
+          <div class="space-card__img" style="background-image:url('assets/img/_MG_0232_Lightroom.jpg')" role="img" aria-label="Guest lounge and common area"></div>
+          <div class="space-card__body">
+            <span class="space-card__tag">Lounges &amp; common rooms</span>
+            <h3>Room to gather</h3>
+            <p>Warm, colourful lounges with a house bar, billiards, darts and giant chess —
+              space to relax, meet fellow travellers or plan tomorrow together.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- ══ GALLERY — HORIZONTAL SCROLL ("A LOOK INSIDE") ═════════════ -->
     <section class="hgallery" id="chapter-gallery" data-chapter aria-label="A look inside">
       <div class="hgallery__pin">
@@ -191,26 +234,18 @@
           <p class="hgallery__hint" aria-hidden="true">Keep scrolling →</p>
         </div>
         <div class="hgallery__track" id="hgtrack">
+          <figure class="hg-item" data-label="Guest kitchen"><img src="assets/img/_MG_0231_Lightroom.jpg" alt="The stainless-steel guest kitchen" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Kitchen &amp; lounge"><img src="assets/img/_MG_0232_Lightroom.jpg" alt="Guest kitchen and lounge" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="The house bar"><img src="assets/img/_MG_0217_Lightroom.jpg" alt="The house bar with vintage signs and glasses" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Festive courtyard"><img src="assets/img/DSC06332.jpg" alt="Christmas tree in the courtyard at night" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Breakfast buffet"><img src="assets/img/IMG_9695_Lightroom.JPG" alt="Fresh bread and gugelhupf at the breakfast buffet" loading="lazy" /></figure>
           <figure class="hg-item" data-label="Wiener Espresso"><img src="assets/img/DSC06286.jpg" alt="An espresso pouring into an Original Wiener cup" loading="lazy" /></figure>
           <figure class="hg-item" data-label="An easy evening in"><img src="assets/img/_DSC8180.jpg" alt="A couple with wine in a brick-walled room" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Breakfast buffet"><img src="assets/img/IMG_9695_Lightroom.JPG" alt="Fresh bread and gugelhupf at the breakfast buffet" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="The house bar"><img src="assets/img/_MG_0217_Lightroom.jpg" alt="The house bar with vintage signs and glasses" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="A proper coffee"><img src="assets/img/DSC06272.jpg" alt="A milky Viennese coffee" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Time to unwind"><img src="assets/img/_DSC8167.jpg" alt="A couple relaxing with wine" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Bright dorms"><img src="assets/img/_DSC7942.jpg" alt="A guest on a bunk bed in a bright dorm" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Make friends"><img src="assets/img/DSC06383.jpg" alt="Two guests chatting on a dorm bed" loading="lazy" /></figure>
           <figure class="hg-item" data-label="Arrival"><img src="assets/img/_DSC8075.jpg" alt="A couple arriving in their room with luggage" loading="lazy" /></figure>
           <figure class="hg-item" data-label="Breakfast room"><img src="assets/img/_MG_0229_Lightroom.jpg" alt="Colourful breakfast room with brick walls" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Fresh juice"><img src="assets/img/IMG_9717_Lightroom.JPG" alt="Fresh orange juice at the breakfast buffet" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Your floor"><img src="assets/img/_MG_0170_Lightroom.jpg" alt="Bright hallway to the rooms" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="A glass of red"><img src="assets/img/DSC06192.jpg" alt="Red wine poured at the house bar" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Festive courtyard"><img src="assets/img/DSC06332.jpg" alt="Christmas tree in the courtyard at night" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Bright dorms"><img src="assets/img/_DSC7942.jpg" alt="A guest on a bunk bed in a bright dorm" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Cereals &amp; fruit"><img src="assets/img/IMG_9667_Lightroom.JPG" alt="Cereals and fresh fruit" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Guest kitchen"><img src="assets/img/_MG_0231_Lightroom.jpg" alt="The stainless-steel guest kitchen" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Brick &amp; stairs"><img src="assets/img/_MG_0165_Lightroom.jpg" alt="The brick staircase" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Time to unwind"><img src="assets/img/_DSC8167.jpg" alt="A couple relaxing with wine" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Fresh bread"><img src="assets/img/IMG_9713_Lightroom.JPG" alt="Slicing fresh bread at breakfast" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Make friends"><img src="assets/img/DSC06383.jpg" alt="Two guests chatting on a dorm bed" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Fresh fruit"><img src="assets/img/IMG_9702_Lightroom.JPG" alt="A basket of fresh fruit" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Kitchen &amp; lounge"><img src="assets/img/_MG_0232_Lightroom.jpg" alt="Guest kitchen and lounge" loading="lazy" /></figure>
         </div>
       </div>
     </section>
@@ -310,45 +345,7 @@
       </div>
     </section>
 
-    <!-- ══ CHAPTER 4 & 5 — CONCIERGE + ASSISTANT ═════════════════════ -->
-    <section class="section concierge-intro" id="chapter-concierge" data-chapter aria-label="Your concierge and assistant">
-      <div class="section__head">
-        <p class="eyebrow" data-reveal>Chapter IV &amp; V · Two guides, one tap</p>
-        <h2 class="section__title" data-reveal>Never wonder what’s next.</h2>
-        <p class="section__lede" data-reveal>
-          Two calm minds travel with you. One knows Vienna. One knows your stay.
-          Ask either, any time — day or night.
-        </p>
-      </div>
-
-      <div class="guides">
-        <article class="guide-card guide-card--vienna" data-reveal>
-          <span class="guide-card__tag">Explore Vienna</span>
-          <h3>Vienna Concierge</h3>
-          <p>Your stylish local guide. First-day plans, rainy-day ideas, coffee nearby, free things to do, a romantic evening — it maps them out for you.</p>
-          <ul class="guide-card__prompts" role="list">
-            <li><button data-open-concierge="vienna" data-prompt="Plan my first day in Vienna" type="button">Plan my first day</button></li>
-            <li><button data-open-concierge="vienna" data-prompt="What can I do on a rainy day?" type="button">Rainy-day ideas</button></li>
-            <li><button data-open-concierge="vienna" data-prompt="Best free things to do near the hotel" type="button">Best free things</button></li>
-          </ul>
-          <button class="btn btn--gold btn--sm" data-open-concierge="vienna" type="button">Ask Vienna Concierge</button>
-        </article>
-
-        <article class="guide-card guide-card--home" data-reveal>
-          <span class="guide-card__tag">Your stay</span>
-          <h3>Home Assistant</h3>
-          <p>Everything about your stay, answered calmly. Self check-in, late arrival, luggage, getting here, what’s included — no waiting on a front desk.</p>
-          <ul class="guide-card__prompts" role="list">
-            <li><button data-open-concierge="home" data-prompt="How does self check-in work?" type="button">How does self check-in work?</button></li>
-            <li><button data-open-concierge="home" data-prompt="I arrive late — what now?" type="button">I arrive late</button></li>
-            <li><button data-open-concierge="home" data-prompt="Can I store my luggage?" type="button">Store my luggage</button></li>
-          </ul>
-          <button class="btn btn--ghost btn--sm" data-open-concierge="home" type="button">Ask Home Assistant</button>
-        </article>
-      </div>
-    </section>
-
-    <!-- ══ CHAPTER 6 — EXPLORE VIENNA ════════════════════════════════ -->
+    <!-- ══ EXPLORE VIENNA ════════════════════════════════════════════ -->
     <section class="section explore" id="chapter-explore" data-chapter aria-label="Explore Vienna">
       <div class="section__head">
         <p class="eyebrow" data-reveal>Chapter VI · From your door</p>
@@ -393,8 +390,8 @@
       </ul>
 
       <p class="explore__cta" data-reveal>
-        Want it planned for you?
-        <button class="link-gold" data-open-concierge="vienna" data-prompt="Plan my first 24 hours in Vienna from the hotel" type="button">Ask the Vienna Concierge to plan your first 24 hours →</button>
+        Everything worth seeing, minutes from your door —
+        <a class="link-gold" href="#book-top">check dates &amp; book your stay →</a>
       </p>
     </section>
 
@@ -513,8 +510,8 @@
       </div>
 
       <p class="easy__note" data-reveal>
-        Exact policies?
-        <button class="link-gold" data-open-concierge="home" data-prompt="What are your house rules and cancellation policy?" type="button">Ask the Home Assistant →</button>
+        Questions about your stay?
+        <a class="link-gold" href="mailto:reservierung@dostepinn.at">Write to reservierung@dostepinn.at →</a>
       </p>
     </section>
 
@@ -623,10 +620,10 @@
     </div>
     <nav class="footer__nav" aria-label="Footer">
       <a href="#chapter-base">Home base</a>
+      <a href="#chapter-spaces">Kitchen &amp; garden</a>
       <a href="#chapter-rooms">Rooms</a>
       <a href="#chapter-explore">Explore Vienna</a>
-      <a href="#chapter-easy">Easy stay</a>
-      <button class="link-gold" data-open-concierge="home" type="button">Ask the Home Assistant</button>
+      <a href="#chapter-groups">Group reservation</a>
     </nav>
     <p class="footer__legal">
       <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a><br />
@@ -639,12 +636,6 @@
     <span class="stickybar__label">Rooms for every budget · from your calm base in Vienna</span>
     <button class="btn btn--gold btn--sm" data-open-booking type="button">Check availability</button>
   </div>
-
-  <!-- ══ FLOATING CONCIERGE LAUNCHER ══════════════════════════════════ -->
-  <button class="fab" id="fab" data-open-concierge="vienna" type="button" aria-label="Ask your concierge">
-    <span class="fab__orb" aria-hidden="true"></span>
-    <span class="fab__label">Ask your concierge</span>
-  </button>
 
   <!-- ══ BOOKING PANEL ════════════════════════════════════════════════ -->
   <div class="modal" id="booking" role="dialog" aria-modal="true" aria-label="Check availability" hidden>
@@ -668,43 +659,11 @@
     </div>
   </div>
 
-  <!-- ══ CONCIERGE CHAT PANEL ═════════════════════════════════════════ -->
-  <div class="chat" id="chat" role="dialog" aria-modal="true" aria-label="Concierge chat" hidden>
-    <div class="modal__backdrop" data-close-chat></div>
-    <div class="chat__panel">
-      <div class="chat__header">
-        <div class="chat__switch" role="tablist" aria-label="Choose a guide">
-          <button role="tab" class="chat__mode is-active" data-mode="vienna" aria-selected="true">
-            <span class="chat__mode-dot"></span> Vienna Concierge
-          </button>
-          <button role="tab" class="chat__mode" data-mode="home" aria-selected="false">
-            <span class="chat__mode-dot"></span> Home Assistant
-          </button>
-        </div>
-        <button class="chat__close" data-close-chat aria-label="Close chat">&times;</button>
-      </div>
-
-      <div class="chat__body" id="chat-body" aria-live="polite"></div>
-
-      <div class="chat__prompts" id="chat-prompts"></div>
-
-      <form class="chat__input" id="chat-form">
-        <input type="text" id="chat-text" autocomplete="off"
-               placeholder="Ask anything…" aria-label="Type your question" />
-        <button type="submit" aria-label="Send">
-          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l16-8-6 8 6 8-16-8Z" fill="currentColor"/></svg>
-        </button>
-      </form>
-      <p class="chat__disclaimer" id="chat-disclaimer"></p>
-    </div>
-  </div>
-
   <!-- Booking engine (UP Hotel IBE) -->
   <link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
   <script type="text/javascript" src="https://ibe.uphotel.agency/ibe.min.js"></script>
 
   <!-- Scripts -->
-  <script src="assets/js/concierge.js" defer></script>
   <script src="assets/js/main.js" defer></script>
   <script type="module" src="assets/js/scene.js"></script>
 </body>

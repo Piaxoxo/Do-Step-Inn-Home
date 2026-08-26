@@ -968,6 +968,25 @@ body{ background: var(--bg); color: var(--ink); }
   [data-tilt]{ transform: none !important; }
 }
 
+/* ═══ SPACES — kitchen · garden · lounges (robust, no pin) ════════════ */
+.spaces__grid{ display: flex; flex-direction: column; gap: 1.6rem; max-width: var(--max); margin: 0 auto; }
+.space-card{
+  display: grid; grid-template-columns: 1.05fr 1fr; align-items: stretch;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; box-shadow: 0 24px 55px -40px rgba(51,32,14,.3);
+}
+.space-card__img{ min-height: 320px; background-size: cover; background-position: center; background-color: #2a2016; }
+.space-card--reverse .space-card__img{ order: 2; }
+.space-card__body{ padding: clamp(1.8rem, 4vw, 3rem); display: flex; flex-direction: column; justify-content: center; }
+.space-card__tag{ font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .8rem; }
+.space-card__body h3{ font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.4rem); margin-bottom: .7rem; color: var(--ink); }
+.space-card__body p{ color: var(--ink-soft); line-height: 1.7; max-width: 46ch; }
+@media (max-width: 760px){
+  .space-card{ grid-template-columns: 1fr; }
+  .space-card--reverse .space-card__img{ order: 0; }
+  .space-card__img{ min-height: 220px; }
+}
+
 </style>
 
   <!-- Three.js as an ES module import map (gated + fallback in scene.js) -->
@@ -1009,12 +1028,26 @@ body{ background: var(--bg); color: var(--ink); }
     "nearbyAttractions": ["Westbahnhof", "Mariahilfer Straße", "Stephansdom", "Belvedere Palace"]
   }
   </script>
+  <script>window.__DSI_STATIC = true;</script>
   <style>
     /* Full-bleed fit for Elementor: break out of the column to full viewport width */
     #top{ width: 100vw; margin-left: calc(50% - 50vw); }
     .bookbar{ width: 100vw; margin-left: calc(50% - 50vw); }
     /* No built-in fixed header in this build — reclaim the hero's top space */
     .hero{ padding-top: clamp(3rem, 8vh, 6rem); }
+    /* Embed-safe: force scroll-effect sections into their static layout so
+       position:sticky can't collapse and leave long empty gaps inside Elementor */
+    .hgallery__pin{ position: static !important; height: auto !important; padding: clamp(3rem,8vh,6rem) 0; }
+    .hgallery__track{ overflow-x: auto !important; transform: none !important; -webkit-overflow-scrolling: touch; }
+    .story{ height: auto !important; }
+    .story__pin{ position: static !important; height: auto !important; padding: 4rem 0; }
+    .story__line{ opacity: 1 !important; transform: none !important; }
+    .fly{ height: auto !important; }
+    .fly__pin{ position: static !important; height: auto !important; perspective: none !important; overflow: visible !important; }
+    .fly__space{ position: static !important; transform: none !important; }
+    .fly__panel{ position: relative !important; left: auto !important; top: auto !important; transform: none !important; opacity: 1 !important; width: auto; max-width: 640px; margin: 1rem auto; }
+    .fly__head{ position: static !important; margin-bottom: 1.5rem; }
+    .fly__hint{ display: none; }
   </style>
 </head>
 
@@ -1046,9 +1079,7 @@ body{ background: var(--bg); color: var(--ink); }
         </p>
         <div class="hero__actions reveal" data-reveal data-delay="3">
           <button class="btn btn--gold" data-open-booking type="button">Start your stay</button>
-          <button class="btn btn--ghost" data-open-concierge="vienna" type="button">
-            <span class="btn__orb" aria-hidden="true"></span> Ask your concierge
-          </button>
+          <a class="btn btn--ghost" href="#chapter-base">Explore the house</a>
         </div>
       </div>
 
@@ -1113,6 +1144,50 @@ body{ background: var(--bg); color: var(--ink); }
       </ul>
     </section>
 
+    <!-- ══ SPACES — KITCHEN · GARDEN · LOUNGES ═══════════════════════ -->
+    <section class="section spaces" id="chapter-spaces" data-chapter aria-label="Kitchen, garden and lounges">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>More than a bed</p>
+        <h2 class="section__title" data-reveal>Room to live, <span class="ital">not just sleep.</span></h2>
+        <p class="section__lede" data-reveal>
+          A guest kitchen to cook in, a green courtyard to breathe in, and warm lounges to
+          gather in — all included with every stay, for guests of every room.
+        </p>
+      </div>
+
+      <div class="spaces__grid">
+        <article class="space-card" data-reveal>
+          <div class="space-card__img" style="background-image:url('assets/img/kitchen.jpg')" role="img" aria-label="The guest kitchen"></div>
+          <div class="space-card__body">
+            <span class="space-card__tag">Guest kitchen</span>
+            <h3>Cook like a local</h3>
+            <p>A full guest kitchen with hobs, fridge space and a big table — cook a proper
+              meal, share it with new friends, and keep your euros for the city.</p>
+          </div>
+        </article>
+
+        <article class="space-card space-card--reverse" data-reveal>
+          <div class="space-card__img" style="background-image:url('assets/img/courtyard.jpg')" role="img" aria-label="The garden courtyard"></div>
+          <div class="space-card__body">
+            <span class="space-card__tag">Garden courtyard</span>
+            <h3>A green place to breathe</h3>
+            <p>Step out into a calm planted courtyard — morning coffee in the sun, a quiet
+              read in the afternoon, easy evenings outside between adventures.</p>
+          </div>
+        </article>
+
+        <article class="space-card" data-reveal>
+          <div class="space-card__img" style="background-image:url('assets/img/_MG_0232_Lightroom.jpg')" role="img" aria-label="Guest lounge and common area"></div>
+          <div class="space-card__body">
+            <span class="space-card__tag">Lounges &amp; common rooms</span>
+            <h3>Room to gather</h3>
+            <p>Warm, colourful lounges with a house bar, billiards, darts and giant chess —
+              space to relax, meet fellow travellers or plan tomorrow together.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- ══ GALLERY — HORIZONTAL SCROLL ("A LOOK INSIDE") ═════════════ -->
     <section class="hgallery" id="chapter-gallery" data-chapter aria-label="A look inside">
       <div class="hgallery__pin">
@@ -1122,26 +1197,18 @@ body{ background: var(--bg); color: var(--ink); }
           <p class="hgallery__hint" aria-hidden="true">Keep scrolling →</p>
         </div>
         <div class="hgallery__track" id="hgtrack">
+          <figure class="hg-item" data-label="Guest kitchen"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0231_Lightroom.jpg" alt="The stainless-steel guest kitchen" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Kitchen &amp; lounge"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0232_Lightroom.jpg" alt="Guest kitchen and lounge" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="The house bar"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0217_Lightroom.jpg" alt="The house bar with vintage signs and glasses" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Festive courtyard"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSC06332.jpg" alt="Christmas tree in the courtyard at night" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Breakfast buffet"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/IMG_9695_Lightroom.JPG" alt="Fresh bread and gugelhupf at the breakfast buffet" loading="lazy" /></figure>
           <figure class="hg-item" data-label="Wiener Espresso"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSC06286.jpg" alt="An espresso pouring into an Original Wiener cup" loading="lazy" /></figure>
           <figure class="hg-item" data-label="An easy evening in"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_DSC8180.jpg" alt="A couple with wine in a brick-walled room" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Breakfast buffet"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/IMG_9695_Lightroom.JPG" alt="Fresh bread and gugelhupf at the breakfast buffet" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="The house bar"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0217_Lightroom.jpg" alt="The house bar with vintage signs and glasses" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="A proper coffee"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSC06272.jpg" alt="A milky Viennese coffee" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Time to unwind"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_DSC8167.jpg" alt="A couple relaxing with wine" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Bright dorms"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_DSC7942.jpg" alt="A guest on a bunk bed in a bright dorm" loading="lazy" /></figure>
+          <figure class="hg-item" data-label="Make friends"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSC06383.jpg" alt="Two guests chatting on a dorm bed" loading="lazy" /></figure>
           <figure class="hg-item" data-label="Arrival"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_DSC8075.jpg" alt="A couple arriving in their room with luggage" loading="lazy" /></figure>
           <figure class="hg-item" data-label="Breakfast room"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0229_Lightroom.jpg" alt="Colourful breakfast room with brick walls" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Fresh juice"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/IMG_9717_Lightroom.JPG" alt="Fresh orange juice at the breakfast buffet" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Your floor"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0170_Lightroom.jpg" alt="Bright hallway to the rooms" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="A glass of red"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSC06192.jpg" alt="Red wine poured at the house bar" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Festive courtyard"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSC06332.jpg" alt="Christmas tree in the courtyard at night" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Bright dorms"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_DSC7942.jpg" alt="A guest on a bunk bed in a bright dorm" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Cereals &amp; fruit"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/IMG_9667_Lightroom.JPG" alt="Cereals and fresh fruit" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Guest kitchen"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0231_Lightroom.jpg" alt="The stainless-steel guest kitchen" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Brick &amp; stairs"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0165_Lightroom.jpg" alt="The brick staircase" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Time to unwind"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_DSC8167.jpg" alt="A couple relaxing with wine" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Fresh bread"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/IMG_9713_Lightroom.JPG" alt="Slicing fresh bread at breakfast" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Make friends"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/DSC06383.jpg" alt="Two guests chatting on a dorm bed" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Fresh fruit"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/IMG_9702_Lightroom.JPG" alt="A basket of fresh fruit" loading="lazy" /></figure>
-          <figure class="hg-item" data-label="Kitchen &amp; lounge"><img src="https://piaxoxo.github.io/Do-Step-Inn-Home/assets/img/_MG_0232_Lightroom.jpg" alt="Guest kitchen and lounge" loading="lazy" /></figure>
         </div>
       </div>
     </section>
@@ -1241,45 +1308,7 @@ body{ background: var(--bg); color: var(--ink); }
       </div>
     </section>
 
-    <!-- ══ CHAPTER 4 & 5 — CONCIERGE + ASSISTANT ═════════════════════ -->
-    <section class="section concierge-intro" id="chapter-concierge" data-chapter aria-label="Your concierge and assistant">
-      <div class="section__head">
-        <p class="eyebrow" data-reveal>Chapter IV &amp; V · Two guides, one tap</p>
-        <h2 class="section__title" data-reveal>Never wonder what’s next.</h2>
-        <p class="section__lede" data-reveal>
-          Two calm minds travel with you. One knows Vienna. One knows your stay.
-          Ask either, any time — day or night.
-        </p>
-      </div>
-
-      <div class="guides">
-        <article class="guide-card guide-card--vienna" data-reveal>
-          <span class="guide-card__tag">Explore Vienna</span>
-          <h3>Vienna Concierge</h3>
-          <p>Your stylish local guide. First-day plans, rainy-day ideas, coffee nearby, free things to do, a romantic evening — it maps them out for you.</p>
-          <ul class="guide-card__prompts" role="list">
-            <li><button data-open-concierge="vienna" data-prompt="Plan my first day in Vienna" type="button">Plan my first day</button></li>
-            <li><button data-open-concierge="vienna" data-prompt="What can I do on a rainy day?" type="button">Rainy-day ideas</button></li>
-            <li><button data-open-concierge="vienna" data-prompt="Best free things to do near the hotel" type="button">Best free things</button></li>
-          </ul>
-          <button class="btn btn--gold btn--sm" data-open-concierge="vienna" type="button">Ask Vienna Concierge</button>
-        </article>
-
-        <article class="guide-card guide-card--home" data-reveal>
-          <span class="guide-card__tag">Your stay</span>
-          <h3>Home Assistant</h3>
-          <p>Everything about your stay, answered calmly. Self check-in, late arrival, luggage, getting here, what’s included — no waiting on a front desk.</p>
-          <ul class="guide-card__prompts" role="list">
-            <li><button data-open-concierge="home" data-prompt="How does self check-in work?" type="button">How does self check-in work?</button></li>
-            <li><button data-open-concierge="home" data-prompt="I arrive late — what now?" type="button">I arrive late</button></li>
-            <li><button data-open-concierge="home" data-prompt="Can I store my luggage?" type="button">Store my luggage</button></li>
-          </ul>
-          <button class="btn btn--ghost btn--sm" data-open-concierge="home" type="button">Ask Home Assistant</button>
-        </article>
-      </div>
-    </section>
-
-    <!-- ══ CHAPTER 6 — EXPLORE VIENNA ════════════════════════════════ -->
+    <!-- ══ EXPLORE VIENNA ════════════════════════════════════════════ -->
     <section class="section explore" id="chapter-explore" data-chapter aria-label="Explore Vienna">
       <div class="section__head">
         <p class="eyebrow" data-reveal>Chapter VI · From your door</p>
@@ -1324,8 +1353,8 @@ body{ background: var(--bg); color: var(--ink); }
       </ul>
 
       <p class="explore__cta" data-reveal>
-        Want it planned for you?
-        <button class="link-gold" data-open-concierge="vienna" data-prompt="Plan my first 24 hours in Vienna from the hotel" type="button">Ask the Vienna Concierge to plan your first 24 hours →</button>
+        Everything worth seeing, minutes from your door —
+        <a class="link-gold" href="#book-top">check dates &amp; book your stay →</a>
       </p>
     </section>
 
@@ -1444,8 +1473,8 @@ body{ background: var(--bg); color: var(--ink); }
       </div>
 
       <p class="easy__note" data-reveal>
-        Exact policies?
-        <button class="link-gold" data-open-concierge="home" data-prompt="What are your house rules and cancellation policy?" type="button">Ask the Home Assistant →</button>
+        Questions about your stay?
+        <a class="link-gold" href="mailto:reservierung@dostepinn.at">Write to reservierung@dostepinn.at →</a>
       </p>
     </section>
 
@@ -1536,12 +1565,6 @@ body{ background: var(--bg); color: var(--ink); }
     <button class="btn btn--gold btn--sm" data-open-booking type="button">Check availability</button>
   </div>
 
-  <!-- ══ FLOATING CONCIERGE LAUNCHER ══════════════════════════════════ -->
-  <button class="fab" id="fab" data-open-concierge="vienna" type="button" aria-label="Ask your concierge">
-    <span class="fab__orb" aria-hidden="true"></span>
-    <span class="fab__label">Ask your concierge</span>
-  </button>
-
   <!-- ══ BOOKING PANEL ════════════════════════════════════════════════ -->
   <div class="modal" id="booking" role="dialog" aria-modal="true" aria-label="Check availability" hidden>
     <div class="modal__backdrop" data-close-booking></div>
@@ -1564,200 +1587,11 @@ body{ background: var(--bg); color: var(--ink); }
     </div>
   </div>
 
-  <!-- ══ CONCIERGE CHAT PANEL ═════════════════════════════════════════ -->
-  <div class="chat" id="chat" role="dialog" aria-modal="true" aria-label="Concierge chat" hidden>
-    <div class="modal__backdrop" data-close-chat></div>
-    <div class="chat__panel">
-      <div class="chat__header">
-        <div class="chat__switch" role="tablist" aria-label="Choose a guide">
-          <button role="tab" class="chat__mode is-active" data-mode="vienna" aria-selected="true">
-            <span class="chat__mode-dot"></span> Vienna Concierge
-          </button>
-          <button role="tab" class="chat__mode" data-mode="home" aria-selected="false">
-            <span class="chat__mode-dot"></span> Home Assistant
-          </button>
-        </div>
-        <button class="chat__close" data-close-chat aria-label="Close chat">&times;</button>
-      </div>
-
-      <div class="chat__body" id="chat-body" aria-live="polite"></div>
-
-      <div class="chat__prompts" id="chat-prompts"></div>
-
-      <form class="chat__input" id="chat-form">
-        <input type="text" id="chat-text" autocomplete="off"
-               placeholder="Ask anything…" aria-label="Type your question" />
-        <button type="submit" aria-label="Send">
-          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l16-8-6 8 6 8-16-8Z" fill="currentColor"/></svg>
-        </button>
-      </form>
-      <p class="chat__disclaimer" id="chat-disclaimer"></p>
-    </div>
-  </div>
-
   <!-- Booking engine (UP Hotel IBE) -->
   <link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
   <script type="text/javascript" src="https://ibe.uphotel.agency/ibe.min.js"></script>
 
   <!-- Scripts -->
-  <script>
-/* ═══════════════════════════════════════════════════════════════════════
-   CONCIERGE ENGINE — two guardrailed minds
-   · Vienna Concierge  → local city guide (general suggestions, map pins)
-   · Home Assistant     → hotel facts only; never invents policy
-   Rule-based & offline: honest by construction. No hallucinated data.
-   ═══════════════════════════════════════════════════════════════════════ */
-(function () {
-  "use strict";
-
-  const CONTACT = "Please contact the hotel team for confirmation.";
-  const BOOKING = 'For live prices, availability and booking, use <a href="#" data-open-booking>Check availability</a>.';
-
-  /* ── Verified hotel facts (single source of truth for the Assistant) ── */
-  const HOME = [
-    { k: ["self check", "checkin", "check-in", "check in", "arrive", "key", "access"], a:
-      "<strong>Self check-in</strong> keeps arrival stress-free. Check-in opens at <strong>15:00</strong> and you can arrive contactlessly — you’ll receive your access details for the door and your room. Late arrival is possible <strong>until midnight</strong>. If you’ll arrive after midnight, " + CONTACT.toLowerCase() },
-    { k: ["late", "midnight", "after hours", "night arrival"], a:
-      "Arriving late is fine — <strong>self check-in works up to midnight</strong>. You won’t need anyone at a desk. Arriving after midnight? " + CONTACT },
-    { k: ["check-out", "checkout", "check out", "leave", "leaving"], a:
-      "<strong>Check-out is 11:00</strong>, quick and contactless. Leaving later in the day? Drop your bags in our secure luggage room and keep exploring." },
-    { k: ["luggage", "bag", "store", "storage", "suitcase"], a:
-      "Yes — there’s a <strong>secure luggage room</strong> with card access, so you can store bags before check-in or after check-out and head straight into the city. (Bags stored long-term may need the access card renewed.)" },
-    { k: ["wifi", "wi-fi", "internet", "wlan"], a:
-      "<strong>Free WiFi</strong> is available throughout the building — rooms and common areas." },
-    { k: ["breakfast", "morning", "food included", "buffet"], a:
-      "A <strong>buffet breakfast</strong> is served every morning — no need to pre-book — available for a small surcharge. For the current price and times, " + CONTACT.toLowerCase() },
-    { k: ["parking", "car", "garage", "park"], a:
-      "There is <strong>parking available</strong> for guests. For spaces and current rates, " + CONTACT.toLowerCase() },
-    { k: ["kitchen", "cook", "cooking"], a:
-      "You’re welcome to cook — there’s a <strong>guest kitchen</strong>, great for saving your euros for the city." },
-    { k: ["facilit", "amenit", "included", "what do you have", "games", "bar", "billiard", "bike", "bicycle"], a:
-      "Your home base includes a <strong>guest kitchen</strong>, a garden courtyard, a small house bar, <strong>billiards, darts and giant chess</strong>, bikes to borrow, vending, free WiFi and a luggage room. Rooms have private bathrooms, linen and Sat-TV." },
-    { k: ["room", "private", "dorm", "double", "single", "family", "bathroom"], a:
-      "We’re a hotel <em>and</em> hostel — <strong>rooms for every budget</strong>. Private singles, doubles/twins, triples and quads (each with private bathroom, Sat-TV, WiFi), or a bed in a bright dorm with private bathroom, linen and a locker. " + BOOKING },
-    { k: ["where", "address", "location", "how do i get", "get there", "directions", "from airport", "airport", "westbahnhof", "station", "transport", "u-bahn", "ubahn", "tram"], a:
-      "We’re at <strong>Felberstraße 20, 1150 Vienna</strong>, directly <strong>opposite Westbahnhof</strong> (about a 4-minute walk) and one block from Mariahilfer Straße. From the airport, take the <strong>airport bus or CAT</strong> toward the city; U3 and U6 both serve Westbahnhof." },
-    { k: ["price", "cost", "rate", "cheap", "how much", "available", "availability", "book", "reserve"], a:
-      "Rooms suit every budget, from dorm beds to private rooms. " + BOOKING },
-    { k: ["cancel", "cancellation", "refund", "policy", "house rules", "rules", "pet", "smoking"], a:
-      "Cancellation terms and house rules depend on your rate and dates. Rather than guess, here’s the honest answer: <strong>" + CONTACT + "</strong> You’ll also see the exact terms during booking." },
-    { k: ["contact", "phone", "email", "reception", "call", "reach"], a:
-      "The hotel team is happy to help directly. You can reach reception during opening hours — for the current phone and email, please use the contact details on your booking confirmation, or " + CONTACT.toLowerCase() },
-    { k: ["emergency", "help", "police", "ambulance", "fire", "doctor", "hospital"], a:
-      "For any emergency in Austria, dial <strong>112</strong> (general emergency), <strong>133</strong> police, <strong>144</strong> ambulance, or <strong>122</strong> fire. For anything urgent at the hotel, contact the on-site team." },
-  ];
-  const HOME_FALLBACK =
-    "I can help with check-in, luggage, WiFi, breakfast, parking, getting here and facilities. For anything I can’t confirm — like exact prices or specific policies — <strong>" + CONTACT + "</strong>";
-
-  /* ── Vienna Concierge · general local suggestions (+ map pins) ──────── */
-  const VIENNA = [
-    { k: ["first day", "24 hour", "first 24", "one day", "itinerary", "plan my", "plan my first"], a:
-      "Here’s a calm, walkable <strong>first day from your door</strong>:", pins: [
-        "Morning · coffee + stroll along Mariahilfer Straße (1 block away)",
-        "Midday · U3 to Stephansplatz — Stephansdom & the old town lanes",
-        "Afternoon · Hofburg & the Ringstrasse, or Naschmarkt for a bite",
-        "Evening · sunset at Belvedere gardens, dinner back near the hotel" ] },
-    { k: ["rain", "rainy", "bad weather", "indoor", "when it rains"], a:
-      "Perfect rainy-day ideas, mostly indoors:", pins: [
-        "Kunsthistorisches Museum — world-class art, easy by U3",
-        "Albertina — modern masters in the centre",
-        "A grand Viennese café (Café Central, Sperl) — coffee & cake",
-        "Naschmarkt’s covered stalls for a warm bite" ] },
-    { k: ["free", "cheap", "no money", "budget", "without paying"], a:
-      "Wonderful <strong>free</strong> things near you:", pins: [
-        "Belvedere & Schönbrunn gardens — free to wander",
-        "Stephansdom — free to step inside",
-        "Stroll the Ringstrasse & Danube Canal art walls",
-        "Window-shopping + people-watching on Mariahilfer Straße" ] },
-    { k: ["coffee", "cafe", "café", "breakfast out", "espresso"], a:
-      "Vienna runs on coffee. Nearby & classic:", pins: [
-        "Cafés right along Mariahilfer Straße (1 block)",
-        "Café Sperl — historic, elegant, ~10 min",
-        "Café Central — grand and iconic, near Stephansplatz" ] },
-    { k: ["romantic", "couple", "date", "evening", "sunset"], a:
-      "A romantic Vienna evening:", pins: [
-        "Sunset over the city from Belvedere gardens",
-        "A cand-lit dinner in the old town lanes",
-        "An evening classical concert (many near the centre)",
-        "A slow walk along the illuminated Ringstrasse" ] },
-    { k: ["solo", "alone", "by myself", "traveling alone"], a:
-      "Great picks for solo travellers:", pins: [
-        "MuseumsQuartier — art, courtyards, easy to linger",
-        "Naschmarkt — browse & snack at your own pace",
-        "Join a free walking tour from Stephansplatz",
-        "Back home base: kitchen, courtyard & games to meet others" ] },
-    { k: ["food", "eat", "restaurant", "dinner", "lunch", "schnitzel", "local"], a:
-      "Local flavours to seek out:", pins: [
-        "Wiener Schnitzel — a Viennese classic",
-        "Naschmarkt — global stalls + Austrian bites (~10 min)",
-        "A traditional Beisl (cosy tavern) in the old town",
-        "Sachertorte with coffee at a grand café" ] },
-    { k: ["museum", "art", "gallery", "history", "culture"], a:
-      "Museums worth your time:", pins: [
-        "Kunsthistorisches — old masters & antiquities",
-        "Albertina — Monet to Picasso",
-        "MuseumsQuartier — modern art complex",
-        "Belvedere — Klimt’s ‘The Kiss’" ] },
-    { k: ["nearby", "close", "around", "near the hotel", "walking distance", "near me"], a:
-      "Right around your home base:", pins: [
-        "Mariahilfer Straße shopping — 1 block",
-        "Westbahnhof (U3/U6, trains, airport bus) — 4 min walk",
-        "Schönbrunn Palace & gardens — ~8 min by U-Bahn",
-        "Old town / Stephansdom — ~10 min by U3" ] },
-    { k: ["stephansdom", "cathedral", "st stephen", "how do i get to"], a:
-      "To <strong>Stephansdom</strong>: walk to Westbahnhof (4 min), take <strong>U3</strong> direction Simmering to Stephansplatz — about 10 minutes total. It’s free to step inside.", pins: [
-        "Westbahnhof → U3 → Stephansplatz (~10 min)" ] },
-    { k: ["schönbrunn", "schonbrunn", "palace", "garden"], a:
-      "<strong>Schönbrunn Palace</strong> is delightfully close — U-Bahn from Westbahnhof, roughly 8 minutes. The gardens are free to wander.", pins: [
-        "Westbahnhof → U-Bahn → Schönbrunn (~8 min)" ] },
-    { k: ["open today", "opening hours", "hours today", "what is open"], a:
-      "Opening hours change by day and season, so I won’t guess and risk sending you to a closed door. Check the venue’s official page for today’s hours — and your Vienna Concierge is happy to suggest <em>what</em> to see any time." },
-    { k: ["shopping", "shop", "mall", "buy", "mariahilfer"], a:
-      "You’re beside Vienna’s biggest shopping street:", pins: [
-        "Mariahilfer Straße — 1 block from the hotel",
-        "Ringstrassen-Galerien & centre boutiques by U3",
-        "Naschmarkt for food & flea-market finds (weekends)" ] },
-  ];
-  const VIENNA_FALLBACK =
-    "I’m your <strong>Vienna Concierge</strong> — ask me for a first-day plan, rainy-day ideas, free things, coffee & food, romantic or solo suggestions, or how to reach a landmark. What are you in the mood for?";
-
-  const PROMPTS = {
-    vienna: ["Plan my first day", "Rainy-day ideas", "Something nearby", "Best free things", "Romantic evening", "Local food tips", "Museums today"],
-    home:   ["How does self check-in work?", "What time is check-in?", "Can I store luggage?", "How do I get there?", "What facilities are included?", "I arrive late — what now?"],
-  };
-  const GREETING = {
-    vienna: "Hallo! I’m your <strong>Vienna Concierge</strong> — your local guide in your pocket. Tell me how you like to travel and I’ll map out the city for you. 🗺️",
-    home:   "Welcome home. I’m the <strong>Home Assistant</strong> — ask me anything about your stay: check-in, luggage, getting here, what’s included. I only share confirmed details, and point you to the team for anything I can’t. 🏠",
-  };
-  const DISCLAIMER = {
-    vienna: "General suggestions only · opening hours & prices change — always confirm before you go.",
-    home:   "Confirmed hotel info only · for anything unlisted, we’ll point you to the hotel team.",
-  };
-
-  function normalize(s) { return (" " + s.toLowerCase() + " ").replace(/[^a-z0-9äöüß\s-]/g, " "); }
-
-  function score(text, keys) {
-    const t = normalize(text);
-    let hits = 0;
-    for (const k of keys) if (t.includes(k)) hits += k.length;   // longer phrase = stronger match
-    return hits;
-  }
-
-  function answer(mode, text) {
-    const kb = mode === "vienna" ? VIENNA : HOME;
-    let best = null, bestScore = 0;
-    for (const item of kb) {
-      const s = score(text, item.k);
-      if (s > bestScore) { bestScore = s; best = item; }
-    }
-    if (best && bestScore > 0) return { html: best.a, pins: best.pins || null };
-    return { html: mode === "vienna" ? VIENNA_FALLBACK : HOME_FALLBACK, pins: null };
-  }
-
-  window.Concierge = { answer, PROMPTS, GREETING, DISCLAIMER };
-})();
-
-</script>
   <script>
 /* ═══════════════════════════════════════════════════════════════════════
    MAIN — interactions, reveals, booking, chat orchestration
@@ -1807,23 +1641,22 @@ body{ background: var(--bg); color: var(--ink); }
   const fab = $("#fab");
   const hero = $("#chapter-arrival");
   const bookCh = $("#chapter-book");
-  if ("IntersectionObserver" in window) {
+  if ("IntersectionObserver" in window && hero) {
     const gate = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.target === hero) {
           const past = !e.isIntersecting && e.boundingClientRect.top < 0;
-          sticky.classList.toggle("is-visible", past);
-          fab.classList.toggle("is-visible", past);
-          sticky.setAttribute("aria-hidden", String(!past));
+          if (sticky) { sticky.classList.toggle("is-visible", past); sticky.setAttribute("aria-hidden", String(!past)); }
+          if (fab) fab.classList.toggle("is-visible", past);
         }
         // hide sticky bar over the final booking chapter (redundant there)
-        if (e.target === bookCh && e.isIntersecting) {
+        if (e.target === bookCh && e.isIntersecting && sticky) {
           sticky.classList.remove("is-visible");
         }
       });
     }, { threshold: 0 });
     gate.observe(hero);
-    gate.observe(bookCh);
+    if (bookCh) gate.observe(bookCh);
   }
 
   /* ── Rooms tabs ────────────────────────────────────────────────────── */
@@ -1881,7 +1714,7 @@ body{ background: var(--bg); color: var(--ink); }
     const track = $("#hgtrack");
     if (!sec || !track) return;
     const coarse = window.matchMedia("(pointer: coarse)").matches;
-    if (reduce || coarse || window.innerWidth < 760) { sec.classList.add("is-static"); return; }
+    if (reduce || coarse || window.innerWidth < 760 || window.__DSI_STATIC) { sec.classList.add("is-static"); return; }
 
     let maxX = 0, start = 0, ticking = false;
     const measure = () => {
@@ -1952,7 +1785,7 @@ body{ background: var(--bg); color: var(--ink); }
     if (!sec) return;
     const lines = $$(".story__line", sec);
     const fill = $("#story-fill");
-    if (reduce) { lines.forEach(l => l.classList.add("is-lit")); return; }
+    if (reduce || window.__DSI_STATIC) { lines.forEach(l => l.classList.add("is-lit")); return; }
     let ticking = false;
     const update = () => {
       const total = sec.offsetHeight - window.innerHeight || 1;
@@ -1971,7 +1804,7 @@ body{ background: var(--bg); color: var(--ink); }
     const sec = $("#chapter-family");
     const space = $("#flyspace");
     if (!sec || !space) return;
-    if (reduce || window.matchMedia("(pointer: coarse)").matches) { sec.classList.add("is-static"); return; }
+    if (reduce || window.matchMedia("(pointer: coarse)").matches || window.__DSI_STATIC) { sec.classList.add("is-static"); return; }
     const panels = $$(".fly__panel", sec);
     const gap = 900, n = panels.length;
     let ticking = false;
@@ -2085,89 +1918,6 @@ body{ background: var(--bg); color: var(--ink); }
     setTimeout(() => { btn.textContent = "Search rooms"; closeModal(booking); }, 1100);
   });
 
-  /* ══ CHAT ══════════════════════════════════════════════════════════ */
-  const chat = $("#chat");
-  const body = $("#chat-body");
-  const promptsWrap = $("#chat-prompts");
-  const form = $("#chat-form");
-  const input = $("#chat-text");
-  const disclaimer = $("#chat-disclaimer");
-  const modeBtns = $$(".chat__mode");
-  let mode = "vienna";
-  const started = { vienna: false, home: false };
-
-  function setMode(next, { greet = true } = {}) {
-    mode = next;
-    modeBtns.forEach(b => { const on = b.dataset.mode === next; b.classList.toggle("is-active", on); b.setAttribute("aria-selected", String(on)); });
-    disclaimer.innerHTML = window.Concierge.DISCLAIMER[next];
-    input.placeholder = next === "vienna" ? "Ask about Vienna…" : "Ask about your stay…";
-    renderPrompts();
-    if (greet && !started[next]) { started[next] = true; addBot(window.Concierge.GREETING[next]); }
-  }
-
-  function renderPrompts() {
-    promptsWrap.innerHTML = "";
-    window.Concierge.PROMPTS[mode].forEach(p => {
-      const b = document.createElement("button");
-      b.type = "button"; b.textContent = p;
-      b.addEventListener("click", () => submit(p));
-      promptsWrap.appendChild(b);
-    });
-  }
-
-  function scrollDown() { body.scrollTop = body.scrollHeight; }
-
-  function addUser(text) {
-    const el = document.createElement("div");
-    el.className = "msg msg--user"; el.textContent = text;
-    body.appendChild(el); scrollDown();
-  }
-  function addBot(html, pins) {
-    const el = document.createElement("div");
-    el.className = "msg msg--bot"; el.innerHTML = html;
-    if (pins && pins.length) {
-      const wrap = document.createElement("div"); wrap.className = "msg__pins";
-      pins.forEach(p => { const pin = document.createElement("div"); pin.className = "msg__pin"; pin.textContent = p; wrap.appendChild(pin); });
-      el.appendChild(wrap);
-      if (window.Scene && window.Scene.dropPins) window.Scene.dropPins(pins.length);
-    }
-    body.appendChild(el); scrollDown();
-  }
-  function typing() {
-    const el = document.createElement("div");
-    el.className = "msg msg--bot typing"; el.innerHTML = "<span></span><span></span><span></span>";
-    body.appendChild(el); scrollDown(); return el;
-  }
-
-  function submit(text) {
-    text = (text || "").trim(); if (!text) return;
-    addUser(text);
-    const t = typing();
-    const { html, pins } = window.Concierge.answer(mode, text);
-    const delay = reduce ? 200 : 550 + Math.min(text.length * 8, 700);
-    setTimeout(() => { t.remove(); addBot(html, pins); }, delay);
-  }
-
-  form.addEventListener("submit", (e) => { e.preventDefault(); submit(input.value); input.value = ""; });
-  modeBtns.forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
-
-  // Open chat from any [data-open-concierge]; optional data-prompt & mode
-  document.addEventListener("click", (e) => {
-    const opener = e.target.closest("[data-open-concierge]");
-    if (opener) {
-      e.preventDefault();
-      const wanted = opener.dataset.openConcierge || "vienna";
-      const prompt = opener.dataset.prompt;
-      if (wanted !== mode) setMode(wanted, { greet: true });
-      else if (!started[mode]) setMode(mode, { greet: true });
-      openModal(chat);
-      if (prompt) setTimeout(() => submit(prompt), 400);
-    }
-    if (e.target.closest("[data-close-chat]")) closeModal(chat);
-  });
-
-  // initialise default mode greeting lazily on first open handled above
-  setMode("vienna", { greet: false });
 })();
 
 </script>

@@ -21,7 +21,6 @@ function rewriteHtmlAssets(html) {
 
 const styles = rewriteCss(read('assets/css/styles.css'));
 const legal  = rewriteCss(read('assets/css/legal.css'));
-const conc   = read('assets/js/concierge.js');
 const main   = read('assets/js/main.js');
 const scene  = read('assets/js/scene.js');
 
@@ -32,10 +31,6 @@ let idx = read('index.html');
 idx = idx.replace(
   '<link rel="stylesheet" href="assets/css/styles.css" />',
   () => `<style>\n${styles}\n</style>`
-);
-idx = idx.replace(
-  '<script src="assets/js/concierge.js" defer></script>',
-  () => `<script>\n${conc}\n</script>`
 );
 idx = idx.replace(
   '<script src="assets/js/main.js" defer></script>',
@@ -52,12 +47,26 @@ idx = idx.replace(/\n\s*<!-- ══ NAV[\s\S]*?<\/header>\n/, '\n');
 idx = idx.replace(/\n\s*<!-- ══ FOOTER[\s\S]*?<\/footer>\n/, '\n');
 
 // ── Elementor variant: break out of the column so it fills the page ─────
-idx = idx.replace('</head>', `  <style>
+idx = idx.replace('</head>', `  <script>window.__DSI_STATIC = true;</script>
+  <style>
     /* Full-bleed fit for Elementor: break out of the column to full viewport width */
     #top{ width: 100vw; margin-left: calc(50% - 50vw); }
     .bookbar{ width: 100vw; margin-left: calc(50% - 50vw); }
     /* No built-in fixed header in this build — reclaim the hero's top space */
     .hero{ padding-top: clamp(3rem, 8vh, 6rem); }
+    /* Embed-safe: force scroll-effect sections into their static layout so
+       position:sticky can't collapse and leave long empty gaps inside Elementor */
+    .hgallery__pin{ position: static !important; height: auto !important; padding: clamp(3rem,8vh,6rem) 0; }
+    .hgallery__track{ overflow-x: auto !important; transform: none !important; -webkit-overflow-scrolling: touch; }
+    .story{ height: auto !important; }
+    .story__pin{ position: static !important; height: auto !important; padding: 4rem 0; }
+    .story__line{ opacity: 1 !important; transform: none !important; }
+    .fly{ height: auto !important; }
+    .fly__pin{ position: static !important; height: auto !important; perspective: none !important; overflow: visible !important; }
+    .fly__space{ position: static !important; transform: none !important; }
+    .fly__panel{ position: relative !important; left: auto !important; top: auto !important; transform: none !important; opacity: 1 !important; width: auto; max-width: 640px; margin: 1rem auto; }
+    .fly__head{ position: static !important; margin-bottom: 1.5rem; }
+    .fly__hint{ display: none; }
   </style>
 </head>`);
 

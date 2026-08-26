@@ -46,23 +46,22 @@
   const fab = $("#fab");
   const hero = $("#chapter-arrival");
   const bookCh = $("#chapter-book");
-  if ("IntersectionObserver" in window) {
+  if ("IntersectionObserver" in window && hero) {
     const gate = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.target === hero) {
           const past = !e.isIntersecting && e.boundingClientRect.top < 0;
-          sticky.classList.toggle("is-visible", past);
-          fab.classList.toggle("is-visible", past);
-          sticky.setAttribute("aria-hidden", String(!past));
+          if (sticky) { sticky.classList.toggle("is-visible", past); sticky.setAttribute("aria-hidden", String(!past)); }
+          if (fab) fab.classList.toggle("is-visible", past);
         }
         // hide sticky bar over the final booking chapter (redundant there)
-        if (e.target === bookCh && e.isIntersecting) {
+        if (e.target === bookCh && e.isIntersecting && sticky) {
           sticky.classList.remove("is-visible");
         }
       });
     }, { threshold: 0 });
     gate.observe(hero);
-    gate.observe(bookCh);
+    if (bookCh) gate.observe(bookCh);
   }
 
   /* ── Rooms tabs ────────────────────────────────────────────────────── */
@@ -120,7 +119,7 @@
     const track = $("#hgtrack");
     if (!sec || !track) return;
     const coarse = window.matchMedia("(pointer: coarse)").matches;
-    if (reduce || coarse || window.innerWidth < 760) { sec.classList.add("is-static"); return; }
+    if (reduce || coarse || window.innerWidth < 760 || window.__DSI_STATIC) { sec.classList.add("is-static"); return; }
 
     let maxX = 0, start = 0, ticking = false;
     const measure = () => {
@@ -191,7 +190,7 @@
     if (!sec) return;
     const lines = $$(".story__line", sec);
     const fill = $("#story-fill");
-    if (reduce) { lines.forEach(l => l.classList.add("is-lit")); return; }
+    if (reduce || window.__DSI_STATIC) { lines.forEach(l => l.classList.add("is-lit")); return; }
     let ticking = false;
     const update = () => {
       const total = sec.offsetHeight - window.innerHeight || 1;
@@ -210,7 +209,7 @@
     const sec = $("#chapter-family");
     const space = $("#flyspace");
     if (!sec || !space) return;
-    if (reduce || window.matchMedia("(pointer: coarse)").matches) { sec.classList.add("is-static"); return; }
+    if (reduce || window.matchMedia("(pointer: coarse)").matches || window.__DSI_STATIC) { sec.classList.add("is-static"); return; }
     const panels = $$(".fly__panel", sec);
     const gap = 900, n = panels.length;
     let ticking = false;
@@ -324,87 +323,4 @@
     setTimeout(() => { btn.textContent = "Search rooms"; closeModal(booking); }, 1100);
   });
 
-  /* ══ CHAT ══════════════════════════════════════════════════════════ */
-  const chat = $("#chat");
-  const body = $("#chat-body");
-  const promptsWrap = $("#chat-prompts");
-  const form = $("#chat-form");
-  const input = $("#chat-text");
-  const disclaimer = $("#chat-disclaimer");
-  const modeBtns = $$(".chat__mode");
-  let mode = "vienna";
-  const started = { vienna: false, home: false };
-
-  function setMode(next, { greet = true } = {}) {
-    mode = next;
-    modeBtns.forEach(b => { const on = b.dataset.mode === next; b.classList.toggle("is-active", on); b.setAttribute("aria-selected", String(on)); });
-    disclaimer.innerHTML = window.Concierge.DISCLAIMER[next];
-    input.placeholder = next === "vienna" ? "Ask about Vienna…" : "Ask about your stay…";
-    renderPrompts();
-    if (greet && !started[next]) { started[next] = true; addBot(window.Concierge.GREETING[next]); }
-  }
-
-  function renderPrompts() {
-    promptsWrap.innerHTML = "";
-    window.Concierge.PROMPTS[mode].forEach(p => {
-      const b = document.createElement("button");
-      b.type = "button"; b.textContent = p;
-      b.addEventListener("click", () => submit(p));
-      promptsWrap.appendChild(b);
-    });
-  }
-
-  function scrollDown() { body.scrollTop = body.scrollHeight; }
-
-  function addUser(text) {
-    const el = document.createElement("div");
-    el.className = "msg msg--user"; el.textContent = text;
-    body.appendChild(el); scrollDown();
-  }
-  function addBot(html, pins) {
-    const el = document.createElement("div");
-    el.className = "msg msg--bot"; el.innerHTML = html;
-    if (pins && pins.length) {
-      const wrap = document.createElement("div"); wrap.className = "msg__pins";
-      pins.forEach(p => { const pin = document.createElement("div"); pin.className = "msg__pin"; pin.textContent = p; wrap.appendChild(pin); });
-      el.appendChild(wrap);
-      if (window.Scene && window.Scene.dropPins) window.Scene.dropPins(pins.length);
-    }
-    body.appendChild(el); scrollDown();
-  }
-  function typing() {
-    const el = document.createElement("div");
-    el.className = "msg msg--bot typing"; el.innerHTML = "<span></span><span></span><span></span>";
-    body.appendChild(el); scrollDown(); return el;
-  }
-
-  function submit(text) {
-    text = (text || "").trim(); if (!text) return;
-    addUser(text);
-    const t = typing();
-    const { html, pins } = window.Concierge.answer(mode, text);
-    const delay = reduce ? 200 : 550 + Math.min(text.length * 8, 700);
-    setTimeout(() => { t.remove(); addBot(html, pins); }, delay);
-  }
-
-  form.addEventListener("submit", (e) => { e.preventDefault(); submit(input.value); input.value = ""; });
-  modeBtns.forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
-
-  // Open chat from any [data-open-concierge]; optional data-prompt & mode
-  document.addEventListener("click", (e) => {
-    const opener = e.target.closest("[data-open-concierge]");
-    if (opener) {
-      e.preventDefault();
-      const wanted = opener.dataset.openConcierge || "vienna";
-      const prompt = opener.dataset.prompt;
-      if (wanted !== mode) setMode(wanted, { greet: true });
-      else if (!started[mode]) setMode(mode, { greet: true });
-      openModal(chat);
-      if (prompt) setTimeout(() => submit(prompt), 400);
-    }
-    if (e.target.closest("[data-close-chat]")) closeModal(chat);
-  });
-
-  // initialise default mode greeting lazily on first open handled above
-  setMode("vienna", { greet: false });
 })();

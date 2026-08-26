@@ -950,6 +950,25 @@ body{ background: var(--bg); color: var(--ink); }
   [data-tilt]{ transform: none !important; }
 }
 
+/* ═══ SPACES — kitchen · garden · lounges (robust, no pin) ════════════ */
+.spaces__grid{ display: flex; flex-direction: column; gap: 1.6rem; max-width: var(--max); margin: 0 auto; }
+.space-card{
+  display: grid; grid-template-columns: 1.05fr 1fr; align-items: stretch;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; box-shadow: 0 24px 55px -40px rgba(51,32,14,.3);
+}
+.space-card__img{ min-height: 320px; background-size: cover; background-position: center; background-color: #2a2016; }
+.space-card--reverse .space-card__img{ order: 2; }
+.space-card__body{ padding: clamp(1.8rem, 4vw, 3rem); display: flex; flex-direction: column; justify-content: center; }
+.space-card__tag{ font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .8rem; }
+.space-card__body h3{ font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.4rem); margin-bottom: .7rem; color: var(--ink); }
+.space-card__body p{ color: var(--ink-soft); line-height: 1.7; max-width: 46ch; }
+@media (max-width: 760px){
+  .space-card{ grid-template-columns: 1fr; }
+  .space-card--reverse .space-card__img{ order: 0; }
+  .space-card__img{ min-height: 220px; }
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    LEGAL PAGES — Impressum · Datenschutz · AGB
    Calm, readable long-form layout reusing the site's warm tokens.
@@ -1039,10 +1058,10 @@ body.legal { background: var(--bg); color: var(--ink); min-height: 100vh; displa
     </div>
     <nav class="footer__nav" aria-label="Footer">
       <a href="#chapter-base">Home base</a>
+      <a href="#chapter-spaces">Kitchen &amp; garden</a>
       <a href="#chapter-rooms">Rooms</a>
       <a href="#chapter-explore">Explore Vienna</a>
-      <a href="#chapter-easy">Easy stay</a>
-      <button class="link-gold" data-open-concierge="home" type="button">Ask the Home Assistant</button>
+      <a href="#chapter-groups">Group reservation</a>
     </nav>
     <p class="footer__legal">
       <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a> · <a href="agb.html">AGB</a><br />
