@@ -70,11 +70,11 @@ idx = idx.replace('</head>', `  <script>window.__DSI_STATIC = true;</script>
     .story{ height: auto !important; }
     .story__pin{ position: static !important; height: auto !important; padding: 4rem 0; }
     .story__line{ opacity: 1 !important; transform: none !important; }
-    .fly{ height: auto !important; }
-    .fly__pin{ position: static !important; height: auto !important; perspective: none !important; overflow: visible !important; }
-    .fly__space{ position: static !important; transform: none !important; }
-    .fly__panel{ position: relative !important; left: auto !important; top: auto !important; transform: none !important; opacity: 1 !important; width: auto; max-width: 640px; margin: 1rem auto; }
-    .fly__head{ position: static !important; margin-bottom: 1.5rem; }
+    .fly{ height: auto !important; padding: clamp(4rem,10vh,7rem) var(--gutter); }
+    .fly__pin{ position: static !important; height: auto !important; perspective: none !important; overflow: visible !important; display: block; }
+    .fly__head{ position: static !important; left: auto; right: auto; margin: 0 auto 2.4rem; text-align: center; max-width: var(--max); }
+    .fly__space{ position: static !important; transform: none !important; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; max-width: var(--max); margin: 0 auto; }
+    .fly__panel{ position: relative !important; left: auto !important; top: auto !important; transform: none !important; opacity: 1 !important; flex: 1 1 220px; width: auto !important; max-width: 300px; margin: 0 !important; }
     .fly__hint{ display: none; }
   </style>
 </head>`);
