@@ -12,10 +12,11 @@ const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 function rewriteCss(css) {
   return css.replace(/url\((['"]?)\.\.\//g, `url($1${BASE}assets/`);
 }
-// rewrite src/href="assets/..." in HTML -> absolute
+// rewrite src/href="assets/..." AND inline style url(assets/...) in HTML -> absolute
 function rewriteHtmlAssets(html) {
   return html
     .replace(/(src|href)="assets\//g, `$1="${BASE}assets/`)
+    .replace(/url\((['"]?)assets\//g, `url($1${BASE}assets/`)
     .replace(/"\.\/assets\/vendor\/three\.module\.min\.js"/g, `"${BASE}assets/vendor/three.module.min.js"`);
 }
 
