@@ -19,7 +19,7 @@ python3 -m http.server 8080     # from the repo root
 | Ticker | TOP DESTINATION · VIENNA · BEINGASSE 13 · BE FREE HOSTEL, endless |
 | Location | Turquoise band — the neighbourhood, four markers, distances as stickers |
 | Check-in | Pink band — the three steps, plus the phone number for when the QR fails |
-| Rooms | Private room · Capsule bed, as pastel cards |
+| Rooms | Private room · Capsule bed · Classic dorm, as pastel cards |
 | Why Be Free | Freedom, together, clean, colour |
 | Flower gallery | Scroll-driven 3D: every petal is a photograph with its own depth map |
 | Gallery | Plain grid, click to enlarge, keyboard-navigable lightbox |
@@ -123,13 +123,13 @@ Legal links are rewritten to WordPress slugs (`/impressum/`, `/datenschutz/`,
 
 ## Still open
 
-- [ ] **Room types — unresolved.** The page currently shows two: a private
-      room with a double bed, and lockable capsule beds. Both are backed by
-      the client's own photographs. The booking listings additionally
-      advertise classic dorms with open bunks and private twin, triple and
-      quadruple rooms; there is no photograph of any of those, and the
-      operator believes only private doubles exist. This has to be settled
-      before the site goes live.
+- [ ] **A dorm photograph is missing.** The three room types follow the
+      booking listings: private rooms (double, twin, triple, quad), lockable
+      capsule beds, and classic open-bunk dorms. The first two are backed by
+      photographs from the shoot; the classic dorm is not, so its card shows
+      a striped brand panel rather than a picture of a different room type.
+      Replace it with a real dorm photo before launch — the card picks up an
+      `<img>` the moment one exists.
 - [ ] **Other facts to confirm.** Prices, bed counts, exact quiet hours, what
       is included, and whether luggage storage exists.
 - [ ] **Booking engine.** The UP Hotel IBE is wired into the Book section but

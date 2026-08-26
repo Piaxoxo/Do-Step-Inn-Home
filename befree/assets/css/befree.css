@@ -258,6 +258,18 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
   width:100%;height:auto;      /* height:auto or the img height attribute wins over aspect-ratio */
   aspect-ratio:4/3;object-fit:cover;border-bottom:2px solid var(--ink);
 }
+/* stands in for a photograph that does not exist yet — visibly a panel,
+   never a picture of a different room type */
+.pcard__ph{
+  aspect-ratio:4/3;border-bottom:2px solid var(--ink);
+  display:grid;place-items:center;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(11,11,12,.07) 0 14px, transparent 14px 28px),
+    var(--bg,var(--turq));
+}
+.pcard__ph span{font-size:54px;line-height:1;opacity:.55}
+
 .pcard__b{padding:18px 18px 22px;display:flex;flex-direction:column;gap:9px;flex:1}
 .pcard h3{font-family:var(--f-body);font-weight:800;font-size:19px}
 .pcard p{font-size:14.5px;line-height:1.55}
