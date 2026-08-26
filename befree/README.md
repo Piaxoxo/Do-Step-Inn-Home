@@ -1,0 +1,139 @@
+# Be Free Hostel — Website
+
+> **Be Free. Be You. Be Here.**
+> Beingasse 13, 1150 Wien · befree-hostel@dostepinn.at · +43 699 19232769
+
+A bilingual (EN/DE) single-page site for Be Free Hostel. Static, no build step
+for the site itself — open `index.html` and it runs.
+
+```bash
+python3 -m http.server 8080     # from the repo root
+# → http://localhost:8080/befree/
+```
+
+## What's on the page
+
+| Section | Content |
+|---|---|
+| Hero | *Be Free. Be You. Be Here.* over a canvas field of colour-cycling flowers |
+| Ticker | TOP DESTINATION · VIENNA · BEINGASSE 13 · BE FREE HOSTEL, endless |
+| Location | Turquoise band — the neighbourhood, four markers, distances as stickers |
+| Check-in | Pink band — the three steps, plus the phone number for when the QR fails |
+| Rooms | Capsule · Classic dorm · Private room, as pastel cards |
+| Why Be Free | Freedom, together, clean, colour |
+| Flower gallery | Scroll-driven 3D: every petal is a photograph with its own depth map |
+| Gallery | Plain grid, click to enlarge, keyboard-navigable lightbox |
+| Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk, groups |
+| Book | Pink band |
+| Contact | Email and phone |
+
+## Design system
+
+Every brand colour was sampled from the real logo artwork
+(`assets/img/logo-befree.png`), then **pink was promoted to lead**: it carries
+booking, emphasis and the big bands, and nothing else uses it.
+
+| Token | Hex | Role |
+|---|---|---|
+| `--pink` | `#FF3D9A` | Booking, emphasis. Never decorative. |
+| `--pink-mid` | `#F97CB6` | Full-bleed bands |
+| `--pink-soft` | `#FFD9E9` | Cards, oversized background wordmarks |
+| `--ink` | `#0B0B0C` | Every outline and all type |
+| `--turq` | `#4FC3CE` | The cool counterweight — location, practical info |
+| `--gold` | `#E4B430` | The most common logo colour — ticker, brand moments |
+| `--orange` `--violet` `--leaf` `--cherry` | | Flower colours |
+| `--paper` | `#FFF7E4` | Warm ground, pulled toward the gold. Never pure white. |
+
+**Type:** Bagel Fat One (statements) · Shrikhand (headings) · Karla (body) ·
+DM Mono (labels). Deliberately no graffiti face — the street-art feel comes
+from stickers, hard outlines and offset shadows, not from a costume font.
+
+**Components:** sticker tags, pill buttons with a circled arrow, pastel cards,
+full-bleed colour bands, oversized wordmarks that bleed past both edges.
+
+The site commits to one bright look on purpose and has no dark mode — every
+colour is painted explicitly, so it renders the same everywhere.
+
+## Languages
+
+English is the source of truth and lives in the HTML, so the page reads
+correctly even if JavaScript never runs. German lives in the `DE` dictionary at
+the top of `assets/js/befree.js`.
+
+- `data-i18n="key"` swaps `textContent`, `data-i18n-html="key"` swaps `innerHTML`
+  (used where a line break matters).
+- Order of precedence: `?lang=de` → remembered choice → browser language.
+- **To change a German string,** edit the `DE` dictionary. **To change an English
+  string,** edit the HTML — and only add a `DE` entry if the German should differ.
+
+The legal pages stay German-only. That is the legally clean option for a business
+operating in Austria.
+
+## The flower gallery
+
+`assets/js/flower.js` draws eight petals, each one a photograph, each with a
+**depth map** that gives a flat photo real parallax: the foreground shifts
+further than the back wall as you move the pointer or tilt the phone.
+
+It stands down quietly — the whole section hides itself — when there is no
+WebGL or the device reports under 2 GB of memory. Under
+`prefers-reduced-motion` it draws one static, fully open frame. The plain
+gallery below carries the same photographs either way, so nothing is lost.
+
+three.js is vendored at `assets/vendor/three.module.min.js` (v0.169.0) rather
+than loaded from a CDN, so the page has no third-party runtime dependency.
+
+## Replacing the photos
+
+Drop a new file over the old one, keep the name, done. Every slot falls back to
+nothing gracefully, and the gallery labels live in `PHOTOS` in `befree.js`.
+
+| Slot | Files | Size |
+|---|---|---|
+| Flower petals | `petal-1-capsule.jpg` … `petal-8-hangout.jpg` | 700 × 1130, portrait |
+| Petal depth maps | `petal-N-*-depth.png` | 224 × 360, greyscale |
+| Gallery | `gallery-01-room.jpg` … `gallery-12-evening.jpg` | 1400 × 1000, landscape |
+| Room cards | `room-capsule.jpg` `room-dorm.jpg` `room-private.jpg` | 1000 × 750 |
+
+### Regenerating the depth maps
+
+A petal photo needs a matching `-depth.png` or its parallax goes flat. The maps
+here are **estimated** from image geometry and brightness — floor near, back
+wall far, bright reads as far — deliberately kept low-frequency, because a
+smooth depth map never smears the parallax.
+
+For production, run a real monocular depth model (Depth Anything V2 or MiDaS)
+over each petal photo, save the result greyscale at 224 × 360 with a light
+blur, and drop it in under the same name. Nothing in the page changes.
+
+## Elementor / WordPress
+
+```bash
+node scripts/build-befree.mjs      # → befree-elementor/index.html
+```
+
+One self-contained file: CSS, JavaScript and three.js inlined, images pulled
+from the GitHub Pages URL. Paste it into a single **HTML widget** on a page set
+to the **Elementor Canvas** layout (Page settings → Page Layout → Canvas), so
+the theme's own header and footer step aside — the page brings its own fixed
+navigation and full-height hero.
+
+Legal links are rewritten to WordPress slugs (`/impressum/`, `/datenschutz/`,
+`/agb/`), so create those pages and the footer links resolve.
+
+## Still open
+
+- [ ] **Facts to confirm.** Prices, bed counts, exact quiet hours, what is
+      included, and whether luggage storage exists. Anything unconfirmed is
+      phrased cautiously or left out — see the copy in `index.html`.
+- [ ] **Booking engine.** `Book now` currently opens an email. Point it at the
+      real engine once the property ID is known.
+- [ ] **Legal pages.** `impressum.html`, `datenschutz.html` and `agb.html` are
+      linked from the footer but not written yet. They must name the correct
+      operating company and be reviewed by the operator — not something to
+      generate unchecked.
+- [ ] **Own repository.** This lives under `befree/` for now because creating
+      `Piaxoxo/Be-Free-Hostel` was refused (`403`). Once it exists, this folder
+      moves across unchanged.
+- [ ] **Domain.** `befree-hostel.com` currently serves an unfilled
+      "Travel Magazine" theme.
