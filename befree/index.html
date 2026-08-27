@@ -302,14 +302,14 @@
     <span class="eyebrow" data-i18n="bk.eyebrow">Book your stay</span>
     <h2 class="t-dsp" data-i18n-html="bk.h">Be Free. Be You.<br />Be Here.</h2>
     <p class="lede" data-i18n="bk.lede">Pick your dates, pay online, and your key arrives on your phone. That is the whole process.</p>
-    <!-- UP Hotel IBE. Drop Be Free's own key into ibe-key and the widget
-         replaces the fallback below on its own. Do NOT reuse another
-         house's key — guests would book the wrong hotel. -->
+    <!-- UP Hotel IBE — Be Free's own property key. Never swap in another
+         house's key; guests would book the wrong hotel. Blank the key and
+         the widget hides itself, leaving the mail/phone fallback below. -->
     <div class="ibe" id="ibe" hidden>
-      <ibe-up ibe-key="" language="en"></ibe-up>
+      <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
     </div>
 
-    <div id="book-fallback" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+    <div class="book-fb" id="book-fallback">
       <div style="display:flex;flex-wrap:wrap;gap:12px">
         <a class="pill" href="mailto:befree-hostel@dostepinn.at" style="--pc:#FFFFFF"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
         <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
@@ -392,11 +392,11 @@
   </div>
 </div>
 
-<!-- Booking engine (UP Hotel IBE) — loaded only when a key is configured -->
-<link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
-<script src="https://ibe.uphotel.agency/ibe.min.js"></script>
-
 <script src="assets/js/befree.js"></script>
 <script type="module" src="assets/js/flower.js"></script>
+
+<!-- Booking engine (UP Hotel IBE) — their snippet, last before </body> -->
+<script type="text/javascript" src="https://ibe.uphotel.agency/ibe.min.js"></script>
+<link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
 </body>
 </html>

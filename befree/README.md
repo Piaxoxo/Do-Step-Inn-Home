@@ -132,11 +132,13 @@ Legal links are rewritten to WordPress slugs (`/impressum/`, `/datenschutz/`,
       `<img>` the moment one exists.
 - [ ] **Other facts to confirm.** Prices, bed counts, exact quiet hours, what
       is included, and whether luggage storage exists.
-- [ ] **Booking engine.** The UP Hotel IBE is wired into the Book section but
-      has no key. Put Be Free's own `ibe-key` on the `<ibe-up>` element in
-      `index.html` and the widget replaces the mail/phone fallback by itself.
-      Never reuse another house's key — Do Step Inn Home's is
-      `35b41b51-…`, and using it would send guests to the wrong hotel.
+- [x] **Booking engine.** The UP Hotel IBE is live in the Book section with
+      Be Free's own key, `75e0a485-…`. It follows the page language: because
+      the widget reads `language` only when it initialises, a switch swaps in
+      a fresh `<ibe-up>` rather than editing the attribute. Blank the key and
+      the widget hides itself, leaving the mail/phone fallback. Never use
+      another house's key — Do Step Inn Home's `35b41b51-…` would send guests
+      to the wrong hotel.
 - [ ] **Legal pages.** `impressum.html`, `datenschutz.html` and `agb.html` are
       linked from the footer but not written yet. They must name the correct
       operating company and be reviewed by the operator — not something to

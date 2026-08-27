@@ -169,6 +169,7 @@
     if (de) de.setAttribute("aria-pressed", String(lang === "de"));
 
     relabelGallery();
+    syncWidgetLanguage();
     if (lightbox.isOpen()) lightbox.refresh();
 
     if (remember) { try { localStorage.setItem("befree-lang", lang); } catch (e) {} }
@@ -431,6 +432,20 @@
     box.hidden = false;
     var fb = document.getElementById("book-fallback");
     if (fb) fb.hidden = true;
+    syncWidgetLanguage();
+  }
+
+  /* The IBE reads its language attribute once, when it initialises, so a
+     language switch needs a fresh element rather than a changed attribute. */
+  function syncWidgetLanguage() {
+    var box = document.getElementById("ibe");
+    if (!box || box.hidden) return;
+    var el = box.querySelector("ibe-up");
+    if (!el || el.getAttribute("language") === lang) return;
+    var fresh = document.createElement("ibe-up");
+    fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
+    fresh.setAttribute("language", lang);
+    box.replaceChild(fresh, el);
   }
 
   function menu() {
@@ -457,7 +472,6 @@
   heroField();
   reveals();
   menu();
-  bookingWidget();
 
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
@@ -471,6 +485,7 @@
   try { saved = localStorage.getItem("befree-lang"); } catch (e) {}
   var auto = (navigator.language || "en").toLowerCase().indexOf("de") === 0 ? "de" : "en";
   setLang(q || saved || auto, false);
+  bookingWidget();
 
   /* the 3D flower asks whether it may run */
   window.BeFree = { reducedMotion: RM, photos: PHOTOS, palette: PAL };
