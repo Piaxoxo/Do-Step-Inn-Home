@@ -1,0 +1,97 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Be Free Hostel — legal pages (Impressum, Datenschutz, AGB).
+   Loads on top of befree.css and borrows all of its tokens: same brand,
+   quieter register. German only, by design.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.lg-nav{
+  position:sticky;top:0;z-index:40;
+  background:rgba(var(--paper-rgb),.94);border-bottom:2px solid var(--ink);
+  backdrop-filter:blur(10px);
+}
+.lg-nav__in{display:flex;align-items:center;gap:16px;min-height:74px;flex-wrap:wrap}
+.lg-nav__brand{flex:none;text-decoration:none;display:flex;align-items:center}
+.lg-nav__brand img{height:44px;width:auto}
+.lg-back{
+  margin-left:auto;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--f-body);font-weight:800;font-size:14px;text-decoration:none;
+  border:2px solid var(--ink);border-radius:99px;padding:7px 16px;
+  background:var(--card);color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .14s ease,box-shadow .14s ease;
+}
+.lg-back:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+
+.lg-head{
+  background:var(--lgc,var(--pink-mid));color:var(--ink);
+  border-bottom:2px solid var(--ink);
+  padding-block:clamp(38px,6vw,68px);
+}
+.lg-head .eyebrow{color:rgba(11,11,12,.66)}
+.lg-head .eyebrow::before{border-color:var(--ink)}
+.lg-head h1{
+  font-family:var(--f-display);font-weight:400;
+  font-size:clamp(30px,5.4vw,54px);line-height:1.04;margin:14px 0 0;
+}
+.lg-head p{margin-top:12px;max-width:62ch;font-size:clamp(15px,1.8vw,17px);line-height:1.6}
+
+.lg-body{padding-block:clamp(38px,6vw,72px)}
+/* the element carries .wrap too, whose margin-inline:auto would centre the
+   narrower column away from the heading above it */
+.lg-body .col{max-width:68ch;margin-inline:0}
+
+.lg-body h2{
+  font-family:var(--f-body);font-weight:800;
+  font-size:clamp(18px,2.2vw,22px);line-height:1.3;
+  margin:clamp(28px,3.6vw,44px) 0 10px;
+}
+.lg-body h2:first-child{margin-top:0}
+.lg-body h3{
+  font-family:var(--f-body);font-weight:800;font-size:16px;
+  margin:22px 0 6px;
+}
+.lg-body p{margin:0 0 12px;font-size:16px;line-height:1.7}
+.lg-body ul{margin:0 0 14px;padding-left:22px}
+.lg-body li{margin-bottom:7px;font-size:16px;line-height:1.65}
+.lg-body a{text-decoration-color:var(--pink)}
+.lg-body strong{font-weight:800}
+
+/* the block of company facts */
+.lg-facts{
+  border:2px solid var(--ink);border-radius:20px;background:var(--card);
+  box-shadow:var(--shadow-sm);padding:clamp(18px,2.4vw,24px);
+  margin-bottom:clamp(22px,3vw,32px);
+}
+.lg-facts dl{margin:0;display:grid;gap:2px 20px}
+@media(min-width:620px){.lg-facts dl{grid-template-columns:auto 1fr}}
+.lg-facts dt{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--text-dim);padding-top:7px;
+}
+.lg-facts dd{margin:0;padding-bottom:7px;font-size:16px;line-height:1.55}
+.lg-facts dd b{font-weight:800}
+
+/* a fact still to be confirmed by the operator — visible, never silent */
+.lg-check{
+  border:2px dashed var(--cherry);border-radius:16px;
+  background:color-mix(in srgb, var(--cherry) 8%, var(--card));
+  padding:14px 16px;margin:0 0 16px;
+  font-size:15px;line-height:1.6;
+}
+.lg-check b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:5px;color:var(--cherry)}
+
+.lg-foot{
+  background:var(--ink);color:var(--paper);
+  border-top:2px solid var(--ink);padding-block:34px;font-size:14px;
+}
+.lg-foot__in{display:flex;flex-wrap:wrap;gap:14px 22px;justify-content:space-between;align-items:center}
+.lg-foot a{color:var(--paper)}
+.lg-foot nav{display:flex;flex-wrap:wrap;gap:16px}
+.lg-foot__c{font-family:var(--f-mono);font-size:12px;color:rgba(255,247,228,.6)}
+
+@media print{
+  .lg-nav,.lg-back{display:none}
+  .lg-head{background:none;border-bottom:1px solid #000}
+  .lg-foot{background:none;color:#000;border-top:1px solid #000}
+  .lg-body .col{max-width:none}
+}

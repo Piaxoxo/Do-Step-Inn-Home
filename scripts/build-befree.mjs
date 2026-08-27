@@ -55,10 +55,12 @@ function absolutise(html) {
     /* legal pages become WordPress slugs */
     .replace(/href="impressum\.html"/g,   'href="/impressum/"')
     .replace(/href="datenschutz\.html"/g, 'href="/datenschutz/"')
-    .replace(/href="agb\.html"/g,         'href="/agb/"');
+    .replace(/href="agb\.html"/g,         'href="/agb/"')
+    .replace(/href="index\.html"/g,       'href="/"');
 }
 
-const css    = read('assets/css/befree.css');
+const css      = read('assets/css/befree.css');
+const legalCss = read('assets/css/legal.css');
 const main   = read('assets/js/befree.js');
 const three  = threeAsGlobal(read('assets/vendor/three.module.min.js'));
 const flower = flowerAsScript(read('assets/js/flower.js'));
@@ -95,6 +97,16 @@ for (const token of ['assets/css/befree.css', 'assets/js/befree.js', 'assets/js/
   if (html.includes(`"${token}"`)) throw new Error(`not inlined: ${token}`);
 }
 
-const dst = path.join(OUT, 'index.html');
-fs.writeFileSync(dst, html);
-console.log(`befree-elementor/index.html  ${(html.length / 1048576).toFixed(2)} MB`);
+fs.writeFileSync(path.join(OUT, 'index.html'), html);
+console.log(`index.html        ${(html.length / 1024).toFixed(0)} kB`);
+
+/* ── the legal pages: same treatment, only stylesheets to inline ── */
+for (const page of ['impressum.html', 'datenschutz.html', 'agb.html']) {
+  let lg = read(page);
+  lg = lg.replace('<link rel="stylesheet" href="assets/css/befree.css" />', () => `<style>\n${css}\n</style>`);
+  lg = lg.replace('<link rel="stylesheet" href="assets/css/legal.css" />',  () => `<style>\n${legalCss}\n</style>`);
+  lg = absolutise(lg);
+  if (lg.includes('"assets/css/')) throw new Error(`not inlined: ${page}`);
+  fs.writeFileSync(path.join(OUT, page), lg);
+  console.log(`${page.padEnd(17)} ${(lg.length / 1024).toFixed(0)} kB`);
+}

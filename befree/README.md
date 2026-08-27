@@ -24,8 +24,10 @@ python3 -m http.server 8080     # from the repo root
 | Flower gallery | Scroll-driven 3D: every petal is a photograph with its own depth map |
 | Gallery | Plain grid, click to enlarge, keyboard-navigable lightbox |
 | Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk, groups |
-| Book | Pink band |
+| Book | Pink band with the UP Hotel booking widget |
 | Contact | Email and phone |
+
+Plus three German-only legal pages: `impressum.html`, `datenschutz.html`, `agb.html`.
 
 ## Design system
 
@@ -118,8 +120,9 @@ to the **Elementor Canvas** layout (Page settings → Page Layout → Canvas), s
 the theme's own header and footer step aside — the page brings its own fixed
 navigation and full-height hero.
 
-Legal links are rewritten to WordPress slugs (`/impressum/`, `/datenschutz/`,
-`/agb/`), so create those pages and the footer links resolve.
+The three legal pages are built the same way, into `befree-elementor/`. Legal
+links and the home link are rewritten to WordPress slugs (`/impressum/`,
+`/datenschutz/`, `/agb/`, `/`), so create those pages and every link resolves.
 
 ## Still open
 
@@ -139,10 +142,22 @@ Legal links are rewritten to WordPress slugs (`/impressum/`, `/datenschutz/`,
       the widget hides itself, leaving the mail/phone fallback. Never use
       another house's key — Do Step Inn Home's `35b41b51-…` would send guests
       to the wrong hotel.
-- [ ] **Legal pages.** `impressum.html`, `datenschutz.html` and `agb.html` are
-      linked from the footer but not written yet. They must name the correct
-      operating company and be reviewed by the operator — not something to
-      generate unchecked.
+- [ ] **Legal pages — three facts still to confirm.** `impressum.html`,
+      `datenschutz.html` and `agb.html` are written, in German only, adapted
+      from the Do Step Inn Home pages: same operating company (Kern
+      Beherbergungsbetriebs GmbH, UID, Firmenbuch, Geschäftsführung), Be Free's
+      own establishment address and contact.
+
+      The privacy policy was **not** copied wholesale — it describes what this
+      site actually does. Google Maps is gone (Be Free embeds no map), and the
+      language preference stored in `localStorage` is disclosed. Three
+      processors could not be verified for Be Free and are marked in the page
+      with a dashed red box: **hosting**, the **property-management system**
+      (Do Step Inn Home uses apaleo) and the **check-in service** (Do Step Inn
+      Home uses straiv). Fill those in and delete the boxes before publishing —
+      a wrong processor named in a privacy policy is worse than none.
+
+      Have the operator read all three before they go live.
 - [ ] **Own repository.** This lives under `befree/` for now because creating
       `Piaxoxo/Be-Free-Hostel` was refused (`403`). Once it exists, this folder
       moves across unchanged.
