@@ -110,15 +110,27 @@
 <!-- ══════════════════════════════════════ BOOK BAR ══════════════ -->
 <!-- Unhidden by befree.js once the IBE key checks out, so a keyless or
      unreachable engine never leaves an empty band under the hero. -->
-<section class="bookbar" id="bookbar" data-ibe-host hidden aria-labelledby="bookbar-h">
+<section class="bookbar" id="bookbar" data-ibe-host aria-labelledby="bookbar-h">
   <div class="wrap bookbar__in">
     <div class="bookbar__t">
       <span class="eyebrow" data-i18n="bar.k">Free tonight?</span>
       <h2 class="t-dsp" id="bookbar-h" data-i18n="bar.h">Find your bed.</h2>
       <p class="small" data-i18n="bar.p">Pick your dates and see what is free — payment online, key on your phone.</p>
     </div>
-    <div class="ibe">
-      <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
+    <div class="bookbar__w">
+      <div class="ibe" hidden><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
+      <form class="ibeform" data-ibe-form>
+        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
+          <input type="date" name="in" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
+          <input type="date" name="out" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
+          <select name="pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select></label>
+        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
+      </form>
     </div>
   </div>
 </section>
@@ -319,18 +331,27 @@
     <h2 class="t-dsp" data-i18n-html="bk.h">Be Free. Be You.<br />Be Here.</h2>
     <p class="lede" data-i18n="bk.lede">Pick your dates, pay online, and your key arrives on your phone. That is the whole process.</p>
     <!-- UP Hotel IBE — Be Free's own property key. Never swap in another
-         house's key; guests would book the wrong hotel. Blank the key and
-         the widget hides itself, leaving the mail/phone fallback below. -->
-    <div class="ibe" id="ibe" data-ibe-host hidden>
-      <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
+         house's key; guests would book the wrong hotel. If the engine cannot
+         load, the form below takes over on its own. -->
+    <div class="bookband" data-ibe-host>
+      <div class="ibe" hidden><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
+      <form class="ibeform" data-ibe-form>
+        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
+          <input type="date" name="in" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
+          <input type="date" name="out" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
+          <select name="pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select></label>
+        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
+      </form>
     </div>
 
-    <div class="book-fb" id="book-fallback">
-      <div style="display:flex;flex-wrap:wrap;gap:12px">
-        <a class="pill" href="mailto:befree-hostel@dostepinn.at" style="--pc:#FFFFFF"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
-        <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
-      </div>
-      <p class="small" style="color:rgba(11,11,12,.72)" data-i18n="bk.note">The live booking engine is not connected yet — until it is, mail or call us and we will confirm your bed by hand.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
+      <a class="pill pill--ghost" href="tel:+4369919232769">+43 699 19232769</a>
     </div>
   </div>
 </section>

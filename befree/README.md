@@ -17,7 +17,7 @@ python3 -m http.server 8080     # from the repo root
 |---|---|
 | Hero | *Be Free. Be You. Be Here.* over a canvas field of colour-cycling flowers |
 | Ticker | TOP DESTINATION · VIENNA · BEINGASSE 13 · BE FREE HOSTEL, endless |
-| Book bar | Gold band under the hero — the booking widget where intent is highest |
+| Book bar | Gold band under the hero — booking where intent is highest |
 | Location | Turquoise band — the neighbourhood, four markers, distances as stickers |
 | Check-in | Pink band — the three steps, plus the phone number for when the QR fails |
 | Rooms | Private room · Capsule bed · Classic dorm, as pastel cards |
@@ -25,7 +25,7 @@ python3 -m http.server 8080     # from the repo root
 | Flower gallery | Scroll-driven 3D: every petal is a photograph with its own depth map |
 | Gallery | Plain grid, click to enlarge, keyboard-navigable lightbox |
 | Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk, groups |
-| Book | Pink band with the UP Hotel booking widget |
+| Book | Pink band — booking form, replaced by the UP Hotel widget when it loads |
 | Contact | Email and phone |
 
 Plus three German-only legal pages: `impressum.html`, `datenschutz.html`, `agb.html`.
@@ -149,9 +149,17 @@ links and the home link are rewritten to WordPress slugs (`/impressum/`,
       house's key — Do Step Inn Home's `35b41b51-…` would send guests to the
       wrong hotel.
 
+      **The booking form is the floor, not a stand-in.** Both hosts carry a
+      real form — check-in, check-out, guests — and it shows immediately, so
+      the section is never an empty frame. The widget takes over only once the
+      browser reports `<ibe-up>` as actually defined
+      (`customElements.whenDefined`), which covers a missing key, a blocked
+      script, an ad-blocker and a dead network with one path instead of four
+      guesses. Submitting the form opens a mail with the dates filled in.
+
       **Not verified here:** `ibe.uphotel.agency` is blocked by this
-      environment's egress proxy, so the rendered booking form has never been
-      seen. Check both widgets once on a real host.
+      environment's egress proxy, so the rendered widget has never been seen —
+      only the form it hands over from. Check both on a real host.
 - [ ] **Legal pages — three facts still to confirm.** `impressum.html`,
       `datenschutz.html` and `agb.html` are written, in German only, adapted
       from the Do Step Inn Home pages: same operating company (Kern

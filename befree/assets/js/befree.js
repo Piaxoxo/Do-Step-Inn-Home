@@ -43,6 +43,9 @@
     "loc.s1": "300 m zur U3", "loc.s2": "200 m zum Bus",
     "loc.s3": "6 Min zur Stadthalle", "loc.s4": "Westbahnhof zu Fuß",
 
+    "bk.in": "Anreise", "bk.out": "Abreise", "bk.pax": "Gäste",
+    "bk.go": "Verfügbarkeit prüfen",
+
     "bar.k": "Heute Nacht frei?",
     "bar.h": "Finde dein Bett.",
     "bar.p": "Termin wählen und sehen, was frei ist — Zahlung online, Schlüssel aufs Handy.",
@@ -424,35 +427,77 @@
     els.forEach(function (e) { io.observe(e); });
   }
 
-  /* Every booking widget on the page comes up together, and only once
-     Be Free's own IBE key checks out — a keyless or misconfigured engine
-     leaves no empty frames behind, just the mail/phone fallback. */
+  /* Booking. The form shows immediately — it is useful on its own and
+     leaves no empty frame — and the UP Hotel widget takes over only once
+     the browser confirms <ibe-up> is really defined. That covers a missing
+     key, a blocked script, an ad-blocker and a dead network with one path
+     instead of four guesses. */
   function bookingWidget() {
     var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
-    var live = false;
-    hosts.forEach(function (host) {
-      var el = host.querySelector("ibe-up");
-      var key = el && el.getAttribute("ibe-key");
-      if (!key || !key.trim()) return;
-      host.hidden = false;
-      live = true;
-    });
-    var fb = document.getElementById("book-fallback");
-    if (fb) fb.hidden = live;
-    syncWidgetLanguage();
+    if (!hosts.length) return;
+
+    function show(useWidget) {
+      hosts.forEach(function (host) {
+        var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-form]");
+        if (w) w.hidden = !useWidget;
+        if (f) f.hidden = useWidget;
+      });
+      if (useWidget) syncWidgetLanguage();
+    }
+
+    show(false);
+    bookingForm();
+
+    var el = document.querySelector("[data-ibe-host] ibe-up");
+    var key = el && el.getAttribute("ibe-key");
+    if (!key || !key.trim() || !window.customElements) return;
+
+    if (customElements.get("ibe-up")) { show(true); return; }
+    customElements.whenDefined("ibe-up").then(function () { show(true); });
   }
 
   /* The IBE reads its language attribute once, when it initialises, so a
      language switch needs a fresh element rather than a changed attribute. */
   function syncWidgetLanguage() {
-    [].forEach.call(document.querySelectorAll("[data-ibe-host]"), function (host) {
-      if (host.hidden) return;
-      var el = host.querySelector("ibe-up");
+    [].forEach.call(document.querySelectorAll("[data-ibe-host] .ibe"), function (box) {
+      if (box.hidden) return;
+      var el = box.querySelector("ibe-up");
       if (!el || el.getAttribute("language") === lang) return;
       var fresh = document.createElement("ibe-up");
       fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
       fresh.setAttribute("language", lang);
       el.parentNode.replaceChild(fresh, el);
+    });
+  }
+
+  /* Dates cannot be in the past, check-out cannot precede check-in, and a
+     submitted form becomes a mail we can answer by hand. */
+  function bookingForm() {
+    var iso = function (d) { return d.toISOString().slice(0, 10); };
+    var today = iso(new Date());
+
+    [].forEach.call(document.querySelectorAll("[data-ibe-form]"), function (form) {
+      var inp = form.querySelector('input[name="in"]'),
+          out = form.querySelector('input[name="out"]');
+      inp.min = out.min = today;
+
+      inp.addEventListener("change", function () {
+        var next = new Date(inp.value);
+        next.setDate(next.getDate() + 1);
+        out.min = iso(next);
+        if (out.value && out.value <= inp.value) out.value = iso(next);
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var pax = form.querySelector('select[name="pax"]').value;
+        var subject = lang === "de" ? "Anfrage Be Free Hostel" : "Booking request — Be Free Hostel";
+        var body = lang === "de"
+          ? "Anreise: " + inp.value + "\nAbreise: " + out.value + "\nGäste: " + pax + "\n\n"
+          : "Check-in: " + inp.value + "\nCheck-out: " + out.value + "\nGuests: " + pax + "\n\n";
+        location.href = "mailto:befree-hostel@dostepinn.at?subject=" +
+          encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      });
     });
   }
 

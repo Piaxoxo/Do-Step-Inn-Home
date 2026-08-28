@@ -419,6 +419,35 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .bookbar__t h2{font-size:clamp(24px,3.4vw,38px)}
 .bookbar__t p{max-width:38ch;color:rgba(11,11,12,.78)}
 
+/* the booking form: what shows until the IBE takes over, and whenever
+   the engine cannot load at all */
+.ibeform{
+  display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;
+  background:var(--card);border:2px solid var(--ink);border-radius:22px;
+  padding:clamp(14px,2vw,20px);box-shadow:var(--shadow-sm);
+}
+.ibeform[hidden]{display:none}
+.ibeform__f{display:flex;flex-direction:column;gap:5px;flex:1 1 140px;min-width:0}
+.ibeform__f span{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--text-dim);
+}
+.ibeform input,.ibeform select{
+  font-family:var(--f-body);font-size:15.5px;font-weight:700;color:var(--text);
+  background:var(--paper);border:2px solid var(--ink);border-radius:14px;
+  padding:9px 12px;width:100%;min-width:0;
+}
+.ibeform input:focus-visible,.ibeform select:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.ibeform .pill{flex:0 0 auto}
+@media(max-width:520px){
+  .ibeform{gap:10px}
+  .ibeform__f{flex:1 1 100%}
+  .ibeform .pill{width:100%;justify-content:space-between}
+}
+
+.bookbar__w{display:flex;flex-direction:column;gap:12px;min-width:0}
+.bookband{margin-bottom:4px}
+
 /* ═══ A BOOKING BUTTON THAT FOLLOWS ON PHONES ═════════════════════ */
 .bookfab{
   position:fixed;z-index:45;left:50%;bottom:16px;transform:translate(-50%,140%);
@@ -566,15 +595,27 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 <!-- ══════════════════════════════════════ BOOK BAR ══════════════ -->
 <!-- Unhidden by befree.js once the IBE key checks out, so a keyless or
      unreachable engine never leaves an empty band under the hero. -->
-<section class="bookbar" id="bookbar" data-ibe-host hidden aria-labelledby="bookbar-h">
+<section class="bookbar" id="bookbar" data-ibe-host aria-labelledby="bookbar-h">
   <div class="wrap bookbar__in">
     <div class="bookbar__t">
       <span class="eyebrow" data-i18n="bar.k">Free tonight?</span>
       <h2 class="t-dsp" id="bookbar-h" data-i18n="bar.h">Find your bed.</h2>
       <p class="small" data-i18n="bar.p">Pick your dates and see what is free — payment online, key on your phone.</p>
     </div>
-    <div class="ibe">
-      <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
+    <div class="bookbar__w">
+      <div class="ibe" hidden><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
+      <form class="ibeform" data-ibe-form>
+        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
+          <input type="date" name="in" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
+          <input type="date" name="out" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
+          <select name="pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select></label>
+        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
+      </form>
     </div>
   </div>
 </section>
@@ -775,18 +816,27 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     <h2 class="t-dsp" data-i18n-html="bk.h">Be Free. Be You.<br />Be Here.</h2>
     <p class="lede" data-i18n="bk.lede">Pick your dates, pay online, and your key arrives on your phone. That is the whole process.</p>
     <!-- UP Hotel IBE — Be Free's own property key. Never swap in another
-         house's key; guests would book the wrong hotel. Blank the key and
-         the widget hides itself, leaving the mail/phone fallback below. -->
-    <div class="ibe" id="ibe" data-ibe-host hidden>
-      <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
+         house's key; guests would book the wrong hotel. If the engine cannot
+         load, the form below takes over on its own. -->
+    <div class="bookband" data-ibe-host>
+      <div class="ibe" hidden><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
+      <form class="ibeform" data-ibe-form>
+        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
+          <input type="date" name="in" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
+          <input type="date" name="out" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
+          <select name="pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select></label>
+        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
+      </form>
     </div>
 
-    <div class="book-fb" id="book-fallback">
-      <div style="display:flex;flex-wrap:wrap;gap:12px">
-        <a class="pill" href="mailto:befree-hostel@dostepinn.at" style="--pc:#FFFFFF"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
-        <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
-      </div>
-      <p class="small" style="color:rgba(11,11,12,.72)" data-i18n="bk.note">The live booking engine is not connected yet — until it is, mail or call us and we will confirm your bed by hand.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
+      <a class="pill pill--ghost" href="tel:+4369919232769">+43 699 19232769</a>
     </div>
   </div>
 </section>
@@ -913,6 +963,9 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     "loc.m4d": "Wiens größte Konzert- und Veranstaltungshalle liegt sechs Gehminuten entfernt.",
     "loc.s1": "300 m zur U3", "loc.s2": "200 m zum Bus",
     "loc.s3": "6 Min zur Stadthalle", "loc.s4": "Westbahnhof zu Fuß",
+
+    "bk.in": "Anreise", "bk.out": "Abreise", "bk.pax": "Gäste",
+    "bk.go": "Verfügbarkeit prüfen",
 
     "bar.k": "Heute Nacht frei?",
     "bar.h": "Finde dein Bett.",
@@ -1295,35 +1348,77 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     els.forEach(function (e) { io.observe(e); });
   }
 
-  /* Every booking widget on the page comes up together, and only once
-     Be Free's own IBE key checks out — a keyless or misconfigured engine
-     leaves no empty frames behind, just the mail/phone fallback. */
+  /* Booking. The form shows immediately — it is useful on its own and
+     leaves no empty frame — and the UP Hotel widget takes over only once
+     the browser confirms <ibe-up> is really defined. That covers a missing
+     key, a blocked script, an ad-blocker and a dead network with one path
+     instead of four guesses. */
   function bookingWidget() {
     var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
-    var live = false;
-    hosts.forEach(function (host) {
-      var el = host.querySelector("ibe-up");
-      var key = el && el.getAttribute("ibe-key");
-      if (!key || !key.trim()) return;
-      host.hidden = false;
-      live = true;
-    });
-    var fb = document.getElementById("book-fallback");
-    if (fb) fb.hidden = live;
-    syncWidgetLanguage();
+    if (!hosts.length) return;
+
+    function show(useWidget) {
+      hosts.forEach(function (host) {
+        var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-form]");
+        if (w) w.hidden = !useWidget;
+        if (f) f.hidden = useWidget;
+      });
+      if (useWidget) syncWidgetLanguage();
+    }
+
+    show(false);
+    bookingForm();
+
+    var el = document.querySelector("[data-ibe-host] ibe-up");
+    var key = el && el.getAttribute("ibe-key");
+    if (!key || !key.trim() || !window.customElements) return;
+
+    if (customElements.get("ibe-up")) { show(true); return; }
+    customElements.whenDefined("ibe-up").then(function () { show(true); });
   }
 
   /* The IBE reads its language attribute once, when it initialises, so a
      language switch needs a fresh element rather than a changed attribute. */
   function syncWidgetLanguage() {
-    [].forEach.call(document.querySelectorAll("[data-ibe-host]"), function (host) {
-      if (host.hidden) return;
-      var el = host.querySelector("ibe-up");
+    [].forEach.call(document.querySelectorAll("[data-ibe-host] .ibe"), function (box) {
+      if (box.hidden) return;
+      var el = box.querySelector("ibe-up");
       if (!el || el.getAttribute("language") === lang) return;
       var fresh = document.createElement("ibe-up");
       fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
       fresh.setAttribute("language", lang);
       el.parentNode.replaceChild(fresh, el);
+    });
+  }
+
+  /* Dates cannot be in the past, check-out cannot precede check-in, and a
+     submitted form becomes a mail we can answer by hand. */
+  function bookingForm() {
+    var iso = function (d) { return d.toISOString().slice(0, 10); };
+    var today = iso(new Date());
+
+    [].forEach.call(document.querySelectorAll("[data-ibe-form]"), function (form) {
+      var inp = form.querySelector('input[name="in"]'),
+          out = form.querySelector('input[name="out"]');
+      inp.min = out.min = today;
+
+      inp.addEventListener("change", function () {
+        var next = new Date(inp.value);
+        next.setDate(next.getDate() + 1);
+        out.min = iso(next);
+        if (out.value && out.value <= inp.value) out.value = iso(next);
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var pax = form.querySelector('select[name="pax"]').value;
+        var subject = lang === "de" ? "Anfrage Be Free Hostel" : "Booking request — Be Free Hostel";
+        var body = lang === "de"
+          ? "Anreise: " + inp.value + "\nAbreise: " + out.value + "\nGäste: " + pax + "\n\n"
+          : "Check-in: " + inp.value + "\nCheck-out: " + out.value + "\nGuests: " + pax + "\n\n";
+        location.href = "mailto:befree-hostel@dostepinn.at?subject=" +
+          encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      });
     });
   }
 
