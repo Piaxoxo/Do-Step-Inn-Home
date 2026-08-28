@@ -14,6 +14,31 @@ const OUT  = path.join(ROOT, 'befree-elementor');
 const BASE = 'https://piaxoxo.github.io/Do-Step-Inn-Home/befree/';
 
 const read = f => fs.readFileSync(path.join(SRC, f), 'utf8');
+
+/* Pass --standalone to inline every photograph too: one file that needs no
+   host at all. Without it only the logo is embedded and the photos load from
+   GitHub Pages, which keeps the file small enough to paste comfortably. */
+const STANDALONE = process.argv.includes('--standalone');
+
+function dataUri(rel) {
+  const ext = path.extname(rel).toLowerCase();
+  const mime = ext === '.png' ? 'image/png'
+             : ext === '.svg' ? 'image/svg+xml'
+             : 'image/jpeg';
+  return `data:${mime};base64,` +
+    fs.readFileSync(path.join(SRC, rel)).toString('base64');
+}
+
+/* The brand must never depend on a host being up, so the logo is embedded
+   in every build — a broken logo is the one image nobody forgives. */
+const LOGO = dataUri('assets/img/logo-befree.png');
+
+const IMAGES = {};
+if (STANDALONE) {
+  for (const f of fs.readdirSync(path.join(SRC, 'assets/img'))) {
+    IMAGES['assets/img/' + f] = dataUri('assets/img/' + f);
+  }
+}
 fs.mkdirSync(OUT, { recursive: true });
 
 /* ── three.js ships as an ES module; turn its final export list into a
@@ -46,6 +71,19 @@ function flowerAsScript(src) {
 }
 
 function absolutise(html) {
+  /* only the visible logo — embedding it in the favicon link too would
+     double the weight of every page for an icon nobody misses */
+  html = html.replace(/src="assets\/img\/logo-befree\.png"/g, `src="${LOGO}"`);
+
+  if (STANDALONE) {
+    html = html
+      .replace(/(src|href)="(assets\/img\/[^"]+)"/g,
+               (m, a, p2) => IMAGES[p2] ? `${a}="${IMAGES[p2]}"` : m)
+      /* the gallery and the flower build their paths at runtime */
+      .replace(/"assets\/img\/"/g, 'BF_IMG_BASE')
+      .replace(/`assets\/img\/\$\{name\}/g, '`${BF_IMG_BASE}${name}');
+  }
+
   return html
     .replace(/(src|href)="assets\//g, `$1="${BASE}assets/`)
     .replace(/url\((['"]?)assets\//g, `url($1${BASE}assets/`)
@@ -84,6 +122,18 @@ html = html.replace(
 
 html = absolutise(html);
 
+if (STANDALONE) {
+  /* one map for every path the scripts assemble at runtime */
+  html = html.replace('</head>', () =>
+    `<script>\nwindow.__BFIMG = ${JSON.stringify(IMAGES)};\n` +
+    `function BF_IMG(p){ return window.__BFIMG[p] || p; }\n</script>\n</head>`);
+  html = html
+    .replace(/BF_IMG_BASE \+ p\.f \+ "\.jpg"/g, 'BF_IMG("assets/img/" + p.f + ".jpg")')
+    .replace(/`\$\{BF_IMG_BASE\}\$\{name\}\.jpg`/g, 'BF_IMG(`assets/img/${name}.jpg`)')
+    .replace(/`\$\{BF_IMG_BASE\}\$\{name\}-depth\.png`/g, 'BF_IMG(`assets/img/${name}-depth.png`)');
+  if (html.includes('BF_IMG_BASE')) throw new Error('a runtime image path was left unresolved');
+}
+
 /* Elementor Canvas gives the page the full width; make sure nothing in the
    theme can box the layout in */
 html = html.replace('</head>', `  <style>
@@ -97,8 +147,9 @@ for (const token of ['assets/css/befree.css', 'assets/js/befree.js', 'assets/js/
   if (html.includes(`"${token}"`)) throw new Error(`not inlined: ${token}`);
 }
 
-fs.writeFileSync(path.join(OUT, 'index.html'), html);
-console.log(`index.html        ${(html.length / 1024).toFixed(0)} kB`);
+const NAME = STANDALONE ? 'index-standalone.html' : 'index.html';
+fs.writeFileSync(path.join(OUT, NAME), html);
+console.log(`${NAME.padEnd(24)} ${(html.length / 1024).toFixed(0)} kB`);
 
 /* ── the legal pages: same treatment, only stylesheets to inline ── */
 for (const page of ['impressum.html', 'datenschutz.html', 'agb.html']) {
@@ -107,6 +158,7 @@ for (const page of ['impressum.html', 'datenschutz.html', 'agb.html']) {
   lg = lg.replace('<link rel="stylesheet" href="assets/css/legal.css" />',  () => `<style>\n${legalCss}\n</style>`);
   lg = absolutise(lg);
   if (lg.includes('"assets/css/')) throw new Error(`not inlined: ${page}`);
-  fs.writeFileSync(path.join(OUT, page), lg);
-  console.log(`${page.padEnd(17)} ${(lg.length / 1024).toFixed(0)} kB`);
+  const name = STANDALONE ? page.replace('.html', '-standalone.html') : page;
+  fs.writeFileSync(path.join(OUT, name), lg);
+  console.log(`${name.padEnd(24)} ${(lg.length / 1024).toFixed(0)} kB`);
 }

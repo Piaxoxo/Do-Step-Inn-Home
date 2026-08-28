@@ -112,18 +112,38 @@ blur, and drop it in under the same name. Nothing in the page changes.
 ## Elementor / WordPress
 
 ```bash
-node scripts/build-befree.mjs      # → befree-elementor/index.html
+node scripts/build-befree.mjs                # photos from GitHub Pages
+node scripts/build-befree.mjs --standalone   # photos embedded, needs no host
 ```
 
-One self-contained file: CSS, JavaScript and three.js inlined, images pulled
-from the GitHub Pages URL. Paste it into a single **HTML widget** on a page set
-to the **Elementor Canvas** layout (Page settings → Page Layout → Canvas), so
-the theme's own header and footer step aside — the page brings its own fixed
-navigation and full-height hero.
+Both write into `befree-elementor/`; `--standalone` adds a `-standalone`
+suffix so the two sets sit side by side.
 
-The three legal pages are built the same way, into `befree-elementor/`. Legal
-links and the home link are rewritten to WordPress slugs (`/impressum/`,
-`/datenschutz/`, `/agb/`, `/`), so create those pages and every link resolves.
+| Variant | index | Photos |
+|---|---|---|
+| default | ~800 kB | load from the GitHub Pages URL |
+| `--standalone` | ~4.3 MB | embedded as data URIs, no host needed |
+
+**The logo is embedded in both.** It is the one image nobody forgives when it
+breaks, so it never depends on a host being up. It is quantized to 256 colours
+at 600px wide — 32 kB instead of the 503 kB original, which was five times
+larger than anything the page ever displays.
+
+The default variant only works once the photos are reachable, so it needs this
+branch merged and GitHub Pages serving `befree/`. Until then, use
+`--standalone` — or upload the contents of `befree/assets/img/` to the
+WordPress media library and search-replace
+`https://piaxoxo.github.io/Do-Step-Inn-Home/befree/assets/img/` with your
+uploads folder.
+
+Paste the file into a single **HTML widget** on a page set to the **Elementor
+Canvas** layout (Page settings → Page Layout → Canvas), so the theme's own
+header and footer step aside — the page brings its own fixed navigation and
+full-height hero.
+
+Legal links and the home link are rewritten to WordPress slugs
+(`/impressum/`, `/datenschutz/`, `/agb/`, `/`), so create those pages and
+every link resolves.
 
 ## Still open
 
