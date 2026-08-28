@@ -391,6 +391,33 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .book-fb{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
 .book-fb[hidden]{display:none}
 
+/* ═══ BOOK BAR — the search sitting right under the hero ══════════ */
+.bookbar{
+  background:var(--gold);border-bottom:2px solid var(--ink);
+  padding-block:clamp(26px,3.6vw,44px);
+}
+.bookbar[hidden]{display:none}
+.bookbar__in{display:grid;gap:clamp(16px,2.4vw,28px);align-items:center}
+@media(min-width:940px){.bookbar__in{grid-template-columns:minmax(240px,1fr) minmax(0,1.55fr)}}
+.bookbar__t{display:flex;flex-direction:column;gap:8px;color:var(--ink)}
+.bookbar__t .eyebrow{color:rgba(11,11,12,.66)}
+.bookbar__t .eyebrow::before{border-color:var(--ink)}
+.bookbar__t h2{font-size:clamp(24px,3.4vw,38px)}
+.bookbar__t p{max-width:38ch;color:rgba(11,11,12,.78)}
+
+/* ═══ A BOOKING BUTTON THAT FOLLOWS ON PHONES ═════════════════════ */
+.bookfab{
+  position:fixed;z-index:45;left:50%;bottom:16px;transform:translate(-50%,140%);
+  display:none;align-items:center;gap:10px;
+  font-family:var(--f-body);font-weight:800;font-size:15px;text-decoration:none;
+  background:var(--pink);color:var(--ink);
+  border:2px solid var(--ink);border-radius:99px;
+  padding:9px 10px 9px 22px;box-shadow:var(--shadow);
+  transition:transform .3s cubic-bezier(.2,.9,.3,1);
+}
+.bookfab.in{transform:translate(-50%,0)}
+@media(max-width:980px){.bookfab{display:inline-flex}}
+
 /* ═══ CONTACT ═════════════════════════════════════════════════════ */
 .contact{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .ccard{

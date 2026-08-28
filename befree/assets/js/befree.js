@@ -43,6 +43,10 @@
     "loc.s1": "300 m zur U3", "loc.s2": "200 m zum Bus",
     "loc.s3": "6 Min zur Stadthalle", "loc.s4": "Westbahnhof zu Fuß",
 
+    "bar.k": "Heute Nacht frei?",
+    "bar.h": "Finde dein Bett.",
+    "bar.p": "Termin wählen und sehen, was frei ist — Zahlung online, Schlüssel aufs Handy.",
+
     "chk.eyebrow": "So kommst du rein",
     "chk.h": "Kein Empfang. Keine Schlange.<br />Dein Handy ist der Schlüssel.",
     "chk.lede": "Alles passiert vor deiner Ankunft, damit bei der Ankunft nichts mehr passieren muss. Um Mitternacht da sein und einfach reingehen.",
@@ -420,32 +424,59 @@
     els.forEach(function (e) { io.observe(e); });
   }
 
-  /* The booking widget only appears once Be Free's own IBE key is set;
-     until then the mail/phone fallback stays, so nobody is ever sent to
-     another house's booking engine. */
+  /* Every booking widget on the page comes up together, and only once
+     Be Free's own IBE key checks out — a keyless or misconfigured engine
+     leaves no empty frames behind, just the mail/phone fallback. */
   function bookingWidget() {
-    var box = document.getElementById("ibe");
-    if (!box) return;
-    var el = box.querySelector("ibe-up");
-    var key = el && el.getAttribute("ibe-key");
-    if (!key || !key.trim()) return;
-    box.hidden = false;
+    var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
+    var live = false;
+    hosts.forEach(function (host) {
+      var el = host.querySelector("ibe-up");
+      var key = el && el.getAttribute("ibe-key");
+      if (!key || !key.trim()) return;
+      host.hidden = false;
+      live = true;
+    });
     var fb = document.getElementById("book-fallback");
-    if (fb) fb.hidden = true;
+    if (fb) fb.hidden = live;
     syncWidgetLanguage();
   }
 
   /* The IBE reads its language attribute once, when it initialises, so a
      language switch needs a fresh element rather than a changed attribute. */
   function syncWidgetLanguage() {
-    var box = document.getElementById("ibe");
-    if (!box || box.hidden) return;
-    var el = box.querySelector("ibe-up");
-    if (!el || el.getAttribute("language") === lang) return;
-    var fresh = document.createElement("ibe-up");
-    fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
-    fresh.setAttribute("language", lang);
-    box.replaceChild(fresh, el);
+    [].forEach.call(document.querySelectorAll("[data-ibe-host]"), function (host) {
+      if (host.hidden) return;
+      var el = host.querySelector("ibe-up");
+      if (!el || el.getAttribute("language") === lang) return;
+      var fresh = document.createElement("ibe-up");
+      fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
+      fresh.setAttribute("language", lang);
+      el.parentNode.replaceChild(fresh, el);
+    });
+  }
+
+  /* The nav's booking pill is hidden on narrow screens, so a floating one
+     takes over — but only between the hero and the booking section, so it
+     never covers the thing it points at. One shared state, because two
+     observers toggling the same class fight each other. */
+  function bookingFab() {
+    var fab  = document.getElementById("bookfab"),
+        hero = document.getElementById("top"),
+        book = document.getElementById("book");
+    if (!fab || !hero || !("IntersectionObserver" in window)) return;
+
+    var heroVisible = true, bookVisible = false;
+    function update() { fab.classList.toggle("in", !heroVisible && !bookVisible); }
+
+    function watch(el, set) {
+      new IntersectionObserver(function (es) {
+        set(es[0].isIntersecting);
+        update();
+      }, { threshold: 0 }).observe(el);
+    }
+    watch(hero, function (v) { heroVisible = v; });
+    if (book) watch(book, function (v) { bookVisible = v; });
   }
 
   function menu() {
@@ -486,6 +517,7 @@
   var auto = (navigator.language || "en").toLowerCase().indexOf("de") === 0 ? "de" : "en";
   setLang(q || saved || auto, false);
   bookingWidget();
+  bookingFab();
 
   /* the 3D flower asks whether it may run */
   window.BeFree = { reducedMotion: RM, photos: PHOTOS, palette: PAL };

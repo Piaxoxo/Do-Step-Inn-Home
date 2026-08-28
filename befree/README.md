@@ -17,6 +17,7 @@ python3 -m http.server 8080     # from the repo root
 |---|---|
 | Hero | *Be Free. Be You. Be Here.* over a canvas field of colour-cycling flowers |
 | Ticker | TOP DESTINATION · VIENNA · BEINGASSE 13 · BE FREE HOSTEL, endless |
+| Book bar | Gold band under the hero — the booking widget where intent is highest |
 | Location | Turquoise band — the neighbourhood, four markers, distances as stickers |
 | Check-in | Pink band — the three steps, plus the phone number for when the QR fails |
 | Rooms | Private room · Capsule bed · Classic dorm, as pastel cards |
@@ -135,13 +136,22 @@ links and the home link are rewritten to WordPress slugs (`/impressum/`,
       `<img>` the moment one exists.
 - [ ] **Other facts to confirm.** Prices, bed counts, exact quiet hours, what
       is included, and whether luggage storage exists.
-- [x] **Booking engine.** The UP Hotel IBE is live in the Book section with
-      Be Free's own key, `75e0a485-…`. It follows the page language: because
-      the widget reads `language` only when it initialises, a switch swaps in
-      a fresh `<ibe-up>` rather than editing the attribute. Blank the key and
-      the widget hides itself, leaving the mail/phone fallback. Never use
-      another house's key — Do Step Inn Home's `35b41b51-…` would send guests
-      to the wrong hotel.
+- [x] **Booking engine.** The UP Hotel IBE runs with Be Free's own key,
+      `75e0a485-…`, in **two** places: a gold search bar directly under the
+      hero, and the Book band further down. Any element marked
+      `data-ibe-host` joins in; the gate checks the key once and brings them
+      all up together, so a keyless or misconfigured engine leaves no empty
+      frames — just the mail/phone fallback. Both follow the page language:
+      the widget reads `language` only when it initialises, so a switch swaps
+      in a fresh `<ibe-up>` rather than editing an attribute nothing watches.
+      On screens under 980px the nav's booking pill is hidden, so a floating
+      button appears between the hero and the Book band. Never use another
+      house's key — Do Step Inn Home's `35b41b51-…` would send guests to the
+      wrong hotel.
+
+      **Not verified here:** `ibe.uphotel.agency` is blocked by this
+      environment's egress proxy, so the rendered booking form has never been
+      seen. Check both widgets once on a real host.
 - [ ] **Legal pages — three facts still to confirm.** `impressum.html`,
       `datenschutz.html` and `agb.html` are written, in German only, adapted
       from the Do Step Inn Home pages: same operating company (Kern

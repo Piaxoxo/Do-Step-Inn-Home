@@ -405,6 +405,33 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .book-fb{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
 .book-fb[hidden]{display:none}
 
+/* ═══ BOOK BAR — the search sitting right under the hero ══════════ */
+.bookbar{
+  background:var(--gold);border-bottom:2px solid var(--ink);
+  padding-block:clamp(26px,3.6vw,44px);
+}
+.bookbar[hidden]{display:none}
+.bookbar__in{display:grid;gap:clamp(16px,2.4vw,28px);align-items:center}
+@media(min-width:940px){.bookbar__in{grid-template-columns:minmax(240px,1fr) minmax(0,1.55fr)}}
+.bookbar__t{display:flex;flex-direction:column;gap:8px;color:var(--ink)}
+.bookbar__t .eyebrow{color:rgba(11,11,12,.66)}
+.bookbar__t .eyebrow::before{border-color:var(--ink)}
+.bookbar__t h2{font-size:clamp(24px,3.4vw,38px)}
+.bookbar__t p{max-width:38ch;color:rgba(11,11,12,.78)}
+
+/* ═══ A BOOKING BUTTON THAT FOLLOWS ON PHONES ═════════════════════ */
+.bookfab{
+  position:fixed;z-index:45;left:50%;bottom:16px;transform:translate(-50%,140%);
+  display:none;align-items:center;gap:10px;
+  font-family:var(--f-body);font-weight:800;font-size:15px;text-decoration:none;
+  background:var(--pink);color:var(--ink);
+  border:2px solid var(--ink);border-radius:99px;
+  padding:9px 10px 9px 22px;box-shadow:var(--shadow);
+  transition:transform .3s cubic-bezier(.2,.9,.3,1);
+}
+.bookfab.in{transform:translate(-50%,0)}
+@media(max-width:980px){.bookfab{display:inline-flex}}
+
 /* ═══ CONTACT ═════════════════════════════════════════════════════ */
 .contact{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .ccard{
@@ -535,6 +562,22 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 </section>
 
 <div class="ticker" aria-hidden="true"><div class="ticker__row" id="ticker"></div></div>
+
+<!-- ══════════════════════════════════════ BOOK BAR ══════════════ -->
+<!-- Unhidden by befree.js once the IBE key checks out, so a keyless or
+     unreachable engine never leaves an empty band under the hero. -->
+<section class="bookbar" id="bookbar" data-ibe-host hidden aria-labelledby="bookbar-h">
+  <div class="wrap bookbar__in">
+    <div class="bookbar__t">
+      <span class="eyebrow" data-i18n="bar.k">Free tonight?</span>
+      <h2 class="t-dsp" id="bookbar-h" data-i18n="bar.h">Find your bed.</h2>
+      <p class="small" data-i18n="bar.p">Pick your dates and see what is free — payment online, key on your phone.</p>
+    </div>
+    <div class="ibe">
+      <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
+    </div>
+  </div>
+</section>
 
 <!-- ══════════════════════════════════════ LOCATION ══════════════ -->
 <section class="band" id="location" style="--bg:var(--turq)">
@@ -734,7 +777,7 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     <!-- UP Hotel IBE — Be Free's own property key. Never swap in another
          house's key; guests would book the wrong hotel. Blank the key and
          the widget hides itself, leaving the mail/phone fallback below. -->
-    <div class="ibe" id="ibe" hidden>
+    <div class="ibe" id="ibe" data-ibe-host hidden>
       <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
     </div>
 
@@ -811,6 +854,10 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
   </div>
 </footer>
 
+<a class="bookfab" id="bookfab" href="#book">
+  <span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span>
+</a>
+
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
   <figure class="lb__fig"><img id="lb-img" alt="" /></figure>
   <div class="lb__bar">
@@ -866,6 +913,10 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     "loc.m4d": "Wiens größte Konzert- und Veranstaltungshalle liegt sechs Gehminuten entfernt.",
     "loc.s1": "300 m zur U3", "loc.s2": "200 m zum Bus",
     "loc.s3": "6 Min zur Stadthalle", "loc.s4": "Westbahnhof zu Fuß",
+
+    "bar.k": "Heute Nacht frei?",
+    "bar.h": "Finde dein Bett.",
+    "bar.p": "Termin wählen und sehen, was frei ist — Zahlung online, Schlüssel aufs Handy.",
 
     "chk.eyebrow": "So kommst du rein",
     "chk.h": "Kein Empfang. Keine Schlange.<br />Dein Handy ist der Schlüssel.",
@@ -1244,32 +1295,59 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     els.forEach(function (e) { io.observe(e); });
   }
 
-  /* The booking widget only appears once Be Free's own IBE key is set;
-     until then the mail/phone fallback stays, so nobody is ever sent to
-     another house's booking engine. */
+  /* Every booking widget on the page comes up together, and only once
+     Be Free's own IBE key checks out — a keyless or misconfigured engine
+     leaves no empty frames behind, just the mail/phone fallback. */
   function bookingWidget() {
-    var box = document.getElementById("ibe");
-    if (!box) return;
-    var el = box.querySelector("ibe-up");
-    var key = el && el.getAttribute("ibe-key");
-    if (!key || !key.trim()) return;
-    box.hidden = false;
+    var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
+    var live = false;
+    hosts.forEach(function (host) {
+      var el = host.querySelector("ibe-up");
+      var key = el && el.getAttribute("ibe-key");
+      if (!key || !key.trim()) return;
+      host.hidden = false;
+      live = true;
+    });
     var fb = document.getElementById("book-fallback");
-    if (fb) fb.hidden = true;
+    if (fb) fb.hidden = live;
     syncWidgetLanguage();
   }
 
   /* The IBE reads its language attribute once, when it initialises, so a
      language switch needs a fresh element rather than a changed attribute. */
   function syncWidgetLanguage() {
-    var box = document.getElementById("ibe");
-    if (!box || box.hidden) return;
-    var el = box.querySelector("ibe-up");
-    if (!el || el.getAttribute("language") === lang) return;
-    var fresh = document.createElement("ibe-up");
-    fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
-    fresh.setAttribute("language", lang);
-    box.replaceChild(fresh, el);
+    [].forEach.call(document.querySelectorAll("[data-ibe-host]"), function (host) {
+      if (host.hidden) return;
+      var el = host.querySelector("ibe-up");
+      if (!el || el.getAttribute("language") === lang) return;
+      var fresh = document.createElement("ibe-up");
+      fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
+      fresh.setAttribute("language", lang);
+      el.parentNode.replaceChild(fresh, el);
+    });
+  }
+
+  /* The nav's booking pill is hidden on narrow screens, so a floating one
+     takes over — but only between the hero and the booking section, so it
+     never covers the thing it points at. One shared state, because two
+     observers toggling the same class fight each other. */
+  function bookingFab() {
+    var fab  = document.getElementById("bookfab"),
+        hero = document.getElementById("top"),
+        book = document.getElementById("book");
+    if (!fab || !hero || !("IntersectionObserver" in window)) return;
+
+    var heroVisible = true, bookVisible = false;
+    function update() { fab.classList.toggle("in", !heroVisible && !bookVisible); }
+
+    function watch(el, set) {
+      new IntersectionObserver(function (es) {
+        set(es[0].isIntersecting);
+        update();
+      }, { threshold: 0 }).observe(el);
+    }
+    watch(hero, function (v) { heroVisible = v; });
+    if (book) watch(book, function (v) { bookVisible = v; });
   }
 
   function menu() {
@@ -1310,6 +1388,7 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
   var auto = (navigator.language || "en").toLowerCase().indexOf("de") === 0 ? "de" : "en";
   setLang(q || saved || auto, false);
   bookingWidget();
+  bookingFab();
 
   /* the 3D flower asks whether it may run */
   window.BeFree = { reducedMotion: RM, photos: PHOTOS, palette: PAL };

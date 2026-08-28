@@ -107,6 +107,22 @@
 
 <div class="ticker" aria-hidden="true"><div class="ticker__row" id="ticker"></div></div>
 
+<!-- ══════════════════════════════════════ BOOK BAR ══════════════ -->
+<!-- Unhidden by befree.js once the IBE key checks out, so a keyless or
+     unreachable engine never leaves an empty band under the hero. -->
+<section class="bookbar" id="bookbar" data-ibe-host hidden aria-labelledby="bookbar-h">
+  <div class="wrap bookbar__in">
+    <div class="bookbar__t">
+      <span class="eyebrow" data-i18n="bar.k">Free tonight?</span>
+      <h2 class="t-dsp" id="bookbar-h" data-i18n="bar.h">Find your bed.</h2>
+      <p class="small" data-i18n="bar.p">Pick your dates and see what is free — payment online, key on your phone.</p>
+    </div>
+    <div class="ibe">
+      <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════════════════════════ LOCATION ══════════════ -->
 <section class="band" id="location" style="--bg:var(--turq)">
   <div class="wrap">
@@ -305,7 +321,7 @@
     <!-- UP Hotel IBE — Be Free's own property key. Never swap in another
          house's key; guests would book the wrong hotel. Blank the key and
          the widget hides itself, leaving the mail/phone fallback below. -->
-    <div class="ibe" id="ibe" hidden>
+    <div class="ibe" id="ibe" data-ibe-host hidden>
       <ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up>
     </div>
 
@@ -381,6 +397,10 @@
     </div>
   </div>
 </footer>
+
+<a class="bookfab" id="bookfab" href="#book">
+  <span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span>
+</a>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
   <figure class="lb__fig"><img id="lb-img" alt="" /></figure>
