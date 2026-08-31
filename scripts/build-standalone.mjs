@@ -25,6 +25,7 @@ function rewriteLegalLinks(html) {
     .replace(/href="impressum\.html"/g, 'href="/impressum/"')
     .replace(/href="datenschutz\.html"/g, 'href="/datenschutz/"')
     .replace(/href="agb\.html"/g, 'href="/agb/"')
+    .replace(/href="jobs\.html"/g, 'href="/jobs/"')
     .replace(/href="index\.html"/g, 'href="/"');
 }
 
@@ -81,8 +82,8 @@ idx = idx.replace('</head>', `  <script>window.__DSI_STATIC = true;</script>
 
 fs.writeFileSync(path.join(OUT, 'index.html'), rewriteLegalLinks(idx));
 
-// ---- LEGAL PAGES ----
-for (const pg of ['impressum', 'datenschutz', 'agb']) {
+// ---- LEGAL + JOBS PAGES ----
+for (const pg of ['impressum', 'datenschutz', 'agb', 'jobs']) {
   let h = read(`${pg}.html`);
   h = h.replace('<link rel="stylesheet" href="assets/css/styles.css" />', () => `<style>\n${styles}\n</style>`);
   h = h.replace('<link rel="stylesheet" href="assets/css/legal.css" />', () => `<style>\n${legal}\n</style>`);
@@ -167,7 +168,7 @@ const headerJs = `<script>
 </script>`;
 let header = doc({ title: 'Header — Do Step Inn Home', body: headerHtml + '\n' + headerJs });
 header = rewriteHtmlAssets(header);
-fs.writeFileSync(path.join(OUT, 'header.html'), header);
+fs.writeFileSync(path.join(OUT, 'header.html'), rewriteLegalLinks(header));
 
 // ---- FOOTER SNIPPET (footer HTML + CSS + year JS) ----
 const footerHtml = srcIndex.match(/<footer class="footer"[\s\S]*?<\/footer>/)[0];
