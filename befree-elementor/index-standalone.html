@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Be Free Hostel Vienna — Be Free. Be You. Be Here.</title>
 
-<meta name="description" content="Colorful, affordable hostel near Westbahnhof in Vienna. Self check-in with your phone, no reception, no curfew. Private rooms, lockable capsule beds and classic dorms at Beingasse 13, 1150 Wien." />
+<meta name="description" content="Colorful, affordable hostel near Westbahnhof in Vienna. Self-service check-in hotel without a reception. Your phone is the key. Private rooms, lockable capsule beds and classic dorms at Beingasse 13, 1150 Wien." />
 <meta name="keywords" content="hostel Vienna, cheap hostel Vienna, self check-in hostel Vienna, hostel near Westbahnhof, Beingasse 13, Be Free Hostel, capsule beds Vienna, dorm Vienna, private room hostel Vienna" />
 <link rel="canonical" href="https://befree-hostel.com/" />
 <link rel="alternate" hreflang="en" href="https://befree-hostel.com/" />
@@ -448,6 +448,16 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .bookbar__w{display:flex;flex-direction:column;gap:12px;min-width:0}
 .bookband{margin-bottom:4px}
 
+/* the third booking spot: a quiet strip closing the rooms section */
+.bookrooms{
+  border:2px solid var(--ink);border-radius:24px;background:var(--paper-2);
+  box-shadow:var(--shadow-sm);padding:clamp(16px,2.2vw,24px);
+  display:flex;flex-direction:column;gap:12px;
+}
+.bookrooms__t{
+  font-family:var(--f-body);font-weight:800;font-size:clamp(16px,2vw,19px);
+}
+
 /* ═══ A BOOKING BUTTON THAT FOLLOWS ON PHONES ═════════════════════ */
 .bookfab{
   position:fixed;z-index:45;left:50%;bottom:16px;transform:translate(-50%,140%);
@@ -556,6 +566,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
       <li><a href="#location" data-i18n="nav.location">Location</a></li>
       <li><a href="#checkin"  data-i18n="nav.checkin">Check-in</a></li>
       <li><a href="#gallery"  data-i18n="nav.gallery">Gallery</a></li>
+      <li><a href="#groups"   data-i18n="nav.groups">Groups</a></li>
       <li><a href="#rules"    data-i18n="nav.rules">Good to know</a></li>
       <li><a href="#contact"  data-i18n="nav.contact">Contact</a></li>
     </ul>
@@ -587,7 +598,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     </div>
     <div class="stix">
       <i style="--sc:var(--pink-soft)" data-i18n="tag.selfcheckin">Self check-in</i>
-      <i style="--sc:var(--turq)" data-i18n="tag.nocurfew">No curfew</i>
+      <i style="--sc:var(--turq)" data-i18n="tag.noreception">No reception</i>
       <i style="--sc:var(--gold)" data-i18n="tag.from15">From 15:00</i>
       <i style="--sc:var(--leaf)" data-i18n="tag.wifi">Free WiFi</i>
     </div>
@@ -657,28 +668,40 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
   <div class="wrap">
     <div class="sec__head">
       <span class="eyebrow" data-i18n="chk.eyebrow">How you get in</span>
-      <h2 class="t-dsp" data-i18n-html="chk.h">No reception. No queue.<br />Your phone is the key.</h2>
-      <p class="lede" data-i18n="chk.lede">Everything happens before you arrive, so nothing has to happen when you do. Land at midnight, walk straight in.</p>
+      <h2 class="t-dsp" data-i18n-html="chk.h">A self-service house.<br />There is no reception.</h2>
+      <p class="lede" data-i18n="chk.lede">Everything happens before you arrive, so nothing has to happen when you do. Land at midnight, walk straight in — nobody is waiting at a desk, and nobody needs to be.</p>
     </div>
+
     <div class="steps">
       <div class="step" data-reveal><span class="step__n" style="--sc:var(--pink)">1</span>
         <h3 data-i18n="chk.s1t">Book online</h3>
         <p data-i18n="chk.s1d">Payment and registration are handled digitally. Nothing to print, nothing to sign at a desk.</p></div>
       <div class="step" data-reveal><span class="step__n" style="--sc:var(--turq)">2</span>
-        <h3 data-i18n="chk.s2t">Get your QR code</h3>
-        <p data-i18n="chk.s2d">Your personal code arrives on your phone before you travel. It opens the front door and your room, from 15:00 onwards, at any hour.</p></div>
+        <h3 data-i18n="chk.s2t">Your check-in link arrives</h3>
+        <p data-i18n="chk.s2d">By email if you booked with us directly. Booked through Booking.com or another platform? Then it arrives in that platform's message chat — check there, not your inbox.</p></div>
       <div class="step" data-reveal><span class="step__n" style="--sc:var(--orange)">3</span>
-        <h3 data-i18n="chk.s3t">Walk in</h3>
-        <p data-i18n="chk.s3d">No reception, no waiting, no curfew. Come and go whenever you like — it is your stay.</p></div>
+        <h3 data-i18n="chk.s3t">Your QR code opens the door</h3>
+        <p data-i18n="chk.s3d">Complete the check-in and the code lands on your phone. It opens the front door and your room, from 15:00 onwards, at any hour. No reception, no waiting, no curfew.</p></div>
     </div>
-    <div class="card" style="margin-top:20px;--card:#FFFFFF">
-      <span class="card__tag" data-i18n="chk.helpt">If the code will not scan</span>
-      <h3 data-i18n="chk.helph">Call us. Someone always picks up.</h3>
-      <p class="small dim" data-i18n="chk.helpd">A door that will not open is the worst part of any trip, so we say this plainly: if your QR code fails, ring the number below and we will let you in. You are never locked out of Be Free.</p>
-      <p><a class="pill" href="tel:+4369919232769" style="--pc:var(--gold)"><span>+43 699 19232769</span><span class="pill__a" aria-hidden="true">→</span></a></p>
+
+    <div class="grid g2" style="margin-top:20px;align-items:start">
+      <div class="card" style="--card:#FFFFFF">
+        <span class="card__tag" data-i18n="chk.helpt">Trouble with the QR code or check-in?</span>
+        <h3 data-i18n="chk.helph">Call us. Someone always picks up.</h3>
+        <p class="small dim" data-i18n="chk.helpd">A door that will not open is the worst part of any trip, so we say this plainly: if your code fails or the check-in will not go through, ring this number and we will sort it out.</p>
+        <p><a class="pill" href="tel:+4369919232769" style="--pc:var(--gold)"><span>+43 699 19232769</span><span class="pill__a" aria-hidden="true">→</span></a></p>
+      </div>
+
+      <div class="card" style="--card:#FFFFFF">
+        <span class="card__tag" data-i18n="chk.facet">Want to see a real face?</span>
+        <h3 data-i18n="chk.faceh">Our reception is three minutes away.</h3>
+        <p class="small dim" data-i18n="chk.faced">We cannot always come over to Beingasse — but the reception at our sister house is a three-minute walk. Drop by whenever you would rather talk to a person than a screen.</p>
+        <p class="small"><b>Do Step Inn Home</b><br />Felberstraße 20, 1150 Wien</p>
+        <p><a class="pill" href="https://www.google.com/maps/dir/?api=1&amp;destination=Felberstra%C3%9Fe%2020%2C%201150%20Wien" target="_blank" rel="noopener noreferrer" style="--pc:var(--turq)"><span data-i18n="chk.faceb">Get directions</span><span class="pill__a" aria-hidden="true">→</span></a></p>
+      </div>
     </div>
   </div>
-  <div class="bleedmark" style="--bm:rgba(255,255,255,.36)" aria-hidden="true">BE FREE HOSTEL</div>
+  <div class="bleedmark" style="--bm:rgba(255,255,255,.36)" aria-hidden="true">NO RECEPTION</div>
 </section>
 
 <!-- ══════════════════════════════════════ ROOMS ═════════════════ -->
@@ -719,6 +742,28 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
           <span class="pcard__m" data-i18n="room.c3m">Bunk beds · Lockers · Best price</span>
         </div>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ BOOK 2 ════════════════ -->
+<section class="sec" id="book-rooms" style="padding-top:0">
+  <div class="wrap">
+    <div class="bookrooms" data-ibe-host>
+      <p class="bookrooms__t" data-i18n="bar.rooms">Seen a room you like? Pick your dates.</p>
+      <div class="ibe" hidden><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
+      <form class="ibeform" data-ibe-form>
+        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
+          <input type="date" name="in" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
+          <input type="date" name="out" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
+          <select name="pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select></label>
+        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
+      </form>
     </div>
   </div>
 </section>
@@ -813,6 +858,40 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
   </div>
 </section>
 
+<!-- ══════════════════════════════════════ GROUPS ════════════════ -->
+<section class="band" id="groups" style="--bg:var(--leaf)">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" data-i18n="grp.eyebrow">Groups</span>
+      <h2 class="t-dsp" data-i18n-html="grp.h">Group bookings —<br />breakfast included.</h2>
+      <p class="lede" data-i18n="grp.lede">School trips, teams, choirs, clubs. Tell us your dates and how many you are, and we put together one quote for the whole group.</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c1k">Breakfast</span>
+        <h3 data-i18n="grp.c1t">Served at Felberstraße 20</h3>
+        <p class="small dim" data-i18n="grp.c1d">Groups have breakfast at our sister house, Do Step Inn Home — a three-minute walk from the front door. Sleep at Be Free, eat around the corner.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c2k">One contact</span>
+        <h3 data-i18n="grp.c2t">One quote, one invoice</h3>
+        <p class="small dim" data-i18n="grp.c2d">Beds, breakfast and any extras arrive on a single offer, so nobody has to chase separate bookings.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c3k">Tell us</span>
+        <h3 data-i18n="grp.c3t">What we need to know</h3>
+        <p class="small dim" data-i18n="grp.c3d">Dates, how many people, how you would like the rooms split, and whether breakfast is for everyone. That is enough to price it.</p></div>
+    </div>
+
+    <div class="stix" style="margin-top:24px">
+      <i style="--sc:#FFFFFF" data-i18n="grp.s1">Breakfast at Felberstraße 20</i>
+      <i style="--sc:var(--gold)" data-i18n="grp.s2">3 minutes on foot</i>
+      <i style="--sc:var(--pink)" data-i18n="grp.s3">One quote for everyone</i>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:22px">
+      <a class="pill" href="mailto:befree-hostel@dostepinn.at?subject=Gruppenanfrage%20Be%20Free%20Hostel" style="--pc:#FFFFFF"><span data-i18n="grp.cta">Send a group request</span><span class="pill__a" aria-hidden="true">→</span></a>
+      <a class="pill pill--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=Felberstra%C3%9Fe%2020%2C%201150%20Wien" target="_blank" rel="noopener noreferrer" data-i18n="grp.route">Route to Felberstraße 20</a>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════════════════════════════════ BOOK ══════════════════ -->
 <section class="band" id="book" style="--bg:var(--pink)">
   <div class="wrap" style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
@@ -892,6 +971,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
         <a href="#rooms" data-i18n="nav.rooms">Rooms</a>
         <a href="#checkin" data-i18n="nav.checkin">Check-in</a>
         <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+        <a href="#groups" data-i18n="nav.groups">Groups</a>
         <a href="#rules" data-i18n="nav.rules">Good to know</a>
       </div>
       <div class="foot__l">
@@ -942,7 +1022,8 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     "skip": "Zum Inhalt springen",
 
     "nav.rooms": "Zimmer", "nav.location": "Lage", "nav.checkin": "Check-in",
-    "nav.gallery": "Galerie", "nav.rules": "Gut zu wissen", "nav.contact": "Kontakt",
+    "nav.gallery": "Galerie", "nav.groups": "Gruppen",
+    "nav.rules": "Gut zu wissen", "nav.contact": "Kontakt",
     "nav.menu": "Menü",
 
     "cta.book": "Jetzt buchen", "cta.rooms": "Zimmer ansehen", "cta.ask": "Frage stellen",
@@ -950,7 +1031,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     "hero.l1": "Be Free.", "hero.l2": "Be You.", "hero.l3": "Be Here.",
     "hero.sub": "Das Be Free Hostel Wien ist eine bunte, leistbare Bleibe nahe dem Westbahnhof — entspannt, flexibel und mitten in der Stadt. Mit unkompliziertem Self-Check-in, zentraler Lage und lebendiger Atmosphäre ist es die perfekte Basis, um Wien auf deine Art zu entdecken und dabei Leute aus aller Welt zu treffen.",
 
-    "tag.selfcheckin": "Self-Check-in", "tag.nocurfew": "Keine Sperrstunde",
+    "tag.selfcheckin": "Self-Check-in", "tag.noreception": "Keine Rezeption",
     "tag.from15": "Ab 15:00", "tag.wifi": "WLAN gratis",
 
     "loc.eyebrow": "Top-Lage",
@@ -974,19 +1055,24 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     "bar.k": "Heute Nacht frei?",
     "bar.h": "Finde dein Bett.",
     "bar.p": "Termin wählen und sehen, was frei ist — Zahlung online, Schlüssel aufs Handy.",
+    "bar.rooms": "Ein Zimmer gefunden? Dann wähl deinen Termin.",
 
     "chk.eyebrow": "So kommst du rein",
-    "chk.h": "Kein Empfang. Keine Schlange.<br />Dein Handy ist der Schlüssel.",
-    "chk.lede": "Alles passiert vor deiner Ankunft, damit bei der Ankunft nichts mehr passieren muss. Um Mitternacht da sein und einfach reingehen.",
+    "chk.h": "Ein Self-Service-Haus.<br />Es gibt keine Rezeption.",
+    "chk.lede": "Alles passiert vor deiner Ankunft, damit bei der Ankunft nichts mehr passieren muss. Um Mitternacht da sein und einfach reingehen — niemand wartet an einem Tresen, und niemand muss es.",
     "chk.s1t": "Online buchen",
     "chk.s1d": "Zahlung und Meldung laufen digital. Nichts zum Ausdrucken, nichts an einem Tresen zu unterschreiben.",
-    "chk.s2t": "QR-Code aufs Handy",
-    "chk.s2d": "Dein persönlicher Code kommt schon vor der Anreise. Er öffnet Haustür und Zimmer — ab 15:00, zu jeder Uhrzeit.",
-    "chk.s3t": "Reingehen",
-    "chk.s3d": "Kein Empfang, keine Wartezeit, keine Sperrstunde. Komm und geh, wann du willst — es ist dein Aufenthalt.",
-    "chk.helpt": "Wenn der Code nicht scannt",
+    "chk.s2t": "Dein Check-in-Link kommt",
+    "chk.s2d": "Per E-Mail, wenn du direkt bei uns gebucht hast. Über Booking.com oder ein anderes Portal gebucht? Dann kommt er im Nachrichten-Chat des Portals — schau dort nach, nicht im Posteingang.",
+    "chk.s3t": "Dein QR-Code öffnet die Tür",
+    "chk.s3d": "Check-in abschließen, und der Code landet auf deinem Handy. Er öffnet Haustür und Zimmer — ab 15:00, zu jeder Uhrzeit. Keine Rezeption, keine Wartezeit, keine Sperrstunde.",
+    "chk.helpt": "Probleme mit dem QR-Code oder dem Check-in?",
     "chk.helph": "Ruf an. Es hebt immer jemand ab.",
-    "chk.helpd": "Eine Tür, die nicht aufgeht, ist das Schlimmste auf jeder Reise. Deshalb sagen wir es deutlich: Wenn dein QR-Code streikt, ruf die Nummer unten an, und wir lassen dich rein. Du stehst bei Be Free nie draußen.",
+    "chk.helpd": "Eine Tür, die nicht aufgeht, ist das Schlimmste auf jeder Reise. Deshalb sagen wir es deutlich: Wenn dein Code streikt oder der Check-in nicht durchgeht, ruf diese Nummer an, und wir bringen das in Ordnung.",
+    "chk.facet": "Lieber ein echtes Gesicht?",
+    "chk.faceh": "Unsere Rezeption ist drei Minuten entfernt.",
+    "chk.faced": "Wir können leider nicht immer in die Beingasse rüberkommen — aber die Rezeption in unserem Schwesterhaus ist drei Gehminuten entfernt. Komm vorbei, wann immer dir ein Mensch lieber ist als ein Bildschirm.",
+    "chk.faceb": "Route anzeigen",
 
     "room.eyebrow": "Zimmer",
     "room.h": "Schlaf, wie es dir passt",
@@ -1042,6 +1128,18 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     "rul.c5d": "Niemand sitzt in einer Lobby und wartet auf dich. Genau das ist der Sinn des Hauses — aber ans Telefon geht immer jemand, du bist nie allein.",
     "rul.c6k": "Gruppen", "rul.c6t": "Schulklassen und Teams willkommen",
     "rul.c6d": "Schreib uns Termin und Personenzahl, dann stellen wir ein Angebot für die ganze Gruppe zusammen.",
+
+    "grp.eyebrow": "Gruppen",
+    "grp.h": "Gruppenreservierung —<br />mit Frühstück.",
+    "grp.lede": "Schulklassen, Teams, Chöre, Vereine. Sag uns Termin und Personenzahl, und wir stellen ein Angebot für die ganze Gruppe zusammen.",
+    "grp.c1k": "Frühstück", "grp.c1t": "Serviert in der Felberstraße 20",
+    "grp.c1d": "Gruppen frühstücken in unserem Schwesterhaus Do Step Inn Home — drei Gehminuten von der Haustür. Schlafen bei Be Free, essen ums Eck.",
+    "grp.c2k": "Ein Ansprechpartner", "grp.c2t": "Ein Angebot, eine Rechnung",
+    "grp.c2d": "Betten, Frühstück und Zusatzleistungen kommen auf einem Angebot, damit niemand einzelnen Buchungen hinterherlaufen muss.",
+    "grp.c3k": "Sag uns", "grp.c3t": "Was wir wissen müssen",
+    "grp.c3d": "Termin, Personenzahl, gewünschte Zimmeraufteilung und ob Frühstück für alle sein soll. Mehr brauchen wir für den Preis nicht.",
+    "grp.s1": "Frühstück Felberstraße 20", "grp.s2": "3 Gehminuten", "grp.s3": "Ein Angebot für alle",
+    "grp.cta": "Gruppenanfrage senden", "grp.route": "Route zur Felberstraße 20",
 
     "bk.eyebrow": "Aufenthalt buchen",
     "bk.h": "Be Free. Be You.<br />Be Here.",

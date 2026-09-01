@@ -19,12 +19,14 @@ python3 -m http.server 8080     # from the repo root
 | Ticker | TOP DESTINATION · VIENNA · BEINGASSE 13 · BE FREE HOSTEL, endless |
 | Book bar | Gold band under the hero — booking where intent is highest |
 | Location | Turquoise band — the neighbourhood, four markers, distances as stickers |
-| Check-in | Pink band — the three steps, plus the phone number for when the QR fails |
+| Check-in | Pink band — no reception, the three steps, the phone number, and the walk to Felberstraße |
 | Rooms | Private room · Capsule bed · Classic dorm, as pastel cards |
+| Book (rooms) | Booking strip closing the rooms section |
 | Why Be Free | Freedom, together, clean, colour |
 | Flower gallery | Scroll-driven 3D: every petal is a photograph with its own depth map |
 | Gallery | Plain grid, click to enlarge, keyboard-navigable lightbox |
-| Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk, groups |
+| Groups | Green band — group quotes, breakfast at Felberstraße 20, route |
+| Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk |
 | Book | Pink band — booking form, replaced by the UP Hotel widget when it loads |
 | Contact | Email and phone |
 
@@ -157,8 +159,8 @@ every link resolves.
 - [ ] **Other facts to confirm.** Prices, bed counts, exact quiet hours, what
       is included, and whether luggage storage exists.
 - [x] **Booking engine.** The UP Hotel IBE runs with Be Free's own key,
-      `75e0a485-…`, in **two** places: a gold search bar directly under the
-      hero, and the Book band further down. Any element marked
+      `75e0a485-…`, in **three** places: a gold search bar directly under the
+      hero, a strip closing the rooms section, and the Book band further down. Any element marked
       `data-ibe-host` joins in; the gate checks the key once and brings them
       all up together, so a keyless or misconfigured engine leaves no empty
       frames — just the mail/phone fallback. Both follow the page language:

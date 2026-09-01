@@ -421,6 +421,16 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .bookbar__w{display:flex;flex-direction:column;gap:12px;min-width:0}
 .bookband{margin-bottom:4px}
 
+/* the third booking spot: a quiet strip closing the rooms section */
+.bookrooms{
+  border:2px solid var(--ink);border-radius:24px;background:var(--paper-2);
+  box-shadow:var(--shadow-sm);padding:clamp(16px,2.2vw,24px);
+  display:flex;flex-direction:column;gap:12px;
+}
+.bookrooms__t{
+  font-family:var(--f-body);font-weight:800;font-size:clamp(16px,2vw,19px);
+}
+
 /* ═══ A BOOKING BUTTON THAT FOLLOWS ON PHONES ═════════════════════ */
 .bookfab{
   position:fixed;z-index:45;left:50%;bottom:16px;transform:translate(-50%,140%);
