@@ -143,10 +143,21 @@ breaks, so it never depends on a host being up. It is quantized to 256 colours
 at 600px wide — 32 kB instead of the 503 kB original, which was five times
 larger than anything the page ever displays.
 
-To host the photos yourself instead, upload `befree/assets/img/` to the
-WordPress media library and search-replace the `https://cdn.jsdelivr.net/gh/…/`
-prefix with your uploads folder. Or use `--standalone`, which depends on
-nothing.
+### Pointing the photos somewhere else
+
+The default build opens with one switch, near the top of the file:
+
+```js
+window.BEFREE_IMG = "";   // e.g. "https://your-domain.at/wp-content/uploads/befree/"
+```
+
+Set it and every photo follows — the static `src` attributes are rewritten on
+load, and the scripts read the same base. Leave it empty and the built-in
+addresses are used. The logo stays embedded either way.
+
+`befree-elementor/befree-bilder.zip` holds all 31 files ready to upload.
+
+Or use `--standalone`, which depends on nothing at all.
 
 Paste the file into a single **HTML widget** on a page set to the **Elementor
 Canvas** layout (Page settings → Page Layout → Canvas), so the theme's own

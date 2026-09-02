@@ -550,6 +550,33 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 </head>
 
 <body>
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   BILDER / PHOTOS — hier den Ordner eintragen, in dem eure Fotos liegen.
+   Beispiel WordPress-Mediathek:
+     window.BEFREE_IMG = "https://eure-domain.at/wp-content/uploads/befree/";
+   Leer lassen = die voreingestellten Adressen verwenden.
+   ══════════════════════════════════════════════════════════════════════ */
+window.BEFREE_IMG = "";
+
+(function () {
+  var DEFAULT = "https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/";
+  var custom  = (window.BEFREE_IMG || "").trim();
+  if (custom && custom.slice(-1) !== "/") custom += "/";
+  window.BEFREE_IMG_BASE = custom || DEFAULT;
+  if (!custom) return;
+
+  function repoint() {
+    var imgs = document.querySelectorAll('img[src^="' + DEFAULT + '"]');
+    for (var i = 0; i < imgs.length; i++) {
+      imgs[i].src = custom + imgs[i].getAttribute("src").slice(DEFAULT.length);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", repoint);
+  } else { repoint(); }
+})();
+</script>
 <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
 <!-- ══════════════════════════════════════ NAV ═══════════════════ -->
@@ -1221,7 +1248,7 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 
   function label(p) { return lang === "de" ? p.de : p.en; }
   function tagOf(p) { return lang === "de" ? p.tDe : p.tEn; }
-  function srcOf(p) { return "https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/" + p.f + ".jpg"; }
+  function srcOf(p) { return window.BEFREE_IMG_BASE + p.f + ".jpg"; }
 
   function buildGallery() {
     var grid = document.getElementById("galgrid");
@@ -1739,8 +1766,8 @@ PETALS.forEach((name, i) => {
     vertexShader: VERT, fragmentShader: FRAG,
     transparent: true, side: DoubleSide,
     uniforms: {
-      uMap:   { value: tex(`https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/${name}.jpg`, true) },
-      uDepth: { value: tex(`https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/${name}-depth.png`, false) },
+      uMap:   { value: tex(`${window.BEFREE_IMG_BASE}${name}.jpg`, true) },
+      uDepth: { value: tex(`${window.BEFREE_IMG_BASE}${name}-depth.png`, false) },
       uShift: { value: new Vector2() },
       uAmt:   { value: 0.052 },
       uTint:  { value: 1 },

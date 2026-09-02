@@ -112,9 +112,10 @@ function absolutise(html) {
   return html
     .replace(/(src|href)="assets\//g, `$1="${BASE}assets/`)
     .replace(/url\((['"]?)assets\//g, `url($1${BASE}assets/`)
-    /* the JS builds image paths at runtime too */
-    .replace(/"assets\/img\/"/g, `"${BASE}assets/img/"`)
-    .replace(/`assets\/img\/\$\{name\}/g, '`' + BASE + 'assets/img/${name}')
+    /* the JS builds image paths at runtime; route them through the one
+       switch at the top of the file so a different host is a one-line edit */
+    .replace(/"assets\/img\/"/g, 'window.BEFREE_IMG_BASE')
+    .replace(/`assets\/img\/\$\{name\}/g, '`${window.BEFREE_IMG_BASE}${name}')
     /* legal pages become WordPress slugs */
     .replace(/href="impressum\.html"/g,   'href="/impressum/"')
     .replace(/href="datenschutz\.html"/g, 'href="/datenschutz/"')
@@ -157,6 +158,41 @@ if (STANDALONE) {
     .replace(/`\$\{BF_IMG_BASE\}\$\{name\}\.jpg`/g, 'BF_IMG(`assets/img/${name}.jpg`)')
     .replace(/`\$\{BF_IMG_BASE\}\$\{name\}-depth\.png`/g, 'BF_IMG(`assets/img/${name}-depth.png`)');
   if (html.includes('BF_IMG_BASE')) throw new Error('a runtime image path was left unresolved');
+}
+
+if (!STANDALONE) {
+  /* One place to point the photos somewhere else — the WordPress media
+     library, your own CDN, anywhere. Leave it empty and the built-in
+     addresses are used. Static src attributes are rewritten on load; the
+     scripts read the same base. */
+  html = html.replace('<body>', `<body>
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   BILDER / PHOTOS — hier den Ordner eintragen, in dem eure Fotos liegen.
+   Beispiel WordPress-Mediathek:
+     window.BEFREE_IMG = "https://eure-domain.at/wp-content/uploads/befree/";
+   Leer lassen = die voreingestellten Adressen verwenden.
+   ══════════════════════════════════════════════════════════════════════ */
+window.BEFREE_IMG = "";
+
+(function () {
+  var DEFAULT = ${JSON.stringify(BASE + 'assets/img/')};
+  var custom  = (window.BEFREE_IMG || "").trim();
+  if (custom && custom.slice(-1) !== "/") custom += "/";
+  window.BEFREE_IMG_BASE = custom || DEFAULT;
+  if (!custom) return;
+
+  function repoint() {
+    var imgs = document.querySelectorAll('img[src^="' + DEFAULT + '"]');
+    for (var i = 0; i < imgs.length; i++) {
+      imgs[i].src = custom + imgs[i].getAttribute("src").slice(DEFAULT.length);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", repoint);
+  } else { repoint(); }
+})();
+</script>`);
 }
 
 /* Elementor Canvas gives the page the full width; make sure nothing in the
