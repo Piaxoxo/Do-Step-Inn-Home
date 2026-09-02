@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Be Free Hostel Vienna — Be Free. Be You. Be Here.</title>
+
+<meta name="description" content="Colorful, affordable hostel near Westbahnhof in Vienna. Self-service check-in hotel without a reception. Your phone is the key. Private rooms, lockable capsule beds and classic dorms at Beingasse 13, 1150 Wien." />
+<meta name="keywords" content="hostel Vienna, cheap hostel Vienna, self check-in hostel Vienna, hostel near Westbahnhof, Beingasse 13, Be Free Hostel, capsule beds Vienna, dorm Vienna, private room hostel Vienna" />
+<link rel="canonical" href="https://befree-hostel.com/" />
+<link rel="alternate" hreflang="en" href="https://befree-hostel.com/" />
+<link rel="alternate" hreflang="de" href="https://befree-hostel.com/?lang=de" />
+<link rel="alternate" hreflang="x-default" href="https://befree-hostel.com/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Be Free Hostel Vienna" />
+<meta property="og:title" content="Be Free Hostel Vienna — Be Free. Be You. Be Here." />
+<meta property="og:description" content="Self check-in with your phone. No reception, no queue, no curfew. Beingasse 13, 1150 Vienna." />
+<meta property="og:image" content="https://befree-hostel.com/assets/img/gallery-01-room.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#FF3D9A" />
+
+<link rel="icon" href="assets/img/logo-befree.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Shrikhand&family=Karla:ital,wght@0,300..800;1,300..800&family=DM+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="assets/css/befree.css" />
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Hostel",
+  "name":"Be Free Hostel Vienna",
+  "url":"https://befree-hostel.com/",
+  "image":"https://befree-hostel.com/assets/img/gallery-01-room.jpg",
+  "email":"befree-hostel@dostepinn.at",
+  "telephone":"+43 699 19232769",
+  "address":{
+    "@type":"PostalAddress",
+    "streetAddress":"Beingasse 13",
+    "postalCode":"1150",
+    "addressLocality":"Wien",
+    "addressRegion":"Wien",
+    "addressCountry":"AT"
+  },
+  "checkinTime":"15:00",
+  "amenityFeature":[
+    {"@type":"LocationFeatureSpecification","name":"Self check-in","value":true},
+    {"@type":"LocationFeatureSpecification","name":"Free WiFi","value":true},
+    {"@type":"LocationFeatureSpecification","name":"Shared kitchen","value":true},
+    {"@type":"LocationFeatureSpecification","name":"Common room","value":true}
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<!-- ══════════════════════════════════════ NAV ═══════════════════ -->
+<header class="nav">
+  <nav class="wrap nav__in" aria-label="Main">
+    <a class="nav__brand" href="#top"><img src="assets/img/logo-befree.png" alt="Be Free Hostel" width="240" height="129" /></a>
+
+    <ul class="nav__links" id="navlinks">
+      <li><a href="#rooms"    data-i18n="nav.rooms">Rooms</a></li>
+      <li><a href="#location" data-i18n="nav.location">Location</a></li>
+      <li><a href="#checkin"  data-i18n="nav.checkin">Check-in</a></li>
+      <li><a href="#gallery"  data-i18n="nav.gallery">Gallery</a></li>
+      <li><a href="#groups"   data-i18n="nav.groups">Groups</a></li>
+      <li><a href="#rules"    data-i18n="nav.rules">Good to know</a></li>
+      <li><a href="#contact"  data-i18n="nav.contact">Contact</a></li>
+    </ul>
+
+    <div class="nav__side">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="lang-en" aria-pressed="true">EN</button>
+        <button type="button" id="lang-de" aria-pressed="false">DE</button>
+      </div>
+      <a class="pill" href="#book"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks">
+        <span></span><span class="vh" data-i18n="nav.menu">Menu</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<!-- ══════════════════════════════════════ HERO ══════════════════ -->
+<section class="hero" id="top">
+  <canvas id="petals" aria-hidden="true"></canvas>
+  <div class="hero__scrim" aria-hidden="true"></div>
+  <div class="hero__in wrap">
+    <h1><span data-i18n="hero.l1">Be Free.</span><span class="c1" data-i18n="hero.l2">Be You.</span><span class="c2" data-i18n="hero.l3">Be Here.</span></h1>
+    <p class="hero__sub" data-i18n="hero.sub">Be Free Hostel Vienna is a colorful and affordable place to stay near Westbahnhof, offering modern travelers a relaxed and flexible experience in the heart of the city. With easy self check-in, a central location and a vibrant atmosphere, it is the perfect base to explore Vienna your own way while connecting with people from around the world.</p>
+    <div class="hero__cta">
+      <a class="pill" href="#book"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
+      <a class="pill pill--ghost" href="#rooms" data-i18n="cta.rooms">See the rooms</a>
+    </div>
+    <div class="stix">
+      <i style="--sc:var(--pink-soft)" data-i18n="tag.selfcheckin">Self check-in</i>
+      <i style="--sc:var(--turq)" data-i18n="tag.noreception">No reception</i>
+      <i style="--sc:var(--gold)" data-i18n="tag.from15">From 15:00</i>
+      <i style="--sc:var(--leaf)" data-i18n="tag.wifi">Free WiFi</i>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div class="ticker__row" id="ticker"></div></div>
+
+<!-- ══════════════════════════════════════ BOOK BAR ══════════════ -->
+<!-- Unhidden by befree.js once the IBE key checks out, so a keyless or
+     unreachable engine never leaves an empty band under the hero. -->
+<section class="bookbar" id="bookbar" data-ibe-host aria-labelledby="bookbar-h">
+  <div class="wrap bookbar__in">
+    <div class="bookbar__t">
+      <span class="eyebrow" data-i18n="bar.k">Free tonight?</span>
+      <h2 class="t-dsp" id="bookbar-h" data-i18n="bar.h">Find your bed.</h2>
+      <p class="small" data-i18n="bar.p">Pick your dates and see what is free — payment online, key on your phone.</p>
+    </div>
+    <div class="bookbar__w">
+      <div class="ibe" hidden><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
+      <form class="ibeform" data-ibe-form>
+        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
+          <input type="date" name="in" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
+          <input type="date" name="out" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
+          <select name="pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select></label>
+        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ LOCATION ══════════════ -->
+<section class="band" id="location" style="--bg:var(--turq)">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" data-i18n="loc.eyebrow">Top destination</span>
+      <h2 class="t-dsp" data-i18n-html="loc.h">Vienna is<br />right here</h2>
+    </div>
+    <div class="grid g2" style="align-items:start">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <p class="lede" data-i18n="loc.p1">Located at Beingasse 13, Vienna, Be Free Hostel gives you a vibrant base in one of the city's most connected areas. From here, you can move easily between culture, shopping, restaurants, nightlife, and everyday local life while staying flexible and independent.</p>
+        <p class="lede" data-i18n="loc.p2">Perfect for city breaks, backpacking trips, and longer stays, this location lets you experience Vienna with energy, convenience, and freedom. It is a smart starting point for travelers who want to stay close to the action and explore the city their own way.</p>
+      </div>
+      <div class="marks">
+        <div class="mark" data-reveal><b data-i18n="loc.m1t">Beingasse 13</b><span data-i18n="loc.m1d">Corner of Goldschlagstraße, 1150 Vienna — the 15th district, Rudolfsheim-Fünfhaus.</span></div>
+        <div class="mark" data-reveal><b data-i18n="loc.m2t">Central Vienna</b><span data-i18n="loc.m2d">Westbahnhof and Mariahilfer Straße, the city's long shopping street, are within walking distance.</span></div>
+        <div class="mark" data-reveal><b data-i18n="loc.m3t">Easy connections</b><span data-i18n="loc.m3d">300 m to U3 Schweglerstraße, 200 m to the Beingasse bus stop, tram straight to Hauptbahnhof.</span></div>
+        <div class="mark" data-reveal><b data-i18n="loc.m4t">Wiener Stadthalle</b><span data-i18n="loc.m4d">Vienna's biggest concert and event hall is a six-minute walk from the front door.</span></div>
+      </div>
+    </div>
+    <div class="stix" style="margin-top:26px">
+      <i style="--sc:#FFFFFF" data-i18n="loc.s1">300 m to U3</i>
+      <i style="--sc:var(--gold)" data-i18n="loc.s2">200 m to the bus</i>
+      <i style="--sc:var(--pink)" data-i18n="loc.s3">6 min to Stadthalle</i>
+      <i style="--sc:var(--leaf)" data-i18n="loc.s4">Westbahnhof on foot</i>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ CHECK-IN ══════════════ -->
+<section class="band" id="checkin" style="--bg:var(--pink-mid)">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" data-i18n="chk.eyebrow">How you get in</span>
+      <h2 class="t-dsp" data-i18n-html="chk.h">A self-service house.<br />There is no reception.</h2>
+      <p class="lede" data-i18n="chk.lede">Everything happens before you arrive, so nothing has to happen when you do. Land at midnight, walk straight in — nobody is waiting at a desk, and nobody needs to be.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step" data-reveal><span class="step__n" style="--sc:var(--pink)">1</span>
+        <h3 data-i18n="chk.s1t">Book online</h3>
+        <p data-i18n="chk.s1d">Payment and registration are handled digitally. Nothing to print, nothing to sign at a desk.</p></div>
+      <div class="step" data-reveal><span class="step__n" style="--sc:var(--turq)">2</span>
+        <h3 data-i18n="chk.s2t">Your check-in link arrives</h3>
+        <p data-i18n="chk.s2d">By email if you booked with us directly. Booked through Booking.com or another platform? Then it arrives in that platform's message chat — check there, not your inbox.</p></div>
+      <div class="step" data-reveal><span class="step__n" style="--sc:var(--orange)">3</span>
+        <h3 data-i18n="chk.s3t">Your QR code opens the door</h3>
+        <p data-i18n="chk.s3d">Complete the check-in and the code lands on your phone. It opens the front door and your room, from 15:00 onwards, at any hour. No reception, no waiting, no curfew.</p></div>
+    </div>
+
+    <div class="grid g2" style="margin-top:20px;align-items:start">
+      <div class="card" style="--card:#FFFFFF">
+        <span class="card__tag" data-i18n="chk.helpt">Trouble with the QR code or check-in?</span>
+        <h3 data-i18n="chk.helph">Call us. Someone always picks up.</h3>
+        <p class="small dim" data-i18n="chk.helpd">A door that will not open is the worst part of any trip, so we say this plainly: if your code fails or the check-in will not go through, ring this number and we will sort it out.</p>
+        <p><a class="pill" href="tel:+4369919232769" style="--pc:var(--gold)"><span>+43 699 19232769</span><span class="pill__a" aria-hidden="true">→</span></a></p>
+      </div>
+
+      <div class="card" style="--card:#FFFFFF">
+        <span class="card__tag" data-i18n="chk.facet">Want to see a real face?</span>
+        <h3 data-i18n="chk.faceh">Our reception is three minutes away.</h3>
+        <p class="small dim" data-i18n="chk.faced">We cannot always come over to Beingasse — but the reception at our sister house is a three-minute walk. Drop by whenever you would rather talk to a person than a screen.</p>
+        <p class="small"><b>Do Step Inn Home</b><br />Felberstraße 20, 1150 Wien</p>
+        <p><a class="pill" href="https://www.google.com/maps/dir/?api=1&amp;destination=Felberstra%C3%9Fe%2020%2C%201150%20Wien" target="_blank" rel="noopener noreferrer" style="--pc:var(--turq)"><span data-i18n="chk.faceb">Get directions</span><span class="pill__a" aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </div>
+  <div class="bleedmark" style="--bm:rgba(255,255,255,.36)" aria-hidden="true">NO RECEPTION</div>
+</section>
+
+<!-- ══════════════════════════════════════ ROOMS ═════════════════ -->
+<section class="sec" id="rooms">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" style="--dot:var(--pink)" data-i18n="room.eyebrow">Rooms</span>
+      <h2 class="t-dsp" data-i18n="room.h">Sleep your way</h2>
+      <p class="lede" data-i18n="room.lede">Three ways to sleep: behind your own door, behind your own lock, or in the open with everyone else. Everything is freshly renovated, bathrooms are shared throughout the house, and linen is included.</p>
+    </div>
+    <div class="grid g3">
+      <article class="pcard" style="--bg:var(--gold)" data-reveal>
+        <img src="assets/img/room-private.jpg" alt="" loading="lazy" width="1000" height="750" />
+        <div class="pcard__b">
+          <h3 data-i18n="room.c1t">Private room</h3>
+          <p data-i18n="room.c1d">Double, twin, triple or quad. A wide bed on a solid wood platform, a window onto the street, a graffiti mural on the wall — and a door that closes behind you.</p>
+          <span class="pcard__m" data-i18n="room.c1m">2 to 4 people · Own door</span>
+        </div>
+      </article>
+
+      <article class="pcard" style="--bg:var(--pink-soft)" data-reveal>
+        <img src="assets/img/room-capsule.jpg" alt="" loading="lazy" width="1000" height="750" />
+        <div class="pcard__b">
+          <h3 data-i18n="room.c2t">Capsule bed</h3>
+          <p data-i18n="room.c2d">A bed in a shared room that locks. Your own light, your own socket, a door you pull shut. The quiet, private way to sleep at a dorm price.</p>
+          <span class="pcard__m" data-i18n="room.c2m">Lockable · Own light · Own socket</span>
+        </div>
+      </article>
+
+      <article class="pcard" style="--bg:var(--turq)" data-reveal>
+        <!-- No open-bunk dorm in the shoot, and illustrating it with another
+             room type is how this card was wrong before. It reads as a colour
+             card among two photo cards rather than a frame with nothing in
+             it. Add an <img> here the day a real dorm photo exists. -->
+        <div class="pcard__b">
+          <h3 data-i18n="room.c3t">Classic dorm</h3>
+          <p data-i18n="room.c3d">Open bunk beds in a shared room, lockers for your things, and the lowest price in the house. The easiest way to meet the people you end up exploring the city with.</p>
+          <span class="pcard__m" data-i18n="room.c3m">Bunk beds · Lockers · Best price</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ BOOK 2 ════════════════ -->
+<section class="sec" id="book-rooms" style="padding-top:0">
+  <div class="wrap">
+    <div class="bookrooms" data-ibe-host>
+      <p class="bookrooms__t" data-i18n="bar.rooms">Seen a room you like? Pick your dates.</p>
+      <div class="ibe" hidden><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
+      <form class="ibeform" data-ibe-form>
+        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
+          <input type="date" name="in" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
+          <input type="date" name="out" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
+          <select name="pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select></label>
+        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ WHY ═══════════════════ -->
+<section class="sec" id="why" style="background:var(--paper-2);border-block:2px solid var(--ink)">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" style="--dot:var(--orange)" data-i18n="why.eyebrow">Why Be Free</span>
+      <h2 class="t-dsp" data-i18n="why.h">Easy, social, colorful.</h2>
+      <p class="lede" data-i18n="why.lede">Be Free is designed for travelers who want freedom, a strong location and a stay that feels modern, open and effortless from the moment they arrive.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card" data-reveal><span class="card__tag" data-i18n="why.c1k">Freedom</span>
+        <h3 data-i18n="why.c1t">Nobody asks when you arrive</h3>
+        <p class="small dim" data-i18n="why.c1d">No reception hours, no curfew, no keys to hand back. The house runs on your schedule instead of ours.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="why.c2k">Together</span>
+        <h3 data-i18n="why.c2t">A kitchen that is open all night</h3>
+        <p class="small dim" data-i18n="why.c2d">The ground floor belongs to everyone, around the clock — a guest kitchen and a common room where trips get planned and people meet.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="why.c3k">Clean</span>
+        <h3 data-i18n="why.c3t">Freshly renovated, honestly kept</h3>
+        <p class="small dim" data-i18n="why.c3d">The thing guests mention most in their reviews is how clean it is. We would rather keep earning that than promise anything fancier.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="why.c4k">Colour</span>
+        <h3 data-i18n="why.c4t">Not a beige box</h3>
+        <p class="small dim" data-i18n="why.c4d">Yellow walls, graffiti murals painted straight onto the plaster, brick and warm wood. Nothing in here is beige, and no two rooms look the same.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ FLOWER GALLERY ════════ -->
+<section class="bloom" id="gallery">
+  <div class="bloom__stage"><canvas id="flower" aria-hidden="true"></canvas></div>
+  <div class="bloom__scroll">
+    <div class="bloom__panel"><div class="wrap"><div class="bloom__box">
+      <span class="eyebrow" style="--dot:var(--pink)" data-i18n="bl.k1">Gallery · scroll down</span>
+      <h2 class="t-dsp" data-i18n="bl.h1">The house, in bloom.</h2>
+      <p data-i18n="bl.p1">Every petal is a photograph. Scroll and the bud opens — the capsule pods, a room with its mural, the lounge, the corridors. It looks like our logo because it is our logo.</p>
+    </div></div></div>
+    <div class="bloom__panel"><div class="wrap"><div class="bloom__box">
+      <span class="eyebrow" style="--dot:var(--turq)" data-i18n="bl.k2">Move your mouse</span>
+      <h2 class="t-dsp" data-i18n="bl.h2">The rooms have depth.</h2>
+      <p data-i18n="bl.p2">Hover over the flower, or tilt your phone. The foreground moves further than the back wall, so a flat photograph turns into a room you can lean into.</p>
+    </div></div></div>
+    <div class="bloom__panel"><div class="wrap"><div class="bloom__box">
+      <span class="eyebrow" style="--dot:var(--gold)" data-i18n="bl.k3">And below</span>
+      <h2 class="t-dsp" data-i18n="bl.h3">Or just look at the pictures.</h2>
+      <p data-i18n="bl.p3">Nobody books a bed out of a flower. The plain gallery is right underneath — a grid, big images, one click to enlarge.</p>
+    </div></div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ PLAIN GALLERY ═════════ -->
+<section class="gal sec">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" style="--dot:var(--gold)" data-i18n="gal.eyebrow">Inside Be Free</span>
+      <h2 class="t-dsp" data-i18n="gal.h">Inside the color of Be Free</h2>
+      <p class="lede" data-i18n="gal.lede">A look at the atmosphere, rooms and feeling of staying at Be Free Hostel Vienna — vibrant, social and made for modern travelers.</p>
+    </div>
+    <div class="gal__grid" id="galgrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ HOUSE RULES ═══════════ -->
+<section class="band" id="rules" style="--bg:var(--violet)">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" data-i18n="rul.eyebrow">Good to know</span>
+      <h2 class="t-dsp" data-i18n="rul.h">The honest bits</h2>
+      <p class="lede" data-i18n="rul.lede">Better to read it here than to discover it at two in the morning. This is a real hostel in a real old building — here is what that means.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card" data-reveal><span class="card__tag" data-i18n="rul.c1k">Quiet hours</span>
+        <h3 data-i18n="rul.c1t">It is an old building</h3>
+        <p class="small dim" data-i18n="rul.c1d">Sound carries in the stairwell and the kitchen echoes. Quiet hours are respected, and if you are a light sleeper, take a capsule bed — it is the calmest option in the house.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="rul.c2k">Bathrooms</span>
+        <h3 data-i18n="rul.c2t">Showers and toilets are shared</h3>
+        <p class="small dim" data-i18n="rul.c2d">On every floor, cleaned daily. No private bathrooms anywhere in the house — that is part of how the price stays where it is.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="rul.c3k">Kitchen</span>
+        <h3 data-i18n="rul.c3t">Cook whenever you want</h3>
+        <p class="small dim" data-i18n="rul.c3d">The guest kitchen on the ground floor is open around the clock. Wash up after yourself and label what you leave in the fridge.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="rul.c4k">Times</span>
+        <h3 data-i18n="rul.c4t">Check-in from 15:00</h3>
+        <p class="small dim" data-i18n="rul.c4d">Arrive any time after that, day or night. Ask us about leaving your bag if you land early or leave late.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="rul.c5k">Self-service</span>
+        <h3 data-i18n="rul.c5t">There is no front desk</h3>
+        <p class="small dim" data-i18n="rul.c5d">Nobody sits in a lobby waiting for you. That is the point of the place — but the phone is always answered, so you are never on your own.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="rul.c6k">Groups</span>
+        <h3 data-i18n="rul.c6t">School trips and teams welcome</h3>
+        <p class="small dim" data-i18n="rul.c6d">Write to us with your dates and headcount and we will put a quote together for the whole group.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ GROUPS ════════════════ -->
+<section class="band" id="groups" style="--bg:var(--leaf)">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" data-i18n="grp.eyebrow">Groups</span>
+      <h2 class="t-dsp" data-i18n-html="grp.h">Group bookings —<br />breakfast included.</h2>
+      <p class="lede" data-i18n="grp.lede">School trips, teams, choirs, clubs. Tell us your dates and how many you are, and we put together one quote for the whole group.</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c1k">Breakfast</span>
+        <h3 data-i18n="grp.c1t">Served at Felberstraße 20</h3>
+        <p class="small dim" data-i18n="grp.c1d">Groups have breakfast at our sister house, Do Step Inn Home — a three-minute walk from the front door. Sleep at Be Free, eat around the corner.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c2k">One contact</span>
+        <h3 data-i18n="grp.c2t">One quote, one invoice</h3>
+        <p class="small dim" data-i18n="grp.c2d">Beds, breakfast and any extras arrive on a single offer, so nobody has to chase separate bookings.</p></div>
+      <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c3k">Tell us</span>
+        <h3 data-i18n="grp.c3t">What we need to know</h3>
+        <p class="small dim" data-i18n="grp.c3d">Dates, how many people, how you would like the rooms split, and whether breakfast is for everyone. That is enough to price it.</p></div>
+    </div>
+
+    <div class="stix" style="margin-top:24px">
+      <i style="--sc:#FFFFFF" data-i18n="grp.s1">Breakfast at Felberstraße 20</i>
+      <i style="--sc:var(--gold)" data-i18n="grp.s2">3 minutes on foot</i>
+      <i style="--sc:var(--pink)" data-i18n="grp.s3">One quote for everyone</i>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:22px">
+      <a class="pill" href="mailto:befree-hostel@dostepinn.at?subject=Gruppenanfrage%20Be%20Free%20Hostel" style="--pc:#FFFFFF"><span data-i18n="grp.cta">Send a group request</span><span class="pill__a" aria-hidden="true">→</span></a>
+      <a class="pill pill--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=Felberstra%C3%9Fe%2020%2C%201150%20Wien" target="_blank" rel="noopener noreferrer" data-i18n="grp.route">Route to Felberstraße 20</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ BOOK ══════════════════ -->
+<section class="band" id="book" style="--bg:var(--pink)">
+  <div class="wrap" style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+    <span class="eyebrow" data-i18n="bk.eyebrow">Book your stay</span>
+    <h2 class="t-dsp" data-i18n-html="bk.h">Be Free. Be You.<br />Be Here.</h2>
+    <p class="lede" data-i18n="bk.lede">Pick your dates, pay online, and your key arrives on your phone. That is the whole process.</p>
+    <!-- UP Hotel IBE — Be Free's own property key. Never swap in another
+         house's key; guests would book the wrong hotel. If the engine cannot
+         load, the form below takes over on its own. -->
+    <div class="bookband" data-ibe-host>
+      <div class="ibe" hidden><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
+      <form class="ibeform" data-ibe-form>
+        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
+          <input type="date" name="in" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
+          <input type="date" name="out" required /></label>
+        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
+          <select name="pax">
+            <option>1</option><option selected>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8+</option>
+          </select></label>
+        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
+      </form>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
+      <a class="pill pill--ghost" href="tel:+4369919232769">+43 699 19232769</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ CONTACT ═══════════════ -->
+<section class="sec" id="contact">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow" style="--dot:var(--turq)" data-i18n="ct.eyebrow">Contact us</span>
+      <h2 class="t-dsp" data-i18n="ct.h">Reach out to Be Free.</h2>
+      <p class="lede" data-i18n="ct.lede">Questions, bookings or anything else? Get in touch directly and we will help you quickly and easily.</p>
+    </div>
+    <div class="contact">
+      <div class="ccard" data-reveal>
+        <span class="ccard__n">01</span>
+        <h3 data-i18n="ct.c1t">Email us</h3>
+        <a class="big" href="mailto:befree-hostel@dostepinn.at">befree-hostel@dostepinn.at</a>
+        <p><a class="pill" href="mailto:befree-hostel@dostepinn.at" style="--pc:var(--turq)"><span data-i18n="ct.c1b">Open email</span><span class="pill__a" aria-hidden="true">→</span></a></p>
+      </div>
+      <div class="ccard" data-reveal>
+        <span class="ccard__n">02</span>
+        <h3 data-i18n="ct.c2t">Call us</h3>
+        <a class="big" href="tel:+4369919232769">+43 699 19232769</a>
+        <p><a class="pill" href="tel:+4369919232769" style="--pc:var(--gold)"><span data-i18n="ct.c2b">Call now</span><span class="pill__a" aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ══════════════════════════════════════ FOOTER ════════════════ -->
+<footer class="foot">
+  <div class="wrap">
+    <h3 data-i18n="ft.claim">Stay free. Meet people. Create memories.</h3>
+    <div class="foot__grid" style="margin-top:clamp(24px,3.5vw,40px)">
+      <div class="foot__l">
+        <span class="foot__k" data-i18n="ft.house">The house</span>
+        <span>BeFree Hostel – Do Step Inn</span>
+        <span>Beingasse 13, 1150 Wien</span>
+        <span data-i18n="ft.country">Austria</span>
+      </div>
+      <div class="foot__l">
+        <span class="foot__k" data-i18n="ft.reach">Get in touch</span>
+        <a href="tel:+4369919232769">+43 699 19232769</a>
+        <a href="mailto:befree-hostel@dostepinn.at">befree-hostel@dostepinn.at</a>
+      </div>
+      <div class="foot__l">
+        <span class="foot__k" data-i18n="ft.visit">On the page</span>
+        <a href="#rooms" data-i18n="nav.rooms">Rooms</a>
+        <a href="#checkin" data-i18n="nav.checkin">Check-in</a>
+        <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+        <a href="#groups" data-i18n="nav.groups">Groups</a>
+        <a href="#rules" data-i18n="nav.rules">Good to know</a>
+      </div>
+      <div class="foot__l">
+        <span class="foot__k" data-i18n="ft.legal">Legal</span>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="agb.html">AGB</a>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>© <span id="year">2026</span> Be Free Hostel · <span data-i18n="ft.claimshort">Be Free. Be You. Be Here.</span></span>
+      <span>Beingasse 13 · 1150 Wien</span>
+    </div>
+  </div>
+</footer>
+
+<a class="bookfab" id="bookfab" href="#book">
+  <span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span>
+</a>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
+  <figure class="lb__fig"><img id="lb-img" alt="" /></figure>
+  <div class="lb__bar">
+    <button class="lb__btn" id="lb-prev" data-i18n="lb.prev">← Back</button>
+    <span class="lb__cap" id="lb-cap"></span>
+    <button class="lb__btn" id="lb-next" data-i18n="lb.next">Next →</button>
+    <button class="lb__btn lb__btn--x" id="lb-x" data-i18n="lb.close">Close</button>
+  </div>
+</div>
+
+<script src="assets/js/befree.js"></script>
+<script type="module" src="assets/js/flower.js"></script>
+
+<!-- Booking engine (UP Hotel IBE) — their snippet, last before </body> -->
+<script type="text/javascript" src="https://ibe.uphotel.agency/ibe.min.js"></script>
+<link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
+</body>
+</html>

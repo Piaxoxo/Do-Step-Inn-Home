@@ -1,0 +1,230 @@
+# Be Free Hostel — Website
+
+> **Be Free. Be You. Be Here.**
+> Beingasse 13, 1150 Wien · befree-hostel@dostepinn.at · +43 699 19232769
+
+A bilingual (EN/DE) single-page site for Be Free Hostel. Static, no build step
+for the site itself — open `index.html` and it runs.
+
+```bash
+python3 -m http.server 8080     # from the repo root
+# → http://localhost:8080/befree/
+```
+
+## What's on the page
+
+| Section | Content |
+|---|---|
+| Hero | *Be Free. Be You. Be Here.* over a canvas field of colour-cycling flowers |
+| Ticker | TOP DESTINATION · VIENNA · BEINGASSE 13 · BE FREE HOSTEL, endless |
+| Book bar | Gold band under the hero — booking where intent is highest |
+| Location | Turquoise band — the neighbourhood, four markers, distances as stickers |
+| Check-in | Pink band — no reception, the three steps, the phone number, and the walk to Felberstraße |
+| Rooms | Private room · Capsule bed · Classic dorm, as pastel cards |
+| Book (rooms) | Booking strip closing the rooms section |
+| Why Be Free | Freedom, together, clean, colour |
+| Flower gallery | Scroll-driven 3D: every petal is a photograph with its own depth map |
+| Gallery | Plain grid, click to enlarge, keyboard-navigable lightbox |
+| Groups | Green band — group quotes, breakfast at Felberstraße 20, route |
+| Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk |
+| Book | Pink band — booking form, replaced by the UP Hotel widget when it loads |
+| Contact | Email and phone |
+
+Plus three German-only legal pages: `impressum.html`, `datenschutz.html`, `agb.html`.
+
+## Design system
+
+Every brand colour was sampled from the real logo artwork
+(`assets/img/logo-befree.png`), then **pink was promoted to lead**: it carries
+booking, emphasis and the big bands, and nothing else uses it.
+
+| Token | Hex | Role |
+|---|---|---|
+| `--pink` | `#FF3D9A` | Booking, emphasis. Never decorative. |
+| `--pink-mid` | `#F97CB6` | Full-bleed bands |
+| `--pink-soft` | `#FFD9E9` | Cards, oversized background wordmarks |
+| `--ink` | `#0B0B0C` | Every outline and all type |
+| `--turq` | `#4FC3CE` | The cool counterweight — location, practical info |
+| `--gold` | `#E4B430` | The most common logo colour — ticker, brand moments |
+| `--orange` `--violet` `--leaf` `--cherry` | | Flower colours |
+| `--paper` | `#FFF7E4` | Warm ground, pulled toward the gold. Never pure white. |
+
+**Type:** Bagel Fat One (statements) · Shrikhand (headings) · Karla (body) ·
+DM Mono (labels). Deliberately no graffiti face — the street-art feel comes
+from stickers, hard outlines and offset shadows, not from a costume font.
+
+**Components:** sticker tags, pill buttons with a circled arrow, pastel cards,
+full-bleed colour bands, oversized wordmarks that bleed past both edges.
+
+The site commits to one bright look on purpose and has no dark mode — every
+colour is painted explicitly, so it renders the same everywhere.
+
+## Languages
+
+English is the source of truth and lives in the HTML, so the page reads
+correctly even if JavaScript never runs. German lives in the `DE` dictionary at
+the top of `assets/js/befree.js`.
+
+- `data-i18n="key"` swaps `textContent`, `data-i18n-html="key"` swaps `innerHTML`
+  (used where a line break matters).
+- Order of precedence: `?lang=de` → remembered choice → browser language.
+- **To change a German string,** edit the `DE` dictionary. **To change an English
+  string,** edit the HTML — and only add a `DE` entry if the German should differ.
+
+The legal pages stay German-only. That is the legally clean option for a business
+operating in Austria.
+
+## The flower gallery
+
+`assets/js/flower.js` draws eight petals, each one a photograph, each with a
+**depth map** that gives a flat photo real parallax: the foreground shifts
+further than the back wall as you move the pointer or tilt the phone.
+
+It stands down quietly — the whole section hides itself — when there is no
+WebGL or the device reports under 2 GB of memory. Under
+`prefers-reduced-motion` it draws one static, fully open frame. The plain
+gallery below carries the same photographs either way, so nothing is lost.
+
+three.js is vendored at `assets/vendor/three.module.min.js` (v0.169.0) rather
+than loaded from a CDN, so the page has no third-party runtime dependency.
+
+## Replacing the photos
+
+Drop a new file over the old one, keep the name, done. Every slot falls back to
+nothing gracefully, and the gallery labels live in `PHOTOS` in `befree.js`.
+
+| Slot | Files | Size |
+|---|---|---|
+| Flower petals | `petal-1-capsule.jpg` … `petal-8-hangout.jpg` | 700 × 1130, portrait |
+| Petal depth maps | `petal-N-*-depth.png` | 224 × 360, greyscale |
+| Gallery | `gallery-01-room.jpg` … `gallery-12-evening.jpg` | 1400 × 1000, landscape |
+| Room cards | `room-capsule.jpg` `room-private.jpg` | 1000 × 750 |
+
+### Regenerating the depth maps
+
+A petal photo needs a matching `-depth.png` or its parallax goes flat. The maps
+here are **estimated** from image geometry and brightness — floor near, back
+wall far, bright reads as far — deliberately kept low-frequency, because a
+smooth depth map never smears the parallax.
+
+For production, run a real monocular depth model (Depth Anything V2 or MiDaS)
+over each petal photo, save the result greyscale at 224 × 360 with a light
+blur, and drop it in under the same name. Nothing in the page changes.
+
+## Elementor / WordPress
+
+```bash
+node scripts/build-befree.mjs                # photos from GitHub Pages
+node scripts/build-befree.mjs --standalone   # photos embedded, needs no host
+```
+
+Both write into `befree-elementor/`; `--standalone` adds a `-standalone`
+suffix so the two sets sit side by side.
+
+| Variant | index | Photos |
+|---|---|---|
+| default | ~800 kB | load from jsDelivr, pinned to a commit |
+| `--standalone` | ~4.3 MB | embedded as data URIs, no host needed |
+
+**The photos do not come from GitHub Pages.** Pages on this repo serves its
+default branch, `claude/do-step-inn-home-eiit7m`, which does not contain
+`befree/` — so every photo 404s from there until this work is merged. The
+default build therefore points at jsDelivr, which serves any public repo at
+`/gh/<owner>/<repo>@<ref>/<path>` with no Pages involved.
+
+The ref is the commit that last touched `befree/assets/img/`, read from git at
+build time. A commit rather than a branch, for two reasons: a branch name
+containing `/` breaks the URL, and a commit is immutable, so the CDN can cache
+it forever. Change the photos, commit, push, rebuild — the SHA follows on its
+own, and the build warns if that commit is not pushed yet.
+
+**The logo is embedded in both.** It is the one image nobody forgives when it
+breaks, so it never depends on a host being up. It is quantized to 256 colours
+at 600px wide — 32 kB instead of the 503 kB original, which was five times
+larger than anything the page ever displays.
+
+### Pointing the photos somewhere else
+
+The default build opens with one switch, near the top of the file:
+
+```js
+window.BEFREE_IMG = "";   // e.g. "https://your-domain.at/wp-content/uploads/befree/"
+```
+
+Set it and every photo follows — the static `src` attributes are rewritten on
+load, and the scripts read the same base. Leave it empty and the built-in
+addresses are used. The logo stays embedded either way.
+
+`befree-elementor/befree-bilder.zip` holds all 31 files ready to upload.
+
+Or use `--standalone`, which depends on nothing at all.
+
+Paste the file into a single **HTML widget** on a page set to the **Elementor
+Canvas** layout (Page settings → Page Layout → Canvas), so the theme's own
+header and footer step aside — the page brings its own fixed navigation and
+full-height hero.
+
+Legal links and the home link are rewritten to WordPress slugs
+(`/impressum/`, `/datenschutz/`, `/agb/`, `/`), so create those pages and
+every link resolves.
+
+## Still open
+
+- [ ] **A dorm photograph would finish the rooms row.** The three types follow
+      the booking listings: private rooms (double, twin, triple, quad),
+      lockable capsule beds, and classic open-bunk dorms. The first two carry
+      photographs from the shoot; there is no open-bunk dorm in it. Rather
+      than illustrate it with a different room type — the mistake that card
+      carried once — it reads as a plain colour card beside two photo cards.
+      Nothing about it looks unfinished, and adding an `<img>` at the marked
+      spot in `index.html` turns it into a third photo card.
+- [ ] **Other facts to confirm.** Prices, bed counts, exact quiet hours, what
+      is included, and whether luggage storage exists.
+- [x] **Booking engine.** The UP Hotel IBE runs with Be Free's own key,
+      `75e0a485-…`, in **three** places: a gold search bar directly under the
+      hero, a strip closing the rooms section, and the Book band further down. Any element marked
+      `data-ibe-host` joins in; the gate checks the key once and brings them
+      all up together, so a keyless or misconfigured engine leaves no empty
+      frames — just the mail/phone fallback. Both follow the page language:
+      the widget reads `language` only when it initialises, so a switch swaps
+      in a fresh `<ibe-up>` rather than editing an attribute nothing watches.
+      On screens under 980px the nav's booking pill is hidden, so a floating
+      button appears between the hero and the Book band. Never use another
+      house's key — Do Step Inn Home's `35b41b51-…` would send guests to the
+      wrong hotel.
+
+      **The booking form is the floor, not a stand-in.** Both hosts carry a
+      real form — check-in, check-out, guests — and it shows immediately, so
+      the section is never an empty frame. The widget takes over only once the
+      browser reports `<ibe-up>` as actually defined
+      (`customElements.whenDefined`), which covers a missing key, a blocked
+      script, an ad-blocker and a dead network with one path instead of four
+      guesses. Submitting the form opens a mail with the dates filled in.
+
+      **Not verified here:** `ibe.uphotel.agency` is blocked by this
+      environment's egress proxy, so the rendered widget has never been seen —
+      only the form it hands over from. Check both on a real host.
+- [ ] **Legal pages — three facts still to confirm.** `impressum.html`,
+      `datenschutz.html` and `agb.html` are written, in German only, adapted
+      from the Do Step Inn Home pages: same operating company (Kern
+      Beherbergungsbetriebs GmbH, UID, Firmenbuch, Geschäftsführung), Be Free's
+      own establishment address and contact.
+
+      The privacy policy was **not** copied wholesale — it describes what this
+      site actually does. Google Maps is gone (Be Free embeds no map), and the
+      language preference stored in `localStorage` is disclosed.
+
+      Three processors could not be verified for Be Free, so the policy names
+      **categories** rather than companies — which Art. 13(1)(e) GDPR permits,
+      and which beats naming the wrong company: **hosting**, the
+      **property-management system** (Do Step Inn Home uses apaleo) and the
+      **check-in service** (Do Step Inn Home uses straiv). Confirm all three
+      and name them; the sentences are written so a company name drops
+      straight in.
+
+      Have the operator read all three pages before they go live.
+- [ ] **Own repository.** This lives under `befree/` for now because creating
+      `Piaxoxo/Be-Free-Hostel` was refused (`403`). Once it exists, this folder
+      moves across unchanged.
+- [ ] **Domain.** `befree-hostel.com` currently serves an unfilled
+      "Travel Magazine" theme.
