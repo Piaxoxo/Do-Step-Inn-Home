@@ -139,7 +139,6 @@
     "bk.eyebrow": "Aufenthalt buchen",
     "bk.h": "Be Free. Be You.<br />Be Here.",
     "bk.lede": "Termin wählen, online zahlen, und dein Schlüssel kommt aufs Handy. Mehr ist es nicht.",
-    "bk.note": "Die Live-Buchungsstrecke hängt noch nicht dran — bis dahin schreib oder ruf uns an, dann bestätigen wir dein Bett persönlich.",
 
     "ct.eyebrow": "Kontakt",
     "ct.h": "Schreib uns.",

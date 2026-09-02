@@ -170,13 +170,14 @@ every link resolves.
 
 ## Still open
 
-- [ ] **A dorm photograph is missing.** The three room types follow the
-      booking listings: private rooms (double, twin, triple, quad), lockable
-      capsule beds, and classic open-bunk dorms. The first two are backed by
-      photographs from the shoot; the classic dorm is not, so its card shows
-      a striped brand panel rather than a picture of a different room type.
-      Replace it with a real dorm photo before launch — the card picks up an
-      `<img>` the moment one exists.
+- [ ] **A dorm photograph would finish the rooms row.** The three types follow
+      the booking listings: private rooms (double, twin, triple, quad),
+      lockable capsule beds, and classic open-bunk dorms. The first two carry
+      photographs from the shoot; there is no open-bunk dorm in it. Rather
+      than illustrate it with a different room type — the mistake that card
+      carried once — it reads as a plain colour card beside two photo cards.
+      Nothing about it looks unfinished, and adding an `<img>` at the marked
+      spot in `index.html` turns it into a third photo card.
 - [ ] **Other facts to confirm.** Prices, bed counts, exact quiet hours, what
       is included, and whether luggage storage exists.
 - [x] **Booking engine.** The UP Hotel IBE runs with Be Free's own key,
@@ -211,14 +212,17 @@ every link resolves.
 
       The privacy policy was **not** copied wholesale — it describes what this
       site actually does. Google Maps is gone (Be Free embeds no map), and the
-      language preference stored in `localStorage` is disclosed. Three
-      processors could not be verified for Be Free and are marked in the page
-      with a dashed red box: **hosting**, the **property-management system**
-      (Do Step Inn Home uses apaleo) and the **check-in service** (Do Step Inn
-      Home uses straiv). Fill those in and delete the boxes before publishing —
-      a wrong processor named in a privacy policy is worse than none.
+      language preference stored in `localStorage` is disclosed.
 
-      Have the operator read all three before they go live.
+      Three processors could not be verified for Be Free, so the policy names
+      **categories** rather than companies — which Art. 13(1)(e) GDPR permits,
+      and which beats naming the wrong company: **hosting**, the
+      **property-management system** (Do Step Inn Home uses apaleo) and the
+      **check-in service** (Do Step Inn Home uses straiv). Confirm all three
+      and name them; the sentences are written so a company name drops
+      straight in.
+
+      Have the operator read all three pages before they go live.
 - [ ] **Own repository.** This lives under `befree/` for now because creating
       `Piaxoxo/Be-Free-Hostel` was refused (`403`). Once it exists, this folder
       moves across unchanged.

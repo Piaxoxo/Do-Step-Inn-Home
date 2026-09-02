@@ -70,16 +70,6 @@
 .lg-facts dd{margin:0;padding-bottom:7px;font-size:16px;line-height:1.55}
 .lg-facts dd b{font-weight:800}
 
-/* a fact still to be confirmed by the operator — visible, never silent */
-.lg-check{
-  border:2px dashed var(--cherry);border-radius:16px;
-  background:color-mix(in srgb, var(--cherry) 8%, var(--card));
-  padding:14px 16px;margin:0 0 16px;
-  font-size:15px;line-height:1.6;
-}
-.lg-check b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;
-  text-transform:uppercase;display:block;margin-bottom:5px;color:var(--cherry)}
-
 .lg-foot{
   background:var(--ink);color:var(--paper);
   border-top:2px solid var(--ink);padding-block:34px;font-size:14px;

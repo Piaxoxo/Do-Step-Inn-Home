@@ -271,18 +271,6 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
   width:100%;height:auto;      /* height:auto or the img height attribute wins over aspect-ratio */
   aspect-ratio:4/3;object-fit:cover;border-bottom:2px solid var(--ink);
 }
-/* stands in for a photograph that does not exist yet — visibly a panel,
-   never a picture of a different room type */
-.pcard__ph{
-  aspect-ratio:4/3;border-bottom:2px solid var(--ink);
-  display:grid;place-items:center;
-  background:
-    repeating-linear-gradient(45deg,
-      rgba(11,11,12,.07) 0 14px, transparent 14px 28px),
-    var(--bg,var(--turq));
-}
-.pcard__ph span{font-size:54px;line-height:1;opacity:.55}
-
 .pcard__b{padding:18px 18px 22px;display:flex;flex-direction:column;gap:9px;flex:1}
 .pcard h3{font-family:var(--f-body);font-weight:800;font-size:19px}
 .pcard p{font-size:14.5px;line-height:1.55}
@@ -574,16 +562,6 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .lg-facts dd{margin:0;padding-bottom:7px;font-size:16px;line-height:1.55}
 .lg-facts dd b{font-weight:800}
 
-/* a fact still to be confirmed by the operator — visible, never silent */
-.lg-check{
-  border:2px dashed var(--cherry);border-radius:16px;
-  background:color-mix(in srgb, var(--cherry) 8%, var(--card));
-  padding:14px 16px;margin:0 0 16px;
-  font-size:15px;line-height:1.6;
-}
-.lg-check b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;
-  text-transform:uppercase;display:block;margin-bottom:5px;color:var(--cherry)}
-
 .lg-foot{
   background:var(--ink);color:var(--paper);
   border-top:2px solid var(--ink);padding-block:34px;font-size:14px;
@@ -654,7 +632,6 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     </ul>
 
     <h2>3. Hosting der Website</h2>
-    <p class="lg-check"><b>Vor Veröffentlichung prüfen</b>Den Hosting-Dienstleister eintragen, sobald feststeht, wo befree-hostel.com läuft. Für Do Step Inn Home ist es die netcup GmbH, Karlsruhe — für Be Free ist das nicht bestätigt.</p>
     <p>Diese Website wird von einem Hosting-Dienstleister in unserem Auftrag
       technisch bereitgestellt (Auftragsverarbeiter). Dabei werden technisch
       notwendige Zugriffsdaten verarbeitet (siehe Server-Logfiles). Die
@@ -679,7 +656,6 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
       DSGVO).</p>
 
     <h2>6. Buchung und Property-Management-System</h2>
-    <p class="lg-check"><b>Vor Veröffentlichung prüfen</b>Den Namen des Property-Management-Systems eintragen. Do Step Inn Home nennt apaleo (apaleo GmbH, Deutschland); ob Be Free dasselbe System nutzt, ist nicht bestätigt.</p>
     <p>Zur Verwaltung von Reservierungen, Gästedaten und Rechnungen setzen wir ein
       cloudbasiertes Property-Management-System ein. Dabei werden die für die
       Buchung erforderlichen Daten verarbeitet — etwa Name, Kontaktdaten, An- und
@@ -689,7 +665,6 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
       Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO).</p>
 
     <h2>7. Self-Check-in per QR-Code</h2>
-    <p class="lg-check"><b>Vor Veröffentlichung prüfen</b>Den Namen des Check-in-Dienstes eintragen. Do Step Inn Home nennt straiv (straiv by CODE2ORDER GmbH, Deutschland); welcher Dienst die QR-Codes für Be Free ausstellt, ist nicht bestätigt.</p>
     <p>Be Free Hostel arbeitet ohne Rezeption. Für die Anreise nutzen wir einen
       digitalen Check-in-Dienst, über den Sie Ihre Anreisedaten vorab online
       übermitteln und einen persönlichen QR-Code erhalten, der Haustür und Zimmer

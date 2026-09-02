@@ -285,18 +285,6 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
   width:100%;height:auto;      /* height:auto or the img height attribute wins over aspect-ratio */
   aspect-ratio:4/3;object-fit:cover;border-bottom:2px solid var(--ink);
 }
-/* stands in for a photograph that does not exist yet — visibly a panel,
-   never a picture of a different room type */
-.pcard__ph{
-  aspect-ratio:4/3;border-bottom:2px solid var(--ink);
-  display:grid;place-items:center;
-  background:
-    repeating-linear-gradient(45deg,
-      rgba(11,11,12,.07) 0 14px, transparent 14px 28px),
-    var(--bg,var(--turq));
-}
-.pcard__ph span{font-size:54px;line-height:1;opacity:.55}
-
 .pcard__b{padding:18px 18px 22px;display:flex;flex-direction:column;gap:9px;flex:1}
 .pcard h3{font-family:var(--f-body);font-weight:800;font-size:19px}
 .pcard p{font-size:14.5px;line-height:1.55}
@@ -732,10 +720,10 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
       </article>
 
       <article class="pcard" style="--bg:var(--turq)" data-reveal>
-        <!-- No photograph of the open-bunk dorm exists in the shoot yet, and
-             illustrating it with another room type is how this card was wrong
-             before. A brand panel holds the slot until a real photo lands. -->
-        <div class="pcard__ph" aria-hidden="true"><span>✿</span></div>
+        <!-- No open-bunk dorm in the shoot, and illustrating it with another
+             room type is how this card was wrong before. It reads as a colour
+             card among two photo cards rather than a frame with nothing in
+             it. Add an <img> here the day a real dorm photo exists. -->
         <div class="pcard__b">
           <h3 data-i18n="room.c3t">Classic dorm</h3>
           <p data-i18n="room.c3d">Open bunk beds in a shared room, lockers for your things, and the lowest price in the house. The easiest way to meet the people you end up exploring the city with.</p>
@@ -1144,7 +1132,6 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     "bk.eyebrow": "Aufenthalt buchen",
     "bk.h": "Be Free. Be You.<br />Be Here.",
     "bk.lede": "Termin wählen, online zahlen, und dein Schlüssel kommt aufs Handy. Mehr ist es nicht.",
-    "bk.note": "Die Live-Buchungsstrecke hängt noch nicht dran — bis dahin schreib oder ruf uns an, dann bestätigen wir dein Bett persönlich.",
 
     "ct.eyebrow": "Kontakt",
     "ct.h": "Schreib uns.",
