@@ -123,20 +123,30 @@ suffix so the two sets sit side by side.
 
 | Variant | index | Photos |
 |---|---|---|
-| default | ~800 kB | load from the GitHub Pages URL |
+| default | ~800 kB | load from jsDelivr, pinned to a commit |
 | `--standalone` | ~4.3 MB | embedded as data URIs, no host needed |
+
+**The photos do not come from GitHub Pages.** Pages on this repo serves its
+default branch, `claude/do-step-inn-home-eiit7m`, which does not contain
+`befree/` — so every photo 404s from there until this work is merged. The
+default build therefore points at jsDelivr, which serves any public repo at
+`/gh/<owner>/<repo>@<ref>/<path>` with no Pages involved.
+
+The ref is the commit that last touched `befree/assets/img/`, read from git at
+build time. A commit rather than a branch, for two reasons: a branch name
+containing `/` breaks the URL, and a commit is immutable, so the CDN can cache
+it forever. Change the photos, commit, push, rebuild — the SHA follows on its
+own, and the build warns if that commit is not pushed yet.
 
 **The logo is embedded in both.** It is the one image nobody forgives when it
 breaks, so it never depends on a host being up. It is quantized to 256 colours
 at 600px wide — 32 kB instead of the 503 kB original, which was five times
 larger than anything the page ever displays.
 
-The default variant only works once the photos are reachable, so it needs this
-branch merged and GitHub Pages serving `befree/`. Until then, use
-`--standalone` — or upload the contents of `befree/assets/img/` to the
-WordPress media library and search-replace
-`https://piaxoxo.github.io/Do-Step-Inn-Home/befree/assets/img/` with your
-uploads folder.
+To host the photos yourself instead, upload `befree/assets/img/` to the
+WordPress media library and search-replace the `https://cdn.jsdelivr.net/gh/…/`
+prefix with your uploads folder. Or use `--standalone`, which depends on
+nothing.
 
 Paste the file into a single **HTML widget** on a page set to the **Elementor
 Canvas** layout (Page settings → Page Layout → Canvas), so the theme's own

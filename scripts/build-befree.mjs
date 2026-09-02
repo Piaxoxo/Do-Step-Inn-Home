@@ -7,11 +7,26 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 
 const ROOT = '/home/user/Do-Step-Inn-Home';
 const SRC  = path.join(ROOT, 'befree');
 const OUT  = path.join(ROOT, 'befree-elementor');
-const BASE = 'https://piaxoxo.github.io/Do-Step-Inn-Home/befree/';
+/* Where the photos come from when they are not embedded.
+ *
+ * NOT GitHub Pages: this repo serves Pages from its default branch, which
+ * does not contain befree/, so every photo 404s until this work is merged.
+ * jsDelivr serves any public repo at /gh/<owner>/<repo>@<ref>/<path>, so it
+ * works today. The ref is the commit that last touched the images — pinned
+ * rather than a branch name, because a branch containing "/" breaks the URL,
+ * and because a commit is immutable and cached forever.
+ *
+ * If the images change, commit and push them, then rebuild: the SHA below is
+ * read from git, so it follows along on its own.
+ */
+const IMG_SHA = execSync('git log -1 --format=%H -- befree/assets/img',
+                         { cwd: ROOT }).toString().trim();
+const BASE = `https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@${IMG_SHA}/befree/`;
 
 const read = f => fs.readFileSync(path.join(SRC, f), 'utf8');
 
@@ -40,6 +55,16 @@ if (STANDALONE) {
   }
 }
 fs.mkdirSync(OUT, { recursive: true });
+
+if (!STANDALONE) {
+  const pushed = execSync(
+    `git branch -r --contains ${IMG_SHA} 2>/dev/null || true`, { cwd: ROOT }
+  ).toString().trim();
+  if (!pushed) {
+    console.warn(`\n  WARNING  ${IMG_SHA.slice(0, 8)} is not pushed yet.\n` +
+                 `           Every photo will 404 until it is. Push, then rebuild.\n`);
+  }
+}
 
 /* ── three.js ships as an ES module; turn its final export list into a
       plain global so the whole thing can live in one classic <script> ── */

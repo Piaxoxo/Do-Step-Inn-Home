@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="theme-color" content="#FF3D9A" />
 
-<link rel="icon" href="https://piaxoxo.github.io/Do-Step-Inn-Home/befree/assets/img/logo-befree.png" />
+<link rel="icon" href="https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/logo-befree.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Shrikhand&family=Karla:ital,wght@0,300..800;1,300..800&family=DM+Mono:wght@400;500&display=swap" />
@@ -710,7 +710,7 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     </div>
     <div class="grid g3">
       <article class="pcard" style="--bg:var(--gold)" data-reveal>
-        <img src="https://piaxoxo.github.io/Do-Step-Inn-Home/befree/assets/img/room-private.jpg" alt="" loading="lazy" width="1000" height="750" />
+        <img src="https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/room-private.jpg" alt="" loading="lazy" width="1000" height="750" />
         <div class="pcard__b">
           <h3 data-i18n="room.c1t">Private room</h3>
           <p data-i18n="room.c1d">Double, twin, triple or quad. A wide bed on a solid wood platform, a window onto the street, a graffiti mural on the wall — and a door that closes behind you.</p>
@@ -719,7 +719,7 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
       </article>
 
       <article class="pcard" style="--bg:var(--pink-soft)" data-reveal>
-        <img src="https://piaxoxo.github.io/Do-Step-Inn-Home/befree/assets/img/room-capsule.jpg" alt="" loading="lazy" width="1000" height="750" />
+        <img src="https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/room-capsule.jpg" alt="" loading="lazy" width="1000" height="750" />
         <div class="pcard__b">
           <h3 data-i18n="room.c2t">Capsule bed</h3>
           <p data-i18n="room.c2d">A bed in a shared room that locks. Your own light, your own socket, a door you pull shut. The quiet, private way to sleep at a dorm price.</p>
@@ -1221,7 +1221,7 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 
   function label(p) { return lang === "de" ? p.de : p.en; }
   function tagOf(p) { return lang === "de" ? p.tDe : p.tEn; }
-  function srcOf(p) { return "https://piaxoxo.github.io/Do-Step-Inn-Home/befree/assets/img/" + p.f + ".jpg"; }
+  function srcOf(p) { return "https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/" + p.f + ".jpg"; }
 
   function buildGallery() {
     var grid = document.getElementById("galgrid");
@@ -1739,8 +1739,8 @@ PETALS.forEach((name, i) => {
     vertexShader: VERT, fragmentShader: FRAG,
     transparent: true, side: DoubleSide,
     uniforms: {
-      uMap:   { value: tex(`https://piaxoxo.github.io/Do-Step-Inn-Home/befree/assets/img/${name}.jpg`, true) },
-      uDepth: { value: tex(`https://piaxoxo.github.io/Do-Step-Inn-Home/befree/assets/img/${name}-depth.png`, false) },
+      uMap:   { value: tex(`https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/${name}.jpg`, true) },
+      uDepth: { value: tex(`https://cdn.jsdelivr.net/gh/Piaxoxo/Do-Step-Inn-Home@7401c37006aa4334aaf46a6c6be89ee293f84ff8/befree/assets/img/${name}-depth.png`, false) },
       uShift: { value: new Vector2() },
       uAmt:   { value: 0.052 },
       uTint:  { value: 1 },
