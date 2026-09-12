@@ -179,59 +179,140 @@ for (const token of ['assets/css/befree.css', 'assets/js/befree.js']) {
   if (html.includes(`"${token}"`)) throw new Error(`not inlined: ${token}`);
 }
 
-/* ── strip the page down to something a theme can host ──────────────
-   Out: our fixed navigation, our footer, the skip link (the theme has
-   its own), and the document shell around them. In: a language switch,
-   since the one in the navigation went with it, and a quiet legal line,
-   because Impressum, Datenschutz and AGB have to be reachable from the
-   page even if the theme's footer does not carry them. */
-const EMBED_CSS = `<style>
-/* ── Be Free im Theme: Kopf- und Fußzeile kommen von WordPress ──
-   Hat euer Theme einen mitscrollenden (sticky) Header? Dann hier seine
-   Höhe eintragen, damit Sprungmarken nicht darunter verschwinden. */
-:root{ --nav-h: 0px; }
+/* ══ CONTENT-ONLY BUILD (--embed) ═════════════════════════════════════
+   Splits the site the way a WordPress theme wants it: the page keeps only
+   its content, and the chrome ships as two separate files — header.html
+   and footer.html — for the theme's own header and footer templates. The
+   content then has to break out of whatever container the theme wraps it
+   in, or the colour bands stop short of the screen edge. */
 
-.lang--float{
-  position:fixed;left:14px;bottom:14px;z-index:60;
-  background:var(--card);box-shadow:var(--shadow-sm);
-}
-/* Diese Zeile kann weg, wenn der Theme-Footer die Rechtsseiten schon verlinkt */
-.bf-legal{
-  margin:0;padding:18px;text-align:center;
-  background:var(--paper);border-top:2px solid var(--ink);
-  font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;
-}
-.bf-legal a{color:var(--text)}
+const EMBED_CSS = `<style>
+/* ── Be Free — Inhalt einer Theme-Seite ──────────────────────────────
+   Header und Footer liegen als eigene Dateien daneben: header.html und
+   footer.html.
+
+   --nav-h ist der Platz, den die Seite oben freihält:
+     74px  = ihr benutzt unseren header.html (Standard)
+     0px   = euer Theme-Header scrollt normal mit
+     eigene Höhe = euer Theme-Header bleibt beim Scrollen stehen        */
+:root{ --nav-h: 74px; }
+
+/* Volle Breite, egal wie schmal der Container des Themes ist.
+   Bewusst kein width:100vw — das rechnet die Scrollbar mit und erzeugt
+   genau das Querscrollen, das es verhindern soll. */
+.befree-full{ margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw) }
 </style>`;
 
-const EMBED_TAIL = `
-<div class="lang lang--float" role="group" aria-label="Sprache">
-  <button type="button" id="lang-en" aria-pressed="true">EN</button>
-  <button type="button" id="lang-de" aria-pressed="false">DE</button>
-</div>
+/* The German strings live in befree.js. Every partial takes exactly the
+   keys its own markup uses, read from that one dictionary, so the two can
+   never drift apart. */
+const DE = (function () {
+  const m = main.match(/var DE = \{[\s\S]*?\n  \};/);
+  if (!m) throw new Error('partials: the German dictionary was not found');
+  return (0, eval)('(' + m[0].replace(/^var DE = /, '').replace(/;\s*$/, '') + ')');
+})();
 
-<p class="bf-legal">
-  <a href="/impressum/">Impressum</a> ·
-  <a href="/datenschutz/">Datenschutz</a> ·
-  <a href="/agb/">AGB</a>
-</p>
-`;
+function dictFor(markup) {
+  const out = {};
+  for (const m of markup.matchAll(/data-i18n(?:-html)?="([^"]+)"/g)) {
+    if (DE[m[1]]) out[m[1]] = DE[m[1]];
+  }
+  if (!Object.keys(out).length) throw new Error('partials: nothing translatable found');
+  return out;
+}
 
-function toEmbed(doc) {
+/* A partial has to stand on its own: it may end up on a page where
+   befree.js never runs, such as a legal page. Where befree.js IS present
+   it switches the language live, so the button here only records the
+   choice and leaves the reload to the case where nobody else will. */
+function partialScript(dict, rootSel, extra) {
+  return `<script>
+(function () {
+  var DE = ${JSON.stringify(dict)};
+  var KEY = "befree-lang";
+  var root = document.querySelector(${JSON.stringify(rootSel)});
+  if (!root) return;
+
+  var lang = (function () {
+    try {
+      var q = new URLSearchParams(location.search).get("lang");
+      if (q) return q.toLowerCase().indexOf("de") === 0 ? "de" : "en";
+      var s = localStorage.getItem(KEY);
+      if (s) return s === "de" ? "de" : "en";
+    } catch (e) {}
+    return (navigator.language || "en").toLowerCase().indexOf("de") === 0 ? "de" : "en";
+  })();
+
+  if (lang === "de") {
+    root.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var v = DE[el.getAttribute("data-i18n")];
+      if (v) el.textContent = v;
+    });
+    root.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+      var v = DE[el.getAttribute("data-i18n-html")];
+      if (v) el.innerHTML = v;
+    });
+  }
+${extra}
+})();
+</script>`;
+}
+
+const HEADER_EXTRA = `
+  var en = root.querySelector("#lang-en"), de = root.querySelector("#lang-de");
+  if (en) en.setAttribute("aria-pressed", String(lang === "en"));
+  if (de) de.setAttribute("aria-pressed", String(lang === "de"));
+
+  function choose(l) {
+    return function () {
+      try { localStorage.setItem(KEY, l); } catch (e) {}
+      /* on the start page befree.js switches everything live — only a page
+         without it needs the reload */
+      setTimeout(function () { if (!window.BeFree) location.reload(); }, 0);
+    };
+  }
+  if (en) en.addEventListener("click", choose("en"));
+  if (de) de.addEventListener("click", choose("de"));
+
+  var burger = root.querySelector("#burger"), links = root.querySelector("#navlinks");
+  if (burger && links) {
+    burger.dataset.bound = "1";   /* befree.js must not bind it a second time */
+    burger.addEventListener("click", function () {
+      var open = links.classList.toggle("open");
+      burger.setAttribute("aria-expanded", String(open));
+    });
+    links.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") {
+        links.classList.remove("open");
+        burger.setAttribute("aria-expanded", "false");
+      }
+    });
+  }`;
+
+const FOOTER_EXTRA = `
+  var y = root.querySelector("#year");
+  if (y) y.textContent = String(new Date().getFullYear());`;
+
+/* the pieces every fragment needs before its own markup */
+function fragmentHead(doc, extraCss) {
   const head = doc.slice(doc.indexOf('<head>'), doc.indexOf('</head>'));
-  let body = doc.slice(doc.indexOf('<body>') + '<body>'.length, doc.lastIndexOf('</body>'));
-
   const fonts  = head.match(/<link rel="preconnect"[^>]*>|<link rel="stylesheet" href="https:\/\/fonts\.googleapis[^>]*>/g) || [];
   const styles = head.match(/<style>[\s\S]*?<\/style>/g) || [];
-  const ld     = head.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g) || [];
-  /* --standalone puts the image map in the head, and it has to run before
-     anything that reads it */
-  const boot   = (head.match(/<script>[\s\S]*?<\/script>/g) || []);
-  if (STANDALONE && !boot.some(b => b.includes('__BFIMG'))) {
-    throw new Error('embed: the embedded image map went missing');
+  if (!styles.length) throw new Error('fragment: the stylesheet was not inlined');
+  if (!fonts.length)  throw new Error('fragment: the font link is missing');
+  return [...fonts, ...styles, extraCss];
+}
+
+function toContent(doc) {
+  let body = doc.slice(doc.indexOf('<body>') + '<body>'.length, doc.lastIndexOf('</body>'));
+  const ld = doc.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g) || [];
+  /* --standalone keeps the embedded image map in the head, and it has to
+     run before anything reads it */
+  const headScripts = doc.slice(doc.indexOf('<head>'), doc.indexOf('</head>'))
+                         .match(/<script>[\s\S]*?<\/script>/g) || [];
+  if (STANDALONE && !headScripts.some(b => b.includes('__BFIMG'))) {
+    throw new Error('fragment: the embedded image map went missing');
   }
-  if (!styles.length) throw new Error('embed: the stylesheet was not inlined');
-  if (!fonts.length)  throw new Error('embed: the font link is missing');
 
   const before = body.length;
   body = body
@@ -240,26 +321,59 @@ function toEmbed(doc) {
     .replace(/<header class="nav">[\s\S]*?<\/header>\n?/, '')
     .replace(/<!-- =*\s*FOOTER\s*=*\s*-->\n?/, '')
     .replace(/<footer class="foot">[\s\S]*?<\/footer>\n?/, '');
-  if (/<header class="nav"|<footer class="foot"/.test(body)) throw new Error('embed: header or footer survived');
-  if (before - body.length < 2000) throw new Error('embed: too little was removed — did the markup move?');
-
-  /* the language switch goes back in, and the legal line closes the page */
-  body = body.replace('</main>', () => '</main>\n' + EMBED_TAIL);
-  if (!body.includes('lang--float')) throw new Error('embed: the language switch was not placed');
+  if (/<header class="nav"|<footer class="foot"/.test(body)) throw new Error('content: header or footer survived');
+  if (before - body.length < 2000) throw new Error('content: too little was removed — did the markup move?');
 
   return [
-    '<!-- Be Free Hostel — Seite ohne eigenen Header und Footer.',
-    '     Für eine normale Theme-Seite (kein Canvas): ein HTML-Widget, alles hier hinein.',
-    '     Titel und Meta-Beschreibung setzt ihr in WordPress. -->',
-    ...fonts, ...styles, EMBED_CSS, ...boot, body.trim(), ...ld
+    '<!-- Be Free Hostel — INHALT der Startseite.',
+    '     Header und Footer sind eigene Dateien: header.html, footer.html.',
+    '     Auf eine normale Seite (kein Canvas), ein HTML-Widget, alles hier hinein.',
+    '     Seitentitel und Meta-Beschreibung setzt ihr in WordPress. -->',
+    ...fragmentHead(doc, EMBED_CSS), ...headScripts,
+    '<div class="befree-full">', body.trim(), '</div>', ...ld
   ].join('\n');
 }
 
-if (EMBED) html = toEmbed(html);
+/* ── header.html and footer.html: the chrome, on its own ── */
+function partial(doc, which) {
+  const body = doc.slice(doc.indexOf('<body>'), doc.lastIndexOf('</body>'));
+  const markup = which === 'header'
+    ? (body.match(/<header class="nav">[\s\S]*?<\/header>/) || [])[0]
+    : (body.match(/<footer class="foot">[\s\S]*?<\/footer>/) || [])[0];
+  if (!markup) throw new Error(`partial: the ${which} markup was not found`);
 
-const NAME = 'index' + (EMBED ? '-embed' : '') + (STANDALONE ? '-standalone' : '') + '.html';
+  /* inside a theme every link has to work from any page, not just from the
+     start page, so the anchors get the home slug in front of them */
+  const linked = markup.replace(/href="#/g, 'href="/#');
+  const note = which === 'header'
+    ? ['<!-- Be Free Hostel — HEADER. In die Kopfzeilen-Vorlage des Themes,',
+       '     oder als HTML-Widget ganz oben auf jeder Seite.',
+       '     Die Seite darunter hält mit --nav-h: 74px Platz dafür frei. -->']
+    : ['<!-- Be Free Hostel — FOOTER. In die Fußzeilen-Vorlage des Themes,',
+       '     oder als HTML-Widget ganz unten auf jeder Seite.',
+       '     Verlinkt /impressum/, /datenschutz/ und /agb/. -->'];
+
+  return [
+    ...note,
+    ...fragmentHead(doc, which === 'footer' ? '' : ''),
+    '<div class="befree-full">', linked, '</div>',
+    partialScript(dictFor(markup), which === 'header' ? 'header.nav' : 'footer.foot',
+                  which === 'header' ? HEADER_EXTRA : FOOTER_EXTRA)
+  ].filter(Boolean).join('\n');
+}
+
+if (EMBED) {
+  for (const which of ['header', 'footer']) {
+    const out = partial(html, which);
+    fs.writeFileSync(path.join(OUT, which + '.html'), out);
+    console.log(`${(which + '.html').padEnd(26)} ${(out.length / 1024).toFixed(0)} kB`);
+  }
+  html = toContent(html);
+}
+
+const NAME = 'index' + (EMBED ? '-content' : '') + (STANDALONE ? '-standalone' : '') + '.html';
 fs.writeFileSync(path.join(OUT, NAME), html);
-console.log(`${NAME.padEnd(24)} ${(html.length / 1024).toFixed(0)} kB`);
+console.log(`${NAME.padEnd(26)} ${(html.length / 1024).toFixed(0)} kB`);
 
 /* ── the legal pages: same treatment, only stylesheets to inline ── */
 for (const page of ['impressum.html', 'datenschutz.html', 'agb.html']) {
@@ -268,7 +382,32 @@ for (const page of ['impressum.html', 'datenschutz.html', 'agb.html']) {
   lg = lg.replace('<link rel="stylesheet" href="assets/css/legal.css" />',  () => `<style>\n${legalCss}\n</style>`);
   lg = absolutise(lg);
   if (lg.includes('"assets/css/')) throw new Error(`not inlined: ${page}`);
-  const name = STANDALONE ? page.replace('.html', '-standalone.html') : page;
+
+  let name = STANDALONE ? page.replace('.html', '-standalone.html') : page;
+
+  if (EMBED) {
+    /* the legal pages carry their own small header and footer; in a theme
+       both are one too many */
+    let body = lg.slice(lg.indexOf('<body>') + '<body>'.length, lg.lastIndexOf('</body>'));
+    const before = body.length;
+    body = body
+      .replace(/<a class="skip"[\s\S]*?<\/a>\n?/, '')
+      .replace(/<header class="lg-nav">[\s\S]*?<\/header>\n?/, '')
+      .replace(/<footer class="lg-foot">[\s\S]*?<\/footer>\n?/, '')
+      /* that footer held the only #year, so its script has nothing left to do */
+      .replace(/<script>[\s\S]*?getElementById\("year"\)[\s\S]*?<\/script>\n?/, '');
+    if (/lg-nav|lg-foot|getElementById\("year"\)/.test(body)) throw new Error(`content: chrome survived in ${page}`);
+    if (before - body.length < 500) throw new Error(`content: too little was removed from ${page}`);
+
+    lg = [
+      `<!-- Be Free Hostel — INHALT von ${page.replace('.html', '').toUpperCase()}.`,
+      '     Header und Footer kommen vom Theme (header.html / footer.html). -->',
+      ...fragmentHead(lg, EMBED_CSS),
+      '<div class="befree-full">', body.trim(), '</div>'
+    ].join('\n');
+    name = page.replace('.html', '-content' + (STANDALONE ? '-standalone' : '') + '.html');
+  }
+
   fs.writeFileSync(path.join(OUT, name), lg);
-  console.log(`${name.padEnd(24)} ${(lg.length / 1024).toFixed(0)} kB`);
+  console.log(`${name.padEnd(26)} ${(lg.length / 1024).toFixed(0)} kB`);
 }

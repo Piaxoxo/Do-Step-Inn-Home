@@ -116,7 +116,7 @@ the sets sit side by side.
 |---|---|---|
 | default | ~125 kB | load from jsDelivr, pinned to a commit |
 | `--standalone` | ~2.6 MB | embedded as data URIs, no host needed |
-| `--embed` | ~78 kB | as the default, but the page brings no header or footer |
+| `--embed` | ~78 kB | content only — header and footer ship beside it |
 | `--embed --standalone` | ~2.5 MB | both at once |
 
 **The photos do not come from GitHub Pages.** Pages on this repo serves its
@@ -157,27 +157,44 @@ Canvas** layout (Page settings → Page Layout → Canvas), so the theme's own
 header and footer step aside — the page brings its own fixed navigation and
 full-height hero.
 
-### For a theme that already has a header and a footer
+### Split across a theme's own templates
 
-`--embed` is for the other case: the page goes on an ordinary (non-Canvas)
-page and WordPress keeps drawing its own header and footer. It ships as a
-**fragment** — no doctype, no `<head>` — so set the page title and the meta
-description in WordPress, not in the file.
+`--embed` is for the other case: WordPress keeps drawing a header and a
+footer, and the site is delivered in pieces instead of one file.
 
-Three things follow from dropping our own chrome:
+| File | Goes where |
+|---|---|
+| `header.html` | the theme's header template, or an HTML widget at the top of every page |
+| `index-content.html` | an HTML widget on an ordinary page — the start page |
+| `footer.html` | the theme's footer template, or an HTML widget at the bottom |
+| `impressum-content.html` `datenschutz-content.html` `agb-content.html` | one HTML widget each, on pages with those slugs |
 
-- **The language switch moves.** It lived in the navigation, so the build puts
-  a small EN/DE switch in the bottom-left corner instead.
-- **The legal links move.** The footer carried them, so a quiet
-  Impressum · Datenschutz · AGB line closes the page. Delete it if the theme's
-  footer already links all three — but do not simply leave it out.
-- **A sticky theme header needs a number.** The file opens with
-  `:root{ --nav-h: 0px; }`. If the theme's header scrolls along, put its height
-  there and anchor links stop landing underneath it.
+`--standalone` combines with it and adds a `-standalone` suffix to the
+content files (the partials carry no photographs, so they are written once).
 
-Legal links and the home link are rewritten to WordPress slugs
-(`/impressum/`, `/datenschutz/`, `/agb/`, `/`), so create those pages and
-every link resolves.
+Every piece stands on its own: each carries the stylesheet, and the header
+and footer each carry a small translator, because they also appear on the
+legal pages where `befree.js` never runs. The German strings for those two
+are **read out of `befree.js` at build time** — only the keys their own
+markup uses — so the partials cannot drift away from the site.
+
+Three things follow from the split, and the build takes care of all three:
+
+- **Full width.** A themed page boxes its content, which would leave the
+  colour bands short of the screen edge. The content opens with
+  `.befree-full{ margin-left:calc(50% - 50vw); … }` — deliberately not
+  `width:100vw`, which counts the scrollbar and produces the very sideways
+  scrolling it is meant to prevent.
+- **Room for the header.** The content opens with `:root{ --nav-h: 74px; }` —
+  our own header is fixed and 74px tall. Using only the theme's header
+  instead: `0px` if it scrolls away, its height if it stays.
+- **Links that work from any page.** The header's anchors get the home slug
+  in front of them (`/#rooms`), so the menu works from the legal pages too.
+
+The language switch in the header stores the choice and reloads — except on
+the start page, where `befree.js` is present and switches everything live,
+which the switch detects and leaves alone. The burger is bound once: the
+header marks it, and `befree.js` skips a control that is already bound.
 
 ## Still open
 

@@ -1,6 +1,7 @@
-<!-- Be Free Hostel — Seite ohne eigenen Header und Footer.
-     Für eine normale Theme-Seite (kein Canvas): ein HTML-Widget, alles hier hinein.
-     Titel und Meta-Beschreibung setzt ihr in WordPress. -->
+<!-- Be Free Hostel — INHALT der Startseite.
+     Header und Footer sind eigene Dateien: header.html, footer.html.
+     Auf eine normale Seite (kein Canvas), ein HTML-Widget, alles hier hinein.
+     Seitentitel und Meta-Beschreibung setzt ihr in WordPress. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Shrikhand&family=Karla:ital,wght@0,300..800;1,300..800&family=DM+Mono:wght@400;500&display=swap" />
@@ -485,23 +486,22 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 
 </style>
 <style>
-/* ── Be Free im Theme: Kopf- und Fußzeile kommen von WordPress ──
-   Hat euer Theme einen mitscrollenden (sticky) Header? Dann hier seine
-   Höhe eintragen, damit Sprungmarken nicht darunter verschwinden. */
-:root{ --nav-h: 0px; }
+/* ── Be Free — Inhalt einer Theme-Seite ──────────────────────────────
+   Header und Footer liegen als eigene Dateien daneben: header.html und
+   footer.html.
 
-.lang--float{
-  position:fixed;left:14px;bottom:14px;z-index:60;
-  background:var(--card);box-shadow:var(--shadow-sm);
-}
-/* Diese Zeile kann weg, wenn der Theme-Footer die Rechtsseiten schon verlinkt */
-.bf-legal{
-  margin:0;padding:18px;text-align:center;
-  background:var(--paper);border-top:2px solid var(--ink);
-  font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;
-}
-.bf-legal a{color:var(--text)}
+   --nav-h ist der Platz, den die Seite oben freihält:
+     74px  = ihr benutzt unseren header.html (Standard)
+     0px   = euer Theme-Header scrollt normal mit
+     eigene Höhe = euer Theme-Header bleibt beim Scrollen stehen        */
+:root{ --nav-h: 74px; }
+
+/* Volle Breite, egal wie schmal der Container des Themes ist.
+   Bewusst kein width:100vw — das rechnet die Scrollbar mit und erzeugt
+   genau das Querscrollen, das es verhindern soll. */
+.befree-full{ margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw) }
 </style>
+<div class="befree-full">
 <script>
 /* ══════════════════════════════════════════════════════════════════════
    BILDER / PHOTOS — hier den Ordner eintragen, in dem eure Fotos liegen.
@@ -875,18 +875,6 @@ window.BEFREE_IMG = "";
   </div>
 </section>
 </main>
-
-<div class="lang lang--float" role="group" aria-label="Sprache">
-  <button type="button" id="lang-en" aria-pressed="true">EN</button>
-  <button type="button" id="lang-de" aria-pressed="false">DE</button>
-</div>
-
-<p class="bf-legal">
-  <a href="/impressum/">Impressum</a> ·
-  <a href="/datenschutz/">Datenschutz</a> ·
-  <a href="/agb/">AGB</a>
-</p>
-
 
 <!-- ══════════════════════════════════════ FOOTER ════════════════ -->
 
@@ -1509,6 +1497,10 @@ window.BEFREE_IMG = "";
   function menu() {
     var b = document.getElementById("burger"), l = document.getElementById("navlinks");
     if (!b || !l) return;
+    /* the separate header.html brings its own handler — binding a second one
+       would toggle the menu twice and leave it shut */
+    if (b.dataset.bound) return;
+    b.dataset.bound = "1";
     b.addEventListener("click", function () {
       var open = l.classList.toggle("open");
       b.setAttribute("aria-expanded", String(open));
@@ -1557,6 +1549,7 @@ window.BEFREE_IMG = "";
 <!-- Booking engine (UP Hotel IBE) — their snippet, last before </body> -->
 <script type="text/javascript" src="https://ibe.uphotel.agency/ibe.min.js"></script>
 <link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet" />
+</div>
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",

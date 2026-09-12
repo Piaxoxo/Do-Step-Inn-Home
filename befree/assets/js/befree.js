@@ -602,6 +602,10 @@
   function menu() {
     var b = document.getElementById("burger"), l = document.getElementById("navlinks");
     if (!b || !l) return;
+    /* the separate header.html brings its own handler — binding a second one
+       would toggle the menu twice and leave it shut */
+    if (b.dataset.bound) return;
+    b.dataset.bound = "1";
     b.addEventListener("click", function () {
       var open = l.classList.toggle("open");
       b.setAttribute("aria-expanded", String(open));
