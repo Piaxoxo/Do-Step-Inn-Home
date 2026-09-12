@@ -628,8 +628,10 @@
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
 
-  document.getElementById("lang-en").addEventListener("click", function () { setLang("en", true); });
-  document.getElementById("lang-de").addEventListener("click", function () { setLang("de", true); });
+  /* the switch lives in the navigation, which a themed page may not have */
+  var bEn = document.getElementById("lang-en"), bDe = document.getElementById("lang-de");
+  if (bEn) bEn.addEventListener("click", function () { setLang("en", true); });
+  if (bDe) bDe.addEventListener("click", function () { setLang("de", true); });
 
   /* ?lang=de wins, then a remembered choice, then the browser's own */
   var q = new URLSearchParams(location.search).get("lang");

@@ -103,17 +103,21 @@ nothing gracefully, and the gallery labels live in `PHOTOS` in `befree.js`.
 ## Elementor / WordPress
 
 ```bash
-node scripts/build-befree.mjs                # photos from GitHub Pages
+node scripts/build-befree.mjs                # photos from the CDN
 node scripts/build-befree.mjs --standalone   # photos embedded, needs no host
+node scripts/build-befree.mjs --embed        # no navigation, no footer
+node scripts/build-befree.mjs --embed --standalone
 ```
 
-Both write into `befree-elementor/`; `--standalone` adds a `-standalone`
-suffix so the two sets sit side by side.
+All of them write into `befree-elementor/`; each flag adds its own suffix, so
+the sets sit side by side.
 
 | Variant | index | Photos |
 |---|---|---|
-| default | ~130 kB | load from jsDelivr, pinned to a commit |
+| default | ~125 kB | load from jsDelivr, pinned to a commit |
 | `--standalone` | ~2.6 MB | embedded as data URIs, no host needed |
+| `--embed` | ~78 kB | as the default, but the page brings no header or footer |
+| `--embed --standalone` | ~2.5 MB | both at once |
 
 **The photos do not come from GitHub Pages.** Pages on this repo serves its
 default branch, `claude/do-step-inn-home-eiit7m`, which does not contain
@@ -152,6 +156,24 @@ Paste the file into a single **HTML widget** on a page set to the **Elementor
 Canvas** layout (Page settings → Page Layout → Canvas), so the theme's own
 header and footer step aside — the page brings its own fixed navigation and
 full-height hero.
+
+### For a theme that already has a header and a footer
+
+`--embed` is for the other case: the page goes on an ordinary (non-Canvas)
+page and WordPress keeps drawing its own header and footer. It ships as a
+**fragment** — no doctype, no `<head>` — so set the page title and the meta
+description in WordPress, not in the file.
+
+Three things follow from dropping our own chrome:
+
+- **The language switch moves.** It lived in the navigation, so the build puts
+  a small EN/DE switch in the bottom-left corner instead.
+- **The legal links move.** The footer carried them, so a quiet
+  Impressum · Datenschutz · AGB line closes the page. Delete it if the theme's
+  footer already links all three — but do not simply leave it out.
+- **A sticky theme header needs a number.** The file opens with
+  `:root{ --nav-h: 0px; }`. If the theme's header scrolls along, put its height
+  there and anchor links stop landing underneath it.
 
 Legal links and the home link are rewritten to WordPress slugs
 (`/impressum/`, `/datenschutz/`, `/agb/`, `/`), so create those pages and

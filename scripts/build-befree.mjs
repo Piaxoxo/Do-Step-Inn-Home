@@ -35,6 +35,12 @@ const read = f => fs.readFileSync(path.join(SRC, f), 'utf8');
    GitHub Pages, which keeps the file small enough to paste comfortably. */
 const STANDALONE = process.argv.includes('--standalone');
 
+/* Pass --embed for a page that sits INSIDE a theme: no navigation of its own
+   and no footer, because WordPress already draws both. The result is a
+   fragment — no doctype, no <head> — so it can go straight into an HTML
+   widget on an ordinary (non-Canvas) page. */
+const EMBED = process.argv.includes('--embed');
+
 function dataUri(rel) {
   const ext = path.extname(rel).toLowerCase();
   const mime = ext === '.png' ? 'image/png'
@@ -160,8 +166,9 @@ window.BEFREE_IMG = "";
 }
 
 /* Elementor Canvas gives the page the full width; make sure nothing in the
-   theme can box the layout in */
-html = html.replace('</head>', `  <style>
+   theme can box the layout in. In embed mode the theme's layout is the point,
+   so these overrides stay out. */
+if (!EMBED) html = html.replace('</head>', `  <style>
     html,body{max-width:100%!important;overflow-x:hidden}
     .elementor-section-wrap,.elementor-container,.elementor-widget-container,
     .e-con,.e-con-inner{max-width:100%!important;padding:0!important;margin:0!important}
@@ -172,7 +179,85 @@ for (const token of ['assets/css/befree.css', 'assets/js/befree.js']) {
   if (html.includes(`"${token}"`)) throw new Error(`not inlined: ${token}`);
 }
 
-const NAME = STANDALONE ? 'index-standalone.html' : 'index.html';
+/* ── strip the page down to something a theme can host ──────────────
+   Out: our fixed navigation, our footer, the skip link (the theme has
+   its own), and the document shell around them. In: a language switch,
+   since the one in the navigation went with it, and a quiet legal line,
+   because Impressum, Datenschutz and AGB have to be reachable from the
+   page even if the theme's footer does not carry them. */
+const EMBED_CSS = `<style>
+/* ── Be Free im Theme: Kopf- und Fußzeile kommen von WordPress ──
+   Hat euer Theme einen mitscrollenden (sticky) Header? Dann hier seine
+   Höhe eintragen, damit Sprungmarken nicht darunter verschwinden. */
+:root{ --nav-h: 0px; }
+
+.lang--float{
+  position:fixed;left:14px;bottom:14px;z-index:60;
+  background:var(--card);box-shadow:var(--shadow-sm);
+}
+/* Diese Zeile kann weg, wenn der Theme-Footer die Rechtsseiten schon verlinkt */
+.bf-legal{
+  margin:0;padding:18px;text-align:center;
+  background:var(--paper);border-top:2px solid var(--ink);
+  font-family:var(--f-mono);font-size:12.5px;letter-spacing:.06em;
+}
+.bf-legal a{color:var(--text)}
+</style>`;
+
+const EMBED_TAIL = `
+<div class="lang lang--float" role="group" aria-label="Sprache">
+  <button type="button" id="lang-en" aria-pressed="true">EN</button>
+  <button type="button" id="lang-de" aria-pressed="false">DE</button>
+</div>
+
+<p class="bf-legal">
+  <a href="/impressum/">Impressum</a> ·
+  <a href="/datenschutz/">Datenschutz</a> ·
+  <a href="/agb/">AGB</a>
+</p>
+`;
+
+function toEmbed(doc) {
+  const head = doc.slice(doc.indexOf('<head>'), doc.indexOf('</head>'));
+  let body = doc.slice(doc.indexOf('<body>') + '<body>'.length, doc.lastIndexOf('</body>'));
+
+  const fonts  = head.match(/<link rel="preconnect"[^>]*>|<link rel="stylesheet" href="https:\/\/fonts\.googleapis[^>]*>/g) || [];
+  const styles = head.match(/<style>[\s\S]*?<\/style>/g) || [];
+  const ld     = head.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g) || [];
+  /* --standalone puts the image map in the head, and it has to run before
+     anything that reads it */
+  const boot   = (head.match(/<script>[\s\S]*?<\/script>/g) || []);
+  if (STANDALONE && !boot.some(b => b.includes('__BFIMG'))) {
+    throw new Error('embed: the embedded image map went missing');
+  }
+  if (!styles.length) throw new Error('embed: the stylesheet was not inlined');
+  if (!fonts.length)  throw new Error('embed: the font link is missing');
+
+  const before = body.length;
+  body = body
+    .replace(/<a class="skip"[\s\S]*?<\/a>\n?/, '')
+    .replace(/<!-- =*\s*NAV\s*=*\s*-->\n?/, '')
+    .replace(/<header class="nav">[\s\S]*?<\/header>\n?/, '')
+    .replace(/<!-- =*\s*FOOTER\s*=*\s*-->\n?/, '')
+    .replace(/<footer class="foot">[\s\S]*?<\/footer>\n?/, '');
+  if (/<header class="nav"|<footer class="foot"/.test(body)) throw new Error('embed: header or footer survived');
+  if (before - body.length < 2000) throw new Error('embed: too little was removed — did the markup move?');
+
+  /* the language switch goes back in, and the legal line closes the page */
+  body = body.replace('</main>', () => '</main>\n' + EMBED_TAIL);
+  if (!body.includes('lang--float')) throw new Error('embed: the language switch was not placed');
+
+  return [
+    '<!-- Be Free Hostel — Seite ohne eigenen Header und Footer.',
+    '     Für eine normale Theme-Seite (kein Canvas): ein HTML-Widget, alles hier hinein.',
+    '     Titel und Meta-Beschreibung setzt ihr in WordPress. -->',
+    ...fonts, ...styles, EMBED_CSS, ...boot, body.trim(), ...ld
+  ].join('\n');
+}
+
+if (EMBED) html = toEmbed(html);
+
+const NAME = 'index' + (EMBED ? '-embed' : '') + (STANDALONE ? '-standalone' : '') + '.html';
 fs.writeFileSync(path.join(OUT, NAME), html);
 console.log(`${NAME.padEnd(24)} ${(html.length / 1024).toFixed(0)} kB`);
 
