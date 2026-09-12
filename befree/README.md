@@ -221,13 +221,26 @@ header marks it, and `befree.js` skips a control that is already bound.
       house's key — Do Step Inn Home's `35b41b51-…` would send guests to the
       wrong hotel.
 
-      **The booking form is the floor, not a stand-in.** Both hosts carry a
-      real form — check-in, check-out, guests — and it shows immediately, so
-      the section is never an empty frame. The widget takes over only once the
-      browser reports `<ibe-up>` as actually defined
-      (`customElements.whenDefined`), which covers a missing key, a blocked
-      script, an ad-blocker and a dead network with one path instead of four
-      guesses. Submitting the form opens a mail with the dates filled in.
+      **The engine is in the page, visible, from the start** — with no
+      JavaScript too. It used to be hidden until the page approved it, which
+      was wrong twice over: an embed inside `display:none` can neither draw
+      nor measure itself, and the approval hung on `<ibe-up>` being
+      registered as a custom element, which an embed that simply scans the
+      DOM and drops in an iframe never does. Then the box stayed hidden and
+      only the mail form ever showed.
+
+      **The form is the floor, not a stand-in.** Every host carries a real
+      form — check-in, check-out, guests — and it appears only once the
+      engine has demonstrably rendered nothing: a `MutationObserver` accepts
+      the moment anything lands in the box, and a check at four seconds, plus
+      one after `load`, decides otherwise. Any way of rendering counts — a
+      shadow root, injected children, a box with real height. Submitting the
+      form opens a mail with the dates filled in.
+
+      A language switch swaps in a fresh `<ibe-up>`, because that is what
+      makes the engine re-read `language` — but only when it really is a
+      custom element. An engine that scanned the page once would leave the
+      replacement empty, so that box is left as it stands.
 
       **Not verified here:** `ibe.uphotel.agency` is blocked by this
       environment's egress proxy, so the rendered widget has never been seen —

@@ -507,9 +507,18 @@
      the browser confirms <ibe-up> is really defined. That covers a missing
      key, a blocked script, an ad-blocker and a dead network with one path
      instead of four guesses. */
+  /* The booking engine is the real thing, so it is in the page visible from
+     the start — including without JavaScript. Hiding it until we approve it
+     was wrong twice over: a widget inside display:none cannot draw or measure
+     itself, and the approval hung on `<ibe-up>` being registered as a custom
+     element, which an embed that simply scans the DOM and drops in an iframe
+     never does. The form steps in only once the engine has demonstrably not
+     rendered anything. */
   function bookingWidget() {
     var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
     if (!hosts.length) return;
+
+    bookingForm();
 
     function show(useWidget) {
       hosts.forEach(function (host) {
@@ -520,20 +529,62 @@
       if (useWidget) syncWidgetLanguage();
     }
 
-    show(false);
-    bookingForm();
+    var first = document.querySelector("[data-ibe-host] ibe-up");
+    var key = first && first.getAttribute("ibe-key");
+    if (!key || !key.trim()) { show(false); return; }   /* no key, no engine */
 
-    var el = document.querySelector("[data-ibe-host] ibe-up");
-    var key = el && el.getAttribute("ibe-key");
-    if (!key || !key.trim() || !window.customElements) return;
+    show(true);
 
-    if (customElements.get("ibe-up")) { show(true); return; }
-    customElements.whenDefined("ibe-up").then(function () { show(true); });
+    /* Did anything actually arrive? Every way an embed can render counts:
+       a shadow root, injected children, or a box with real height. */
+    function drawn(host) {
+      var el = host.querySelector("ibe-up");
+      if (!el) return false;
+      if (el.shadowRoot) return true;
+      if (el.children.length) return true;
+      if (el.textContent.trim()) return true;
+      return el.getBoundingClientRect().height > 24;
+    }
+
+    var settled = false;
+    function accept() { settled = true; }
+    function verdict() {
+      if (settled) return;
+      if (hosts.some(drawn)) { accept(); return; }
+      settled = true;
+      show(false);       /* the engine never came — the form carries the band */
+    }
+
+    /* as soon as the engine puts anything in the box, stop watching */
+    if (window.MutationObserver) {
+      hosts.forEach(function (host) {
+        var box = host.querySelector(".ibe");
+        if (!box) return;
+        var mo = new MutationObserver(function () {
+          if (drawn(host)) { accept(); mo.disconnect(); }
+        });
+        mo.observe(box, { childList: true, subtree: true });
+      });
+    }
+    if (window.customElements) {
+      customElements.whenDefined("ibe-up").then(function () {
+        setTimeout(function () { if (hosts.some(drawn)) accept(); }, 600);
+      });
+    }
+
+    setTimeout(verdict, 4000);
+    window.addEventListener("load", function () { setTimeout(verdict, 2500); });
   }
+
 
   /* The IBE reads its language attribute once, when it initialises, so a
      language switch needs a fresh element rather than a changed attribute. */
   function syncWidgetLanguage() {
+    /* Swapping in a fresh <ibe-up> is what makes the engine pick up the new
+       language — but only an engine that really is a custom element wakes up
+       on a new element. One that scanned the page once and filled what it
+       found would leave the replacement empty, so that box stays as it is. */
+    if (!(window.customElements && customElements.get("ibe-up"))) return;
     [].forEach.call(document.querySelectorAll("[data-ibe-host] .ibe"), function (box) {
       if (box.hidden) return;
       var el = box.querySelector("ibe-up");
