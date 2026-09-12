@@ -94,19 +94,9 @@
     "why.c4k": "Farbe", "why.c4t": "Keine beige Schachtel",
     "why.c4d": "Gelbe Wände, Graffiti-Murals direkt auf den Putz gemalt, Ziegel und warmes Holz. Hier drin ist nichts beige, und keine zwei Zimmer sehen gleich aus.",
 
-    "bl.k1": "Galerie · nach unten scrollen",
-    "bl.h1": "Das Haus, aufgeblüht.",
-    "bl.p1": "Jedes Blütenblatt ist ein Foto. Scroll, und die Knospe öffnet sich — die Kapsel-Pods, ein Zimmer mit seinem Mural, der Aufenthaltsraum, die Gänge. Es sieht aus wie unser Logo, weil es unser Logo ist.",
-    "bl.k2": "Beweg die Maus",
-    "bl.h2": "Die Zimmer haben Tiefe.",
-    "bl.p2": "Fahr über die Blume oder kipp dein Handy. Der Vordergrund wandert weiter als die Rückwand — so wird aus einem flachen Foto ein Raum, in den du dich hineinlehnst.",
-    "bl.k3": "Und darunter",
-    "bl.h3": "Oder schau dir einfach die Bilder an.",
-    "bl.p3": "Niemand bucht ein Bett aus einer Blume heraus. Die normale Galerie steht direkt darunter — Raster, große Bilder, ein Klick zum Vergrößern.",
-
     "gal.eyebrow": "Drinnen bei Be Free",
     "gal.h": "Die Farben von Be Free",
-    "gal.lede": "Ein Blick auf Atmosphäre, Zimmer und Lebensgefühl im Be Free Hostel Wien — bunt, gesellig und für moderne Reisende gemacht.",
+    "gal.lede": "Ein Blick auf Atmosphäre, Zimmer und Lebensgefühl im Be Free Hostel Wien — bunt, gesellig und für moderne Reisende gemacht. Beim Scrollen wandern die Bilder in eigenem Tempo. Ein Klick, und das Bild füllt den Schirm.",
 
     "rul.eyebrow": "Gut zu wissen",
     "rul.h": "Das Ehrliche",
@@ -125,15 +115,15 @@
     "rul.c6d": "Schreib uns Termin und Personenzahl, dann stellen wir ein Angebot für die ganze Gruppe zusammen.",
 
     "grp.eyebrow": "Gruppen",
-    "grp.h": "Gruppenreservierung —<br />mit Frühstück.",
-    "grp.lede": "Schulklassen, Teams, Chöre, Vereine. Sag uns Termin und Personenzahl, und wir stellen ein Angebot für die ganze Gruppe zusammen.",
-    "grp.c1k": "Frühstück", "grp.c1t": "Serviert in der Felberstraße 20",
-    "grp.c1d": "Gruppen frühstücken in unserem Schwesterhaus Do Step Inn Home — drei Gehminuten von der Haustür. Schlafen bei Be Free, essen ums Eck.",
+    "grp.h": "Gruppenreservierung —<br />ein Angebot, eine Rechnung.",
+    "grp.lede": "Schulklassen, Teams, Chöre, Vereine. Sag uns Termin und Personenzahl, und wir stellen ein Angebot für die ganze Gruppe zusammen. Frühstück ist nicht im Zimmerpreis enthalten — wir buchen es euch aber gern ums Eck dazu.",
+    "grp.c1k": "Frühstück", "grp.c1t": "Zubuchbar in der Felberstraße 20",
+    "grp.c1d": "Frühstück ist nicht inkludiert. Gruppen können es in unserem Schwesterhaus Do Step Inn Home dazubuchen — drei Gehminuten von der Haustür. Einfach bei der Anfrage dazuschreiben, dann steht es auf demselben Angebot.",
     "grp.c2k": "Ein Ansprechpartner", "grp.c2t": "Ein Angebot, eine Rechnung",
-    "grp.c2d": "Betten, Frühstück und Zusatzleistungen kommen auf einem Angebot, damit niemand einzelnen Buchungen hinterherlaufen muss.",
+    "grp.c2d": "Betten und alles, was ihr dazubucht — auf Wunsch auch das Frühstück — kommen auf einem Angebot, damit niemand einzelnen Buchungen hinterherlaufen muss.",
     "grp.c3k": "Sag uns", "grp.c3t": "Was wir wissen müssen",
-    "grp.c3d": "Termin, Personenzahl, gewünschte Zimmeraufteilung und ob Frühstück für alle sein soll. Mehr brauchen wir für den Preis nicht.",
-    "grp.s1": "Frühstück Felberstraße 20", "grp.s2": "3 Gehminuten", "grp.s3": "Ein Angebot für alle",
+    "grp.c3d": "Termin, Personenzahl, gewünschte Zimmeraufteilung und ob Frühstück dazukommen soll. Mehr brauchen wir für den Preis nicht.",
+    "grp.s1": "Frühstück zubuchbar, nicht inkludiert", "grp.s2": "3 Gehminuten", "grp.s3": "Ein Angebot für alle",
     "grp.cta": "Gruppenanfrage senden", "grp.route": "Route zur Felberstraße 20",
 
     "bk.eyebrow": "Aufenthalt buchen",
@@ -215,11 +205,15 @@
     { f: "gallery-11-mirror",   en: "Getting ready",         de: "Fertigmachen",            tEn: "Morning", tDe: "Morgens" },
     { f: "gallery-12-evening",  en: "Snacks and stories",    de: "Snacks und Geschichten",  tEn: "Evening", tDe: "Abends" }
   ];
-  var WIDE = { 0: 1, 5: 1, 8: 1 }, TALL = { 2: 1, 9: 1 };
 
   function label(p) { return lang === "de" ? p.de : p.en; }
   function tagOf(p) { return lang === "de" ? p.tDe : p.tEn; }
   function srcOf(p) { return "assets/img/" + p.f + ".jpg"; }
+
+  /* Speed per card. The two columns pull apart as you scroll, which is
+     where the depth comes from — the photograph is never rotated, never
+     masked, never cropped by more than a few percent. */
+  var SPEED = [1, 1.75, 1.5, 1, 1.85, 1.25, 1.1, 1.7, 1.55, 1, 1.8, 1.35];
 
   function buildGallery() {
     var grid = document.getElementById("galgrid");
@@ -227,19 +221,32 @@
     PHOTOS.forEach(function (p, i) {
       var b = document.createElement("button");
       b.type = "button";
-      b.className = "gal__item" + (WIDE[i] ? " wide" : "") + (TALL[i] ? " tall" : "");
+      b.className = "px__item";
       b.dataset.i = i;
+      b.dataset.sp = String(SPEED[i] || 1);
+
+      var fr = document.createElement("span");
+      fr.className = "px__frame";
 
       var im = document.createElement("img");
       im.src = srcOf(p); im.alt = label(p);
-      im.loading = i < 4 ? "eager" : "lazy";
+      im.loading = i < 2 ? "eager" : "lazy";
       im.decoding = "async";
       im.width = 1400; im.height = 1000;
 
       var tg = document.createElement("span");
-      tg.className = "gal__tag"; tg.textContent = tagOf(p);
+      tg.className = "px__tag"; tg.textContent = tagOf(p);
+      fr.append(im, tg);
 
-      b.append(im, tg);
+      var cap = document.createElement("span");
+      cap.className = "px__cap";
+      var n = document.createElement("i");
+      n.textContent = (i < 9 ? "0" : "") + (i + 1);
+      var tx = document.createElement("b");
+      tx.textContent = label(p);
+      cap.append(n, tx);
+
+      b.append(fr, cap);
       b.addEventListener("click", function () { lightbox.open(i); });
       grid.appendChild(b);
     });
@@ -247,14 +254,65 @@
   }
 
   function relabelGallery() {
-    var items = document.querySelectorAll(".gal__item");
+    var items = document.querySelectorAll(".px__item");
     items.forEach(function (b) {
       var p = PHOTOS[+b.dataset.i];
       if (!p) return;
       b.querySelector("img").alt = label(p);
-      b.querySelector(".gal__tag").textContent = tagOf(p);
+      b.querySelector(".px__tag").textContent = tagOf(p);
+      b.querySelector(".px__cap b").textContent = label(p);
       b.setAttribute("aria-label", label(p) + " — " + t("gal.enlarge"));
     });
+  }
+
+  /* Scroll parallax. Only cards the viewport can actually see are moved,
+     and everything runs inside one rAF, so the page stays cheap. Under
+     prefers-reduced-motion nothing moves at all — the gallery is then a
+     plain grid of big photographs, which loses no information. */
+  function parallaxGallery() {
+    var items = [].slice.call(document.querySelectorAll(".px__item"));
+    if (!items.length || RM) return;
+
+    var live = [], queued = false;
+
+    function place() {
+      var vh = window.innerHeight || 1;
+      var k = window.innerWidth < 860 ? 0.55 : 1;   /* gentler on a phone */
+      for (var i = 0; i < live.length; i++) {
+        var el = live[i];
+        var r = el.getBoundingClientRect();
+        var p = ((r.top + r.height / 2) - vh / 2) / vh;    /* -1 above … +1 below */
+        if (p > 1.5) p = 1.5; else if (p < -1.5) p = -1.5;
+        var sp = parseFloat(el.dataset.sp) || 1;
+        el.style.transform = "translate3d(0," + (p * -30 * sp * k).toFixed(2) + "px,0)";
+        var im = el.querySelector("img");
+        im.style.transform = "translate3d(0," + (p * 3.4 * k).toFixed(2) + "%,0)";
+      }
+    }
+
+    function onScroll() {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; place(); });
+    }
+
+    if (window.IntersectionObserver) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          var at = live.indexOf(e.target);
+          if (e.isIntersecting && at < 0) live.push(e.target);
+          else if (!e.isIntersecting && at >= 0) live.splice(at, 1);
+        });
+        place();
+      }, { rootMargin: "140px 0px" });
+      items.forEach(function (el) { io.observe(el); });
+    } else {
+      live = items;
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    place();
   }
 
   /* ═══ 3. LIGHTBOX ═════════════════════════════════════════════════ */
@@ -560,6 +618,7 @@
 
   harvestEnglish();
   buildGallery();
+  parallaxGallery();
   lightbox.init();
   ticker();
   heroField();
@@ -581,6 +640,5 @@
   bookingWidget();
   bookingFab();
 
-  /* the 3D flower asks whether it may run */
   window.BeFree = { reducedMotion: RM, photos: PHOTOS, palette: PAL };
 })();

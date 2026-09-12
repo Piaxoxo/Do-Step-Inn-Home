@@ -23,9 +23,8 @@ python3 -m http.server 8080     # from the repo root
 | Rooms | Private room · Capsule bed · Classic dorm, as pastel cards |
 | Book (rooms) | Booking strip closing the rooms section |
 | Why Be Free | Freedom, together, clean, colour |
-| Flower gallery | Scroll-driven 3D: every petal is a photograph with its own depth map |
-| Gallery | Plain grid, click to enlarge, keyboard-navigable lightbox |
-| Groups | Green band — group quotes, breakfast at Felberstraße 20, route |
+| Gallery | Scroll parallax: two columns drift at their own speed, click to enlarge, keyboard-navigable lightbox |
+| Groups | Green band — group quotes, breakfast bookable at Felberstraße 20, route |
 | Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk |
 | Book | Pink band — booking form, replaced by the UP Hotel widget when it loads |
 | Contact | Email and phone |
@@ -74,19 +73,22 @@ the top of `assets/js/befree.js`.
 The legal pages stay German-only. That is the legally clean option for a business
 operating in Austria.
 
-## The flower gallery
+## The gallery
 
-`assets/js/flower.js` draws eight petals, each one a photograph, each with a
-**depth map** that gives a flat photo real parallax: the foreground shifts
-further than the back wall as you move the pointer or tilt the phone.
+`assets/js/befree.js` lays the twelve photographs out in two columns and moves
+them as you scroll: every card has its own speed, and inside each frame the
+photograph shifts a little against the frame itself. That is where the depth
+comes from — two planes moving at different rates, not a 3D scene.
 
-It stands down quietly — the whole section hides itself — when there is no
-WebGL or the device reports under 2 GB of memory. Under
-`prefers-reduced-motion` it draws one static, fully open frame. The plain
-gallery below carries the same photographs either way, so nothing is lost.
+The picture stays a picture. Nothing is rotated, masked or cut into a shape;
+at the extremes about 4% of the height sits outside the frame, and a click
+opens the full, uncropped image in the lightbox.
 
-three.js is vendored at `assets/vendor/three.module.min.js` (v0.169.0) rather
-than loaded from a CDN, so the page has no third-party runtime dependency.
+Only cards the viewport can actually see are moved (an `IntersectionObserver`
+keeps that list), and all of them are placed in one `requestAnimationFrame`.
+Under `prefers-reduced-motion` nothing moves at all: the section is then a
+plain grid of large photographs, which loses no information. The page has no
+third-party runtime dependency and no WebGL requirement.
 
 ## Replacing the photos
 
@@ -95,21 +97,8 @@ nothing gracefully, and the gallery labels live in `PHOTOS` in `befree.js`.
 
 | Slot | Files | Size |
 |---|---|---|
-| Flower petals | `petal-1-capsule.jpg` … `petal-8-hangout.jpg` | 700 × 1130, portrait |
-| Petal depth maps | `petal-N-*-depth.png` | 224 × 360, greyscale |
 | Gallery | `gallery-01-room.jpg` … `gallery-12-evening.jpg` | 1400 × 1000, landscape |
 | Room cards | `room-capsule.jpg` `room-private.jpg` | 1000 × 750 |
-
-### Regenerating the depth maps
-
-A petal photo needs a matching `-depth.png` or its parallax goes flat. The maps
-here are **estimated** from image geometry and brightness — floor near, back
-wall far, bright reads as far — deliberately kept low-frequency, because a
-smooth depth map never smears the parallax.
-
-For production, run a real monocular depth model (Depth Anything V2 or MiDaS)
-over each petal photo, save the result greyscale at 224 × 360 with a light
-blur, and drop it in under the same name. Nothing in the page changes.
 
 ## Elementor / WordPress
 
@@ -123,8 +112,8 @@ suffix so the two sets sit side by side.
 
 | Variant | index | Photos |
 |---|---|---|
-| default | ~800 kB | load from jsDelivr, pinned to a commit |
-| `--standalone` | ~4.3 MB | embedded as data URIs, no host needed |
+| default | ~130 kB | load from jsDelivr, pinned to a commit |
+| `--standalone` | ~2.6 MB | embedded as data URIs, no host needed |
 
 **The photos do not come from GitHub Pages.** Pages on this repo serves its
 default branch, `claude/do-step-inn-home-eiit7m`, which does not contain
@@ -155,7 +144,7 @@ Set it and every photo follows — the static `src` attributes are rewritten on
 load, and the scripts read the same base. Leave it empty and the built-in
 addresses are used. The logo stays embedded either way.
 
-`befree-elementor/befree-bilder.zip` holds all 31 files ready to upload.
+`befree-elementor/befree-bilder.zip` holds all 15 files ready to upload.
 
 Or use `--standalone`, which depends on nothing at all.
 

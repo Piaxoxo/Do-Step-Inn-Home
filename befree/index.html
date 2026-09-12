@@ -294,37 +294,15 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════ FLOWER GALLERY ════════ -->
-<section class="bloom" id="gallery">
-  <div class="bloom__stage"><canvas id="flower" aria-hidden="true"></canvas></div>
-  <div class="bloom__scroll">
-    <div class="bloom__panel"><div class="wrap"><div class="bloom__box">
-      <span class="eyebrow" style="--dot:var(--pink)" data-i18n="bl.k1">Gallery · scroll down</span>
-      <h2 class="t-dsp" data-i18n="bl.h1">The house, in bloom.</h2>
-      <p data-i18n="bl.p1">Every petal is a photograph. Scroll and the bud opens — the capsule pods, a room with its mural, the lounge, the corridors. It looks like our logo because it is our logo.</p>
-    </div></div></div>
-    <div class="bloom__panel"><div class="wrap"><div class="bloom__box">
-      <span class="eyebrow" style="--dot:var(--turq)" data-i18n="bl.k2">Move your mouse</span>
-      <h2 class="t-dsp" data-i18n="bl.h2">The rooms have depth.</h2>
-      <p data-i18n="bl.p2">Hover over the flower, or tilt your phone. The foreground moves further than the back wall, so a flat photograph turns into a room you can lean into.</p>
-    </div></div></div>
-    <div class="bloom__panel"><div class="wrap"><div class="bloom__box">
-      <span class="eyebrow" style="--dot:var(--gold)" data-i18n="bl.k3">And below</span>
-      <h2 class="t-dsp" data-i18n="bl.h3">Or just look at the pictures.</h2>
-      <p data-i18n="bl.p3">Nobody books a bed out of a flower. The plain gallery is right underneath — a grid, big images, one click to enlarge.</p>
-    </div></div></div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════ PLAIN GALLERY ═════════ -->
-<section class="gal sec">
+<!-- ══════════════════════════════════════ GALLERY ══════════════ -->
+<section class="px" id="gallery">
   <div class="wrap">
     <div class="sec__head">
       <span class="eyebrow" style="--dot:var(--gold)" data-i18n="gal.eyebrow">Inside Be Free</span>
       <h2 class="t-dsp" data-i18n="gal.h">Inside the color of Be Free</h2>
-      <p class="lede" data-i18n="gal.lede">A look at the atmosphere, rooms and feeling of staying at Be Free Hostel Vienna — vibrant, social and made for modern travelers.</p>
+      <p class="lede" data-i18n="gal.lede">A look at the atmosphere, rooms and feeling of staying at Be Free Hostel Vienna — vibrant, social and made for modern travelers. Scroll: the pictures drift at their own speed. Click one and it fills the screen.</p>
     </div>
-    <div class="gal__grid" id="galgrid"></div>
+    <div class="px__grid" id="galgrid"></div>
   </div>
 </section>
 
@@ -364,24 +342,24 @@
   <div class="wrap">
     <div class="sec__head">
       <span class="eyebrow" data-i18n="grp.eyebrow">Groups</span>
-      <h2 class="t-dsp" data-i18n-html="grp.h">Group bookings —<br />breakfast included.</h2>
-      <p class="lede" data-i18n="grp.lede">School trips, teams, choirs, clubs. Tell us your dates and how many you are, and we put together one quote for the whole group.</p>
+      <h2 class="t-dsp" data-i18n-html="grp.h">Group bookings —<br />one quote, one invoice.</h2>
+      <p class="lede" data-i18n="grp.lede">School trips, teams, choirs, clubs. Tell us your dates and how many you are, and we put together one quote for the whole group. Breakfast is not part of the room rate — we can book it for you around the corner.</p>
     </div>
 
     <div class="grid g3">
       <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c1k">Breakfast</span>
-        <h3 data-i18n="grp.c1t">Served at Felberstraße 20</h3>
-        <p class="small dim" data-i18n="grp.c1d">Groups have breakfast at our sister house, Do Step Inn Home — a three-minute walk from the front door. Sleep at Be Free, eat around the corner.</p></div>
+        <h3 data-i18n="grp.c1t">Bookable at Felberstraße 20</h3>
+        <p class="small dim" data-i18n="grp.c1d">Breakfast is not included in the price. Groups can add it at our sister house, Do Step Inn Home — a three-minute walk from the front door. Ask for it with your enquiry and it goes on the same quote.</p></div>
       <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c2k">One contact</span>
         <h3 data-i18n="grp.c2t">One quote, one invoice</h3>
-        <p class="small dim" data-i18n="grp.c2d">Beds, breakfast and any extras arrive on a single offer, so nobody has to chase separate bookings.</p></div>
+        <p class="small dim" data-i18n="grp.c2d">Beds and any extras you book — breakfast included if you want it — arrive on a single offer, so nobody has to chase separate bookings.</p></div>
       <div class="card" data-reveal><span class="card__tag" data-i18n="grp.c3k">Tell us</span>
         <h3 data-i18n="grp.c3t">What we need to know</h3>
-        <p class="small dim" data-i18n="grp.c3d">Dates, how many people, how you would like the rooms split, and whether breakfast is for everyone. That is enough to price it.</p></div>
+        <p class="small dim" data-i18n="grp.c3d">Dates, how many people, how you would like the rooms split, and whether you want breakfast added. That is enough to price it.</p></div>
     </div>
 
     <div class="stix" style="margin-top:24px">
-      <i style="--sc:#FFFFFF" data-i18n="grp.s1">Breakfast at Felberstraße 20</i>
+      <i style="--sc:#FFFFFF" data-i18n="grp.s1">Breakfast bookable, not included</i>
       <i style="--sc:var(--gold)" data-i18n="grp.s2">3 minutes on foot</i>
       <i style="--sc:var(--pink)" data-i18n="grp.s3">One quote for everyone</i>
     </div>
@@ -504,7 +482,6 @@
 </div>
 
 <script src="assets/js/befree.js"></script>
-<script type="module" src="assets/js/flower.js"></script>
 
 <!-- Booking engine (UP Hotel IBE) — their snippet, last before </body> -->
 <script type="text/javascript" src="https://ibe.uphotel.agency/ibe.min.js"></script>

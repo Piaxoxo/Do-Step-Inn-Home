@@ -2,8 +2,8 @@
  *
  *   node scripts/build-befree.mjs
  *
- * CSS, JS and three.js are inlined; images load from absolute GitHub Pages
- * URLs so the one file works pasted into an Elementor HTML widget.
+ * CSS and JS are inlined; images load from absolute CDN URLs so the one
+ * file works pasted into an Elementor HTML widget.
  */
 import fs from 'fs';
 import path from 'path';
@@ -66,35 +66,6 @@ if (!STANDALONE) {
   }
 }
 
-/* ── three.js ships as an ES module; turn its final export list into a
-      plain global so the whole thing can live in one classic <script> ── */
-function threeAsGlobal(src) {
-  const i = src.lastIndexOf('export{');
-  if (i < 0) throw new Error('three.js: no export block found');
-  const j = src.indexOf('}', i);
-  const pairs = src.slice(i + 'export{'.length, j)
-    .split(',')
-    .map(s => s.trim())
-    .filter(Boolean)
-    .map(part => {
-      const [local, exported] = part.includes(' as ') ? part.split(' as ') : [part, part];
-      return `${exported.trim()}:${local.trim()}`;
-    });
-  return `(function(){${src.slice(0, i)};window.__THREE={${pairs.join(',')}};})();`;
-}
-
-/* ── flower.js imports from three; swap that for the global ── */
-function flowerAsScript(src) {
-  const m = src.match(/import\s*\{([\s\S]*?)\}\s*from\s*["'][^"']*three[^"']*["'];?/);
-  if (!m) throw new Error('flower.js: import block not found');
-  const names = m[1].split(',').map(s => s.trim()).filter(Boolean).join(', ');
-  const body = src.replace(m[0], `const { ${names} } = window.__THREE;`);
-  /* the module bails with `throw` when the stage is missing — contain it */
-  return `(function(){try{\n${body}\n}catch(e){\n` +
-         `  var s=document.querySelector(".bloom"); if(s) s.style.display="none";\n` +
-         `}})();`;
-}
-
 function absolutise(html) {
   /* only the visible logo — embedding it in the favicon link too would
      double the weight of every page for an icon nobody misses */
@@ -104,7 +75,7 @@ function absolutise(html) {
     html = html
       .replace(/(src|href)="(assets\/img\/[^"]+)"/g,
                (m, a, p2) => IMAGES[p2] ? `${a}="${IMAGES[p2]}"` : m)
-      /* the gallery and the flower build their paths at runtime */
+      /* the gallery builds its paths at runtime */
       .replace(/"assets\/img\/"/g, 'BF_IMG_BASE')
       .replace(/`assets\/img\/\$\{name\}/g, '`${BF_IMG_BASE}${name}');
   }
@@ -126,8 +97,6 @@ function absolutise(html) {
 const css      = read('assets/css/befree.css');
 const legalCss = read('assets/css/legal.css');
 const main   = read('assets/js/befree.js');
-const three  = threeAsGlobal(read('assets/vendor/three.module.min.js'));
-const flower = flowerAsScript(read('assets/js/flower.js'));
 
 let html = read('index.html');
 
@@ -141,10 +110,6 @@ html = html.replace(
   '<script src="assets/js/befree.js"></script>',
   () => `<script>\n${main}\n</script>`
 );
-html = html.replace(
-  '<script type="module" src="assets/js/flower.js"></script>',
-  () => `<script>\n${three}\n${flower}\n</script>`
-);
 
 html = absolutise(html);
 
@@ -155,8 +120,7 @@ if (STANDALONE) {
     `function BF_IMG(p){ return window.__BFIMG[p] || p; }\n</script>\n</head>`);
   html = html
     .replace(/BF_IMG_BASE \+ p\.f \+ "\.jpg"/g, 'BF_IMG("assets/img/" + p.f + ".jpg")')
-    .replace(/`\$\{BF_IMG_BASE\}\$\{name\}\.jpg`/g, 'BF_IMG(`assets/img/${name}.jpg`)')
-    .replace(/`\$\{BF_IMG_BASE\}\$\{name\}-depth\.png`/g, 'BF_IMG(`assets/img/${name}-depth.png`)');
+    .replace(/`\$\{BF_IMG_BASE\}\$\{name\}\.jpg`/g, 'BF_IMG(`assets/img/${name}.jpg`)');
   if (html.includes('BF_IMG_BASE')) throw new Error('a runtime image path was left unresolved');
 }
 
@@ -204,7 +168,7 @@ html = html.replace('</head>', `  <style>
   </style>
 </head>`);
 
-for (const token of ['assets/css/befree.css', 'assets/js/befree.js', 'assets/js/flower.js']) {
+for (const token of ['assets/css/befree.css', 'assets/js/befree.js']) {
   if (html.includes(`"${token}"`)) throw new Error(`not inlined: ${token}`);
 }
 
