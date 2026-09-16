@@ -404,32 +404,15 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .bookbar__t h2{font-size:clamp(24px,3.4vw,38px)}
 .bookbar__t p{max-width:38ch;color:rgba(11,11,12,.78)}
 
-/* the booking form: what shows until the IBE takes over, and whenever
-   the engine cannot load at all */
-.ibeform{
-  display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;
-  background:var(--card);border:2px solid var(--ink);border-radius:22px;
-  padding:clamp(14px,2vw,20px);box-shadow:var(--shadow-sm);
+/* Shown only where the booking engine really failed to render: one line,
+   not a second booking path — the engine is the booking path. */
+.ibe-down{
+  max-width:60ch;font-size:15.5px;line-height:1.6;
+  background:var(--card);border:2px solid var(--ink);border-radius:18px;
+  padding:14px 16px;box-shadow:var(--shadow-sm);
 }
-.ibeform[hidden]{display:none}
-.ibeform__f{display:flex;flex-direction:column;gap:5px;flex:1 1 140px;min-width:0}
-.ibeform__f span{
-  font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--text-dim);
-}
-.ibeform input,.ibeform select{
-  font-family:var(--f-body);font-size:15.5px;font-weight:700;color:var(--text);
-  background:var(--paper);border:2px solid var(--ink);border-radius:14px;
-  padding:9px 12px;width:100%;min-width:0;
-}
-.ibeform input:focus-visible,.ibeform select:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
-.ibeform .pill{flex:0 0 auto}
-@media(max-width:520px){
-  .ibeform{gap:10px}
-  .ibeform__f{flex:1 1 100%}
-  .ibeform .pill{width:100%;justify-content:space-between}
-}
-
+.ibe-down[hidden]{display:none}
+.ibe-down a{font-weight:800;text-decoration-color:var(--pink)}
 .bookbar__w{display:flex;flex-direction:column;gap:12px;min-width:0}
  /* the Book band lays its children out with align-items:flex-start, which
    sizes them to their content — the widget has to opt out of that */
@@ -561,18 +544,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     </div>
     <div class="bookbar__w">
       <div class="ibe"><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
-      <form class="ibeform" data-ibe-form hidden>
-        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
-          <input type="date" name="in" required /></label>
-        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
-          <input type="date" name="out" required /></label>
-        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
-          <select name="pax">
-            <option>1</option><option selected>2</option><option>3</option><option>4</option>
-            <option>5</option><option>6</option><option>7</option><option>8+</option>
-          </select></label>
-        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
-      </form>
+      <p class="ibe-down" data-ibe-down hidden data-i18n-html="bk.down">Our booking engine is not responding right now. Call <a href="tel:+4369919232769">+43 699 19232769</a> or write to <a href="mailto:befree-hostel@dostepinn.at">befree-hostel@dostepinn.at</a> and we will book it for you.</p>
     </div>
   </div>
 </section>
@@ -694,18 +666,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     <div class="bookrooms" data-ibe-host>
       <p class="bookrooms__t" data-i18n="bar.rooms">Seen a room you like? Pick your dates.</p>
       <div class="ibe"><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
-      <form class="ibeform" data-ibe-form hidden>
-        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
-          <input type="date" name="in" required /></label>
-        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
-          <input type="date" name="out" required /></label>
-        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
-          <select name="pax">
-            <option>1</option><option selected>2</option><option>3</option><option>4</option>
-            <option>5</option><option>6</option><option>7</option><option>8+</option>
-          </select></label>
-        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
-      </form>
+      <p class="ibe-down" data-ibe-down hidden data-i18n-html="bk.down">Our booking engine is not responding right now. Call <a href="tel:+4369919232769">+43 699 19232769</a> or write to <a href="mailto:befree-hostel@dostepinn.at">befree-hostel@dostepinn.at</a> and we will book it for you.</p>
     </div>
   </div>
 </section>
@@ -823,18 +784,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
          load, the form below takes over on its own. -->
     <div class="bookband" data-ibe-host>
       <div class="ibe"><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
-      <form class="ibeform" data-ibe-form hidden>
-        <label class="ibeform__f"><span data-i18n="bk.in">Check-in</span>
-          <input type="date" name="in" required /></label>
-        <label class="ibeform__f"><span data-i18n="bk.out">Check-out</span>
-          <input type="date" name="out" required /></label>
-        <label class="ibeform__f"><span data-i18n="bk.pax">Guests</span>
-          <select name="pax">
-            <option>1</option><option selected>2</option><option>3</option><option>4</option>
-            <option>5</option><option>6</option><option>7</option><option>8+</option>
-          </select></label>
-        <button class="pill" type="submit"><span data-i18n="bk.go">Check availability</span><span class="pill__a" aria-hidden="true">→</span></button>
-      </form>
+      <p class="ibe-down" data-ibe-down hidden data-i18n-html="bk.down">Our booking engine is not responding right now. Call <a href="tel:+4369919232769">+43 699 19232769</a> or write to <a href="mailto:befree-hostel@dostepinn.at">befree-hostel@dostepinn.at</a> and we will book it for you.</p>
     </div>
 
     <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
@@ -933,8 +883,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     "loc.s1": "300 m zur U3", "loc.s2": "200 m zum Bus",
     "loc.s3": "6 Min zur Stadthalle", "loc.s4": "Westbahnhof zu Fuß",
 
-    "bk.in": "Anreise", "bk.out": "Abreise", "bk.pax": "Gäste",
-    "bk.go": "Verfügbarkeit prüfen",
+    "bk.down": "Unsere Buchungsmaschine antwortet gerade nicht. Ruf uns an unter <a href=\"tel:+4369919232769\">+43 699 19232769</a> oder schreib an <a href=\"mailto:befree-hostel@dostepinn.at\">befree-hostel@dostepinn.at</a>, wir buchen für dich.",
 
     "bar.k": "Heute Nacht frei?",
     "bar.h": "Finde dein Bett.",
@@ -1410,10 +1359,8 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
     if (!hosts.length) return;
 
-    bookingForm();
-
     function show(host, useWidget) {
-      var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-form]");
+      var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-down]");
       if (w) w.hidden = !useWidget;
       if (f) f.hidden = useWidget;
       /* the engine gets the full width, our own form keeps its column */
@@ -1503,34 +1450,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
 
   /* Dates cannot be in the past, check-out cannot precede check-in, and a
      submitted form becomes a mail we can answer by hand. */
-  function bookingForm() {
-    var iso = function (d) { return d.toISOString().slice(0, 10); };
-    var today = iso(new Date());
 
-    [].forEach.call(document.querySelectorAll("[data-ibe-form]"), function (form) {
-      var inp = form.querySelector('input[name="in"]'),
-          out = form.querySelector('input[name="out"]');
-      inp.min = out.min = today;
-
-      inp.addEventListener("change", function () {
-        var next = new Date(inp.value);
-        next.setDate(next.getDate() + 1);
-        out.min = iso(next);
-        if (out.value && out.value <= inp.value) out.value = iso(next);
-      });
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var pax = form.querySelector('select[name="pax"]').value;
-        var subject = lang === "de" ? "Anfrage Be Free Hostel" : "Booking request — Be Free Hostel";
-        var body = lang === "de"
-          ? "Anreise: " + inp.value + "\nAbreise: " + out.value + "\nGäste: " + pax + "\n\n"
-          : "Check-in: " + inp.value + "\nCheck-out: " + out.value + "\nGuests: " + pax + "\n\n";
-        location.href = "mailto:befree-hostel@dostepinn.at?subject=" +
-          encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-      });
-    });
-  }
 
   /* The nav's booking pill is hidden on narrow screens, so a floating one
      takes over — but only between the hero and the booking section, so it

@@ -44,8 +44,7 @@
     "loc.s1": "300 m zur U3", "loc.s2": "200 m zum Bus",
     "loc.s3": "6 Min zur Stadthalle", "loc.s4": "Westbahnhof zu Fuß",
 
-    "bk.in": "Anreise", "bk.out": "Abreise", "bk.pax": "Gäste",
-    "bk.go": "Verfügbarkeit prüfen",
+    "bk.down": "Unsere Buchungsmaschine antwortet gerade nicht. Ruf uns an unter <a href=\"tel:+4369919232769\">+43 699 19232769</a> oder schreib an <a href=\"mailto:befree-hostel@dostepinn.at\">befree-hostel@dostepinn.at</a>, wir buchen für dich.",
 
     "bar.k": "Heute Nacht frei?",
     "bar.h": "Finde dein Bett.",
@@ -521,10 +520,8 @@
     var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
     if (!hosts.length) return;
 
-    bookingForm();
-
     function show(host, useWidget) {
-      var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-form]");
+      var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-down]");
       if (w) w.hidden = !useWidget;
       if (f) f.hidden = useWidget;
       /* the engine gets the full width, our own form keeps its column */
@@ -614,34 +611,7 @@
 
   /* Dates cannot be in the past, check-out cannot precede check-in, and a
      submitted form becomes a mail we can answer by hand. */
-  function bookingForm() {
-    var iso = function (d) { return d.toISOString().slice(0, 10); };
-    var today = iso(new Date());
 
-    [].forEach.call(document.querySelectorAll("[data-ibe-form]"), function (form) {
-      var inp = form.querySelector('input[name="in"]'),
-          out = form.querySelector('input[name="out"]');
-      inp.min = out.min = today;
-
-      inp.addEventListener("change", function () {
-        var next = new Date(inp.value);
-        next.setDate(next.getDate() + 1);
-        out.min = iso(next);
-        if (out.value && out.value <= inp.value) out.value = iso(next);
-      });
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var pax = form.querySelector('select[name="pax"]').value;
-        var subject = lang === "de" ? "Anfrage Be Free Hostel" : "Booking request — Be Free Hostel";
-        var body = lang === "de"
-          ? "Anreise: " + inp.value + "\nAbreise: " + out.value + "\nGäste: " + pax + "\n\n"
-          : "Check-in: " + inp.value + "\nCheck-out: " + out.value + "\nGuests: " + pax + "\n\n";
-        location.href = "mailto:befree-hostel@dostepinn.at?subject=" +
-          encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-      });
-    });
-  }
 
   /* The nav's booking pill is hidden on narrow screens, so a floating one
      takes over — but only between the hero and the booking section, so it

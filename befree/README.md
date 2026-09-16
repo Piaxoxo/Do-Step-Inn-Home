@@ -26,7 +26,7 @@ python3 -m http.server 8080     # from the repo root
 | Gallery | Scroll parallax: two columns drift at their own speed, click to enlarge, keyboard-navigable lightbox |
 | Groups | Green band — group quotes, breakfast bookable at Felberstraße 20, route |
 | Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk |
-| Book | Pink band — booking form, replaced by the UP Hotel widget when it loads |
+| Book | Pink band — the UP Hotel widget |
 | Contact | Email and phone |
 
 Plus three German-only legal pages: `impressum.html`, `datenschutz.html`, `agb.html`.
@@ -229,17 +229,21 @@ header marks it, and `befree.js` skips a control that is already bound.
       DOM and drops in an iframe never does. Then the box stayed hidden and
       only the mail form ever showed.
 
+      **The engine is the only way to book a bed.** There is no mail form
+      beside it: the three spots carry the widget and nothing else. Mail is
+      offered in exactly one place, group bookings, where a quote has to be
+      written by hand anyway, plus the contact section at the end.
+
       **Each of the three spots is judged on its own.** An engine that fills
       only the first `<ibe-up>` it finds is common enough, and an empty box at
-      the bottom of the page is worse than a form. Every host carries a real
-      form — check-in, check-out, guests — and it appears once that host's
-      widget has demonstrably rendered nothing: a `MutationObserver` accepts
-      the moment anything lands in the box, a fresh element is swapped in once
-      as a nudge (which wakes a custom-element engine and is ignored by a
-      scanning one), and a check at four seconds, plus one after `load`,
-      decides otherwise. Any way of rendering counts — a shadow root,
-      injected children, a box with real height. Submitting the form opens a
-      mail with the dates filled in.
+      the bottom of the page is worse than a sentence. Where a widget has
+      demonstrably rendered nothing, that spot shows one line — call this
+      number, or write to us, and we book it for you — and nothing else: a
+      `MutationObserver` accepts the moment anything lands in the box, a fresh
+      element is swapped in once as a nudge (which wakes a custom-element
+      engine and is ignored by a scanning one), and a check at four seconds,
+      plus one after `load`, decides otherwise. Any way of rendering counts —
+      a shadow root, injected children, a box with real height.
 
       **Two CSS traps cost the widget its width.** A custom element the
       browser does not know is an *inline* box, so whatever the engine
