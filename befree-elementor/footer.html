@@ -417,15 +417,12 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .ibe-down[hidden]{display:none}
 .ibe-down a{font-weight:800;text-decoration-color:var(--pink)}
 .bookbar__w{display:flex;flex-direction:column;gap:12px;min-width:0}
- /* the Book band lays its children out with align-items:flex-start, which
-   sizes them to their content — the widget has to opt out of that */
-.bookband{margin-bottom:4px;align-self:stretch;width:100%}
 
 /* the third booking spot: a quiet strip closing the rooms section */
 .bookrooms{
   border:2px solid var(--ink);border-radius:24px;background:var(--paper-2);
   box-shadow:var(--shadow-sm);padding:clamp(16px,2.2vw,24px);
-  display:flex;flex-direction:column;gap:12px;
+  display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;justify-content:space-between;
 }
 .bookrooms__t{
   font-family:var(--f-body);font-weight:800;font-size:clamp(16px,2vw,19px);

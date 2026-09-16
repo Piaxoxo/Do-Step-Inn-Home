@@ -17,16 +17,16 @@ python3 -m http.server 8080     # from the repo root
 |---|---|
 | Hero | *Be Free. Be You. Be Here.* over a canvas field of colour-cycling flowers |
 | Ticker | TOP DESTINATION · VIENNA · BEINGASSE 13 · BE FREE HOSTEL, endless |
-| Book bar | Gold band under the hero — booking where intent is highest |
+| Book bar | Gold band under the hero — the UP Hotel search mask, the one on the page |
 | Location | Turquoise band — the neighbourhood, four markers, distances as stickers |
 | Check-in | Pink band — no reception, the three steps, the phone number, and the walk to Felberstraße |
 | Rooms | Private room · Capsule bed · Classic dorm, as pastel cards |
-| Book (rooms) | Booking strip closing the rooms section |
+| Book (rooms) | Strip closing the rooms section, pointing up to the search mask |
 | Why Be Free | Freedom, together, clean, colour |
 | Gallery | Scroll parallax: two columns drift at their own speed, click to enlarge, keyboard-navigable lightbox |
 | Groups | Green band — group quotes, breakfast bookable at Felberstraße 20, route |
 | Good to know | Violet band — quiet hours, bathrooms, kitchen, no front desk |
-| Book | Pink band — the UP Hotel widget |
+| Book | Pink band — closing call to action, pointing up to the search mask |
 | Contact | Email and phone |
 
 Plus three German-only legal pages: `impressum.html`, `datenschutz.html`, `agb.html`.
@@ -234,24 +234,21 @@ header marks it, and `befree.js` skips a control that is already bound.
       offered in exactly one place, group bookings, where a quote has to be
       written by hand anyway, plus the contact section at the end.
 
-      **Three masks on one page needs three documents.** The embed
-      initialises the element it finds when it loads, and in practice only
-      the first `<ibe-up>` on a page fills — which is exactly what happened
-      here: a mask in the gold bar and nothing in the Book band. A spot that
-      is still empty after three and a half seconds is therefore given its
-      own document: an `iframe` written with `srcdoc`, carrying UP Hotel's
-      snippet and nothing else, so the element in there is the first and only
-      one. `srcdoc` keeps the frame on this domain, so the engine sees the
-      same origin as the page, the frame's height can be read back and
-      followed, and `<base target="_top">` keeps the booking flow in the real
-      window rather than trapping it in the frame.
+      **One search mask, in the gold bar under the hero.** UP Hotel's embed
+      initialises the element it finds when it loads, and on this property it
+      fills exactly one per page — three masks were tried, in the page and
+      each in its own `srcdoc` frame, and only the first ever came up. So the
+      page carries one, where intent is highest, and the two spots below it
+      send guests there: the strip closing the rooms, and the Book band.
+      Every *Book now* on the page — nav, hero, the floating button — points
+      at `#bookbar` for the same reason. `language` is set on the element
+      before the engine loads, so a German visitor gets a German mask.
 
-      The order per spot is: the plain element, then its own frame, and only
-      if even that draws nothing — the engine is unreachable, not busy — one
-      line with the phone number. `language` is set on every element before
-      the engine ever loads, so a German visitor gets a German mask; a
-      language switch reloads a frame and, where the engine really is a
-      custom element, swaps a fresh element in.
+      Where even that one renders nothing — the engine unreachable, not busy
+      — the bar shows a single line with the phone number and the address,
+      and a spot that stays empty is first given its own document (an
+      `iframe` written with `srcdoc`, carrying UP Hotel's snippet and nothing
+      else) before it gives up.
 
       **Two CSS traps cost the widget its width.** A custom element the
       browser does not know is an *inline* box, so whatever the engine

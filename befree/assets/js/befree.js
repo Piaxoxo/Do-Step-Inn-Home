@@ -22,6 +22,7 @@
     "nav.menu": "Menü",
 
     "cta.book": "Jetzt buchen", "cta.rooms": "Zimmer ansehen", "cta.ask": "Frage stellen",
+    "cta.dates": "Termin wählen",
 
     "hero.l1": "Be Free.", "hero.l2": "Be You.", "hero.l3": "Be Here.",
     "hero.sub": "Das Be Free Hostel Wien ist eine bunte, leistbare Bleibe nahe dem Westbahnhof — entspannt, flexibel und mitten in der Stadt. Mit unkompliziertem Self-Check-in, zentraler Lage und lebendiger Atmosphäre ist es die perfekte Basis, um Wien auf deine Art zu entdecken und dabei Leute aus aller Welt zu treffen.",
@@ -686,7 +687,7 @@
   function bookingFab() {
     var fab  = document.getElementById("bookfab"),
         hero = document.getElementById("top"),
-        book = document.getElementById("book");
+        book = document.getElementById("bookbar");   /* where the mask is */
     if (!fab || !hero || !("IntersectionObserver" in window)) return;
 
     var heroVisible = true, bookVisible = false;

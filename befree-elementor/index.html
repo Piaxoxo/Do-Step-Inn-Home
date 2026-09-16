@@ -437,15 +437,12 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .ibe-down[hidden]{display:none}
 .ibe-down a{font-weight:800;text-decoration-color:var(--pink)}
 .bookbar__w{display:flex;flex-direction:column;gap:12px;min-width:0}
- /* the Book band lays its children out with align-items:flex-start, which
-   sizes them to their content — the widget has to opt out of that */
-.bookband{margin-bottom:4px;align-self:stretch;width:100%}
 
 /* the third booking spot: a quiet strip closing the rooms section */
 .bookrooms{
   border:2px solid var(--ink);border-radius:24px;background:var(--paper-2);
   box-shadow:var(--shadow-sm);padding:clamp(16px,2.2vw,24px);
-  display:flex;flex-direction:column;gap:12px;
+  display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;justify-content:space-between;
 }
 .bookrooms__t{
   font-family:var(--f-body);font-weight:800;font-size:clamp(16px,2vw,19px);
@@ -651,7 +648,7 @@ window.BEFREE_IMG = "";
         <button type="button" id="lang-en" aria-pressed="true">EN</button>
         <button type="button" id="lang-de" aria-pressed="false">DE</button>
       </div>
-      <a class="pill" href="#book"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
+      <a class="pill" href="#bookbar"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks">
         <span></span><span class="vh" data-i18n="nav.menu">Menu</span>
       </button>
@@ -668,7 +665,7 @@ window.BEFREE_IMG = "";
     <h1><span data-i18n="hero.l1">Be Free.</span><span class="c1" data-i18n="hero.l2">Be You.</span><span class="c2" data-i18n="hero.l3">Be Here.</span></h1>
     <p class="hero__sub" data-i18n="hero.sub">Be Free Hostel Vienna is a colorful and affordable place to stay near Westbahnhof, offering modern travelers a relaxed and flexible experience in the heart of the city. With easy self check-in, a central location and a vibrant atmosphere, it is the perfect base to explore Vienna your own way while connecting with people from around the world.</p>
     <div class="hero__cta">
-      <a class="pill" href="#book"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
+      <a class="pill" href="#bookbar"><span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span></a>
       <a class="pill pill--ghost" href="#rooms" data-i18n="cta.rooms">See the rooms</a>
     </div>
     <div class="stix">
@@ -813,10 +810,9 @@ window.BEFREE_IMG = "";
 <!-- ══════════════════════════════════════ BOOK 2 ════════════════ -->
 <section class="sec" id="book-rooms" style="padding-top:0">
   <div class="wrap">
-    <div class="bookrooms" data-ibe-host>
+    <div class="bookrooms">
       <p class="bookrooms__t" data-i18n="bar.rooms">Seen a room you like? Pick your dates.</p>
-      <div class="ibe"><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
-      <p class="ibe-down" data-ibe-down hidden data-i18n-html="bk.down">Our booking engine is not responding right now. Call <a href="tel:+4369919232769">+43 699 19232769</a> or write to <a href="mailto:befree-hostel@dostepinn.at">befree-hostel@dostepinn.at</a> and we will book it for you.</p>
+      <a class="pill" href="#bookbar"><span data-i18n="cta.dates">Pick your dates</span><span class="pill__a" aria-hidden="true">↑</span></a>
     </div>
   </div>
 </section>
@@ -929,15 +925,11 @@ window.BEFREE_IMG = "";
     <span class="eyebrow" data-i18n="bk.eyebrow">Book your stay</span>
     <h2 class="t-dsp" data-i18n-html="bk.h">Be Free. Be You.<br />Be Here.</h2>
     <p class="lede" data-i18n="bk.lede">Pick your dates, pay online, and your key arrives on your phone. That is the whole process.</p>
-    <!-- UP Hotel IBE — Be Free's own property key. Never swap in another
-         house's key; guests would book the wrong hotel. If the engine cannot
-         load, the form below takes over on its own. -->
-    <div class="bookband" data-ibe-host>
-      <div class="ibe"><ibe-up ibe-key="75e0a485-2545-432c-8c13-e48b8a8a3fc8" language="en"></ibe-up></div>
-      <p class="ibe-down" data-ibe-down hidden data-i18n-html="bk.down">Our booking engine is not responding right now. Call <a href="tel:+4369919232769">+43 699 19232769</a> or write to <a href="mailto:befree-hostel@dostepinn.at">befree-hostel@dostepinn.at</a> and we will book it for you.</p>
-    </div>
-
+    <!-- The search mask itself lives once, in the gold bar under the hero:
+         the booking engine fills one element per page, so a second one here
+         would stay empty. This band sends guests up to it. -->
     <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <a class="pill" href="#bookbar" style="--pc:#FFFFFF"><span data-i18n="cta.dates">Pick your dates</span><span class="pill__a" aria-hidden="true">↑</span></a>
       <a class="pill pill--ghost" href="#contact" data-i18n="cta.ask">Ask a question</a>
       <a class="pill pill--ghost" href="tel:+4369919232769">+43 699 19232769</a>
     </div>
@@ -1008,7 +1000,7 @@ window.BEFREE_IMG = "";
   </div>
 </footer>
 
-<a class="bookfab" id="bookfab" href="#book">
+<a class="bookfab" id="bookfab" href="#bookbar">
   <span data-i18n="cta.book">Book now</span><span class="pill__a" aria-hidden="true">→</span>
 </a>
 
@@ -1047,6 +1039,7 @@ window.BEFREE_IMG = "";
     "nav.menu": "Menü",
 
     "cta.book": "Jetzt buchen", "cta.rooms": "Zimmer ansehen", "cta.ask": "Frage stellen",
+    "cta.dates": "Termin wählen",
 
     "hero.l1": "Be Free.", "hero.l2": "Be You.", "hero.l3": "Be Here.",
     "hero.sub": "Das Be Free Hostel Wien ist eine bunte, leistbare Bleibe nahe dem Westbahnhof — entspannt, flexibel und mitten in der Stadt. Mit unkompliziertem Self-Check-in, zentraler Lage und lebendiger Atmosphäre ist es die perfekte Basis, um Wien auf deine Art zu entdecken und dabei Leute aus aller Welt zu treffen.",
@@ -1711,7 +1704,7 @@ window.BEFREE_IMG = "";
   function bookingFab() {
     var fab  = document.getElementById("bookfab"),
         hero = document.getElementById("top"),
-        book = document.getElementById("book");
+        book = document.getElementById("bookbar");   /* where the mask is */
     if (!fab || !hero || !("IntersectionObserver" in window)) return;
 
     var heroVisible = true, bookVisible = false;
