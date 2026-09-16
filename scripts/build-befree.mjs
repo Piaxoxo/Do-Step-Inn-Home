@@ -310,11 +310,18 @@ function partialScript(dict, rootSel, extra) {
   if (lang === "de") {
     root.querySelectorAll("[data-i18n]").forEach(function (el) {
       var v = DE[el.getAttribute("data-i18n")];
-      if (v) el.textContent = v;
+      if (!v) return;
+      /* keep the English before overwriting it: befree.js reads the page to
+         learn what English says, and it runs after this. Without the copy it
+         would learn German and the EN button would change nothing. */
+      if (!el.hasAttribute("data-en")) el.setAttribute("data-en", el.textContent);
+      el.textContent = v;
     });
     root.querySelectorAll("[data-i18n-html]").forEach(function (el) {
       var v = DE[el.getAttribute("data-i18n-html")];
-      if (v) el.innerHTML = v;
+      if (!v) return;
+      if (!el.hasAttribute("data-en-html")) el.setAttribute("data-en-html", el.innerHTML);
+      el.innerHTML = v;
     });
   }
 ${extra}

@@ -66,6 +66,14 @@ the top of `assets/js/befree.js`.
 
 - `data-i18n="key"` swaps `textContent`, `data-i18n-html="key"` swaps `innerHTML`
   (used where a line break matters).
+- English is learned off the page, **once per key**, the first time that
+  element is seen. Two things follow from splitting the site across a theme:
+  `header.html` and `footer.html` translate themselves before `befree.js`
+  exists, so they stash the English they overwrite in `data-en` /
+  `data-en-html`, and that copy wins over what is on screen; and the footer is
+  parsed *after* the content script runs, so the page is read a second time on
+  `DOMContentLoaded` — additively, because by then the rest of the page may
+  already be showing German.
 - Order of precedence: `?lang=de` → remembered choice → browser language.
 - **To change a German string,** edit the `DE` dictionary. **To change an English
   string,** edit the HTML — and only add a `DE` entry if the German should differ.

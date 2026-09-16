@@ -147,16 +147,25 @@
   };
 
   var EN_FALLBACK = { "gal.enlarge": "enlarge", "bk.frame": "Booking" };
-  var EN = null;          /* filled from the DOM on first run */
+  var EN = {};            /* English, learned from the page as it arrives */
   var lang = "en";
 
+  /* English is read off the page. A separate header or footer file may have
+     translated itself before this runs — it stashes the English it replaced
+     in data-en / data-en-html, and that copy wins over what is on screen. */
+  /* Learning is one-way: a key is read once, the first time its element is
+     seen, and never again — by the second reading the page may already be
+     showing German, and re-reading would teach German as the English. */
   function harvestEnglish() {
-    EN = {};
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
-      EN[el.getAttribute("data-i18n")] = el.textContent;
+      var k = el.getAttribute("data-i18n");
+      if (k in EN) return;
+      EN[k] = el.hasAttribute("data-en") ? el.getAttribute("data-en") : el.textContent;
     });
     document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
-      EN[el.getAttribute("data-i18n-html")] = el.innerHTML;
+      var k = el.getAttribute("data-i18n-html");
+      if (k in EN) return;
+      EN[k] = el.hasAttribute("data-en-html") ? el.getAttribute("data-en-html") : el.innerHTML;
     });
     Object.keys(EN_FALLBACK).forEach(function (k) { EN[k] = EN_FALLBACK[k]; });
   }
@@ -761,6 +770,20 @@
   try { saved = localStorage.getItem("befree-lang"); } catch (e) {}
   var auto = (navigator.language || "en").toLowerCase().indexOf("de") === 0 ? "de" : "en";
   setLang(q || saved || auto, false);
+
+  /* In a theme this script sits in the CONTENT, and the footer is parsed
+     after it — its text simply did not exist a moment ago. Once the document
+     is complete, read it again and apply the language to what has arrived
+     since. (The footer keeps the English it overwrote in data-en, so the
+     second reading learns English, not German.) */
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () {
+      harvestEnglish();
+      setLang(lang, false);
+      legalLinks();
+    });
+  }
+
   bookingWidget();
   bookingFab();
 
