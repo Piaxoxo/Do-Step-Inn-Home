@@ -47,9 +47,15 @@ const EMBED = process.argv.includes('--embed');
 const LEGAL_SWITCH = `<script>
 /* ══════════════════════════════════════════════════════════════════════
    RECHTSSEITEN — wohin Impressum, Datenschutz und AGB führen sollen.
-   Voreingestellt sind die Seiten /impressum/, /datenschutz/ und /agb/.
-   Heißen eure WordPress-Seiten anders oder liegen sie in einem
-   Unterordner: hier den Permalink aus WordPress eintragen.
+
+   Normalerweise müsst ihr hier NICHTS eintragen: die Seite fragt beim
+   Laden bei WordPress nach, wo die Seiten mit den Titeln Impressum,
+   Datenschutz und AGB wirklich liegen, und trägt die echten Adressen
+   ein — auch bei einfachen Permalinks oder in einem Unterordner.
+
+   Klappt das nicht (REST-API abgeschaltet, andere Slugs), hier einfach
+   die Adressen aus der WordPress-Seitenliste eintragen: Seite öffnen,
+   "Anzeigen" klicken, Adresse kopieren. Ein eingetragener Wert gewinnt.
    ══════════════════════════════════════════════════════════════════════ */
 window.BEFREE_LEGAL = {
   impressum:   "/impressum/",
@@ -58,6 +64,8 @@ window.BEFREE_LEGAL = {
 };
 
 (function () {
+  var DEFAULT = { impressum: "/impressum/", datenschutz: "/datenschutz/", agb: "/agb/" };
+
   function apply() {
     var L = window.BEFREE_LEGAL || {};
     var a = document.querySelectorAll("a[data-legal]");
@@ -66,9 +74,33 @@ window.BEFREE_LEGAL = {
       if (to) a[i].setAttribute("href", to);
     }
   }
+
+  /* WordPress prints the address of its own API into every page head.
+     That is the one reliable way to ask where a page actually lives —
+     it survives plain permalinks, a subfolder and a renamed slug. */
+  function askWordPress() {
+    var tag = document.querySelector('link[rel="https://api.w.org/"]');
+    var root = tag && tag.getAttribute("href");
+    if (!root || !window.fetch) return;
+    if (root.slice(-1) !== "/") root += "/";
+
+    Object.keys(DEFAULT).forEach(function (slug) {
+      if ((window.BEFREE_LEGAL || {})[slug] !== DEFAULT[slug]) return;   /* hand-set wins */
+      fetch(root + "wp/v2/pages?slug=" + slug + "&_fields=link", { credentials: "omit" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (list) {
+          if (!list || !list.length || !list[0].link) return;
+          window.BEFREE_LEGAL[slug] = list[0].link;
+          apply();
+        })
+        .catch(function () {});
+    });
+  }
+
+  function start() { apply(); askWordPress(); }
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", apply);
-  } else { apply(); }
+    document.addEventListener("DOMContentLoaded", start);
+  } else { start(); }
 })();
 </script>`;
 

@@ -384,6 +384,10 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .ibe ibe-up{display:block;width:100%}
 .ibe ibe-up > *{max-width:100%}
 .ibe iframe{display:block;width:100%;border:0}
+/* a booking spot running in its own document: the frame follows its
+   content's height, this is only the floor while it loads */
+.ibe__frame{min-height:340px}
+@media(max-width:620px){.ibe__frame{min-height:420px}}
 
 /* an inline display would outrank the UA rule for [hidden], so the
    fallback carries its layout in CSS and hides on the attribute */
@@ -883,6 +887,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     "loc.s1": "300 m zur U3", "loc.s2": "200 m zum Bus",
     "loc.s3": "6 Min zur Stadthalle", "loc.s4": "Westbahnhof zu Fuß",
 
+    "bk.frame": "Buchung",
     "bk.down": "Unsere Buchungsmaschine antwortet gerade nicht. Ruf uns an unter <a href=\"tel:+4369919232769\">+43 699 19232769</a> oder schreib an <a href=\"mailto:befree-hostel@dostepinn.at\">befree-hostel@dostepinn.at</a>, wir buchen für dich.",
 
     "bar.k": "Heute Nacht frei?",
@@ -983,7 +988,7 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     "gal.enlarge": "größer ansehen"
   };
 
-  var EN_FALLBACK = { "gal.enlarge": "enlarge" };
+  var EN_FALLBACK = { "gal.enlarge": "enlarge", "bk.frame": "Booking" };
   var EN = null;          /* filled from the DOM on first run */
   var lang = "en";
 
@@ -1345,42 +1350,50 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
      the browser confirms <ibe-up> is really defined. That covers a missing
      key, a blocked script, an ad-blocker and a dead network with one path
      instead of four guesses. */
-  /* The booking engine is the real thing, so it is in the page visible from
-     the start — including without JavaScript. Hiding it until we approve it
-     was wrong twice over: a widget inside display:none can neither draw nor
-     measure itself, and the approval hung on `<ibe-up>` being registered as a
-     custom element, which an embed that simply scans the DOM and drops in an
-     iframe never does.
+  /* ─────────────────────────────────────────────────────────────────
+     The booking engine, three times on one page.
 
-     Each of the three spots is judged on its own, because an engine that
-     only ever fills the first element it finds is common enough — and an
-     empty box at the bottom of the page is worse than the form. */
+     UP Hotel's embed initialises the element it finds when it loads, and
+     a page with three <ibe-up> tags is not what such a script expects —
+     in practice only the first one fills. So a spot that stays empty is
+     given its own DOCUMENT: an iframe carrying UP Hotel's own snippet,
+     nothing else, which makes it the first and only element in there.
+     The frame is written with srcdoc, so it stays on this domain — the
+     engine sees the same origin as the page, and its height can be read
+     back and followed. `<base target="_top">` keeps the booking flow in
+     the real window instead of trapping it in the frame.
+
+     Order per spot: the plain element, then its own frame, and only if
+     even that draws nothing, the line with the phone number.
+     ───────────────────────────────────────────────────────────────── */
   function bookingWidget() {
     var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
     if (!hosts.length) return;
 
-    function show(host, useWidget) {
-      var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-down]");
-      if (w) w.hidden = !useWidget;
-      if (f) f.hidden = useWidget;
-      /* the engine gets the full width, our own form keeps its column */
-      host.classList.toggle("is-engine", !!useWidget);
+    function show(host, what) {         /* "widget" | "down" */
+      var w = host.querySelector(".ibe"), d = host.querySelector("[data-ibe-down]");
+      if (w) w.hidden = what !== "widget";
+      if (d) d.hidden = what !== "down";
+      host.classList.toggle("is-engine", what === "widget");
     }
 
     var first = document.querySelector("[data-ibe-host] ibe-up");
     var key = first && first.getAttribute("ibe-key");
-    if (!key || !key.trim()) {                     /* no key, no engine */
-      hosts.forEach(function (h) { show(h, false); });
+    if (!key || !key.trim()) {
+      hosts.forEach(function (h) { show(h, "down"); });
       return;
     }
+    key = key.trim();
 
-    hosts.forEach(function (h) { show(h, true); });
-    syncWidgetLanguage();
+    /* the engine reads `language` when it initialises, so it is set before
+       the engine ever loads — a German visitor gets a German mask */
+    [].forEach.call(document.querySelectorAll("[data-ibe-host] ibe-up"), function (el) {
+      el.setAttribute("language", lang);
+    });
 
-    /* Did anything actually arrive in THIS box? Every way an embed can
-       render counts: a shadow root, injected children, real height. */
-    function drawn(host) {
-      var el = host.querySelector("ibe-up");
+    hosts.forEach(function (h) { show(h, "widget"); });
+
+    function drawn(el) {
       if (!el) return false;
       if (el.shadowRoot) return true;
       if (el.children.length) return true;
@@ -1388,57 +1401,114 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
       return el.getBoundingClientRect().height > 24;
     }
 
-    /* A fresh element is the one nudge worth trying: an engine built on
-       custom elements picks it up, one that scanned the page ignores it. */
-    function nudge(host) {
-      var el = host.querySelector("ibe-up");
-      if (!el) return;
-      var fresh = document.createElement("ibe-up");
-      fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
-      fresh.setAttribute("language", el.getAttribute("language") || lang);
-      el.parentNode.replaceChild(fresh, el);
+    /* one document per frame: UP Hotel's snippet and nothing else.
+       "</scr" + "ipt>" because this file is inlined into the page. */
+    function frameDoc(language) {
+      return '<!doctype html><html lang="' + language + '"><head>' +
+        '<meta charset="utf-8">' +
+        '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+        '<base target="_top">' +
+        '<link href="https://ibe.uphotel.agency/ibe.min.css" rel="stylesheet">' +
+        '<style>html,body{margin:0;padding:0;background:transparent;' +
+        'font-family:Karla,system-ui,-apple-system,sans-serif}</style></head><body>' +
+        '<ibe-up ibe-key="' + key + '" language="' + language + '"></ibe-up>' +
+        '<scr' + 'ipt src="https://ibe.uphotel.agency/ibe.min.js"></scr' + 'ipt>' +
+        '</body></html>';
+    }
+
+    function follow(frame) {            /* let the frame set its own height */
+      var stop = null;
+      function fit() {
+        try {
+          var d = frame.contentDocument;
+          if (!d || !d.body) return;
+          var h = Math.max(d.body.scrollHeight, d.documentElement.scrollHeight);
+          if (h > 80) frame.style.height = (h + 8) + "px";
+        } catch (e) { if (stop) clearInterval(stop); }
+      }
+      stop = setInterval(fit, 400);
+      setTimeout(function () { clearInterval(stop); }, 40000);
+      frame.addEventListener("load", fit);
+    }
+
+    function frameIn(host) {
+      var box = host.querySelector(".ibe");
+      if (!box) return null;
+      var frame = document.createElement("iframe");
+      frame.className = "ibe__frame";
+      frame.title = t("bk.frame") || "Booking";
+      frame.setAttribute("scrolling", "no");
+      frame.srcdoc = frameDoc(lang);
+      box.innerHTML = "";
+      box.appendChild(frame);
+      follow(frame);
+      return frame;
+    }
+
+    function frameDrew(frame) {
+      try {
+        var d = frame.contentDocument;
+        if (!d || !d.body) return false;
+        var el = d.querySelector("ibe-up");
+        return drawn(el) || d.body.scrollHeight > 120;
+      } catch (e) { return true; }   /* unreadable means it is not ours: leave it */
     }
 
     hosts.forEach(function (host) {
-      var settled = false, nudged = false;
+      var settled = false, frame = null;
 
-      function accept() { settled = true; }
+      function keep() { settled = true; }
 
-      function verdict() {
+      function step1() {               /* did the plain element fill? */
         if (settled) return;
-        if (drawn(host)) { accept(); return; }
-        if (!nudged) { nudged = true; nudge(host); setTimeout(verdict, 2500); return; }
+        if (drawn(host.querySelector("ibe-up"))) { keep(); return; }
+        frame = frameIn(host);         /* no: give this spot its own document */
+        setTimeout(step2, 5000);
+      }
+
+      function step2() {               /* did the frame fill? */
+        if (settled || !frame) return;
+        if (frameDrew(frame)) { keep(); return; }
         settled = true;
-        show(host, false);       /* this spot stays with the form */
+        show(host, "down");            /* the engine is unreachable, not busy */
       }
 
       if (window.MutationObserver) {
         var box = host.querySelector(".ibe");
         if (box) {
           var mo = new MutationObserver(function () {
-            if (drawn(host)) { accept(); mo.disconnect(); }
+            if (drawn(box.querySelector("ibe-up"))) { keep(); mo.disconnect(); }
           });
           mo.observe(box, { childList: true, subtree: true });
         }
       }
 
-      setTimeout(verdict, 4000);
-      window.addEventListener("load", function () { setTimeout(verdict, 2500); });
+      setTimeout(step1, 3500);
+      host.addEventListener("befree:relang", function () {
+        if (frame) { frame.srcdoc = frameDoc(lang); follow(frame); }
+      });
     });
   }
+
 
 
 
   /* The IBE reads its language attribute once, when it initialises, so a
      language switch needs a fresh element rather than a changed attribute. */
   function syncWidgetLanguage() {
-    /* Swapping in a fresh <ibe-up> is what makes the engine pick up the new
-       language — but only an engine that really is a custom element wakes up
-       on a new element. One that scanned the page once and filled what it
-       found would leave the replacement empty, so that box stays as it is. */
-    if (!(window.customElements && customElements.get("ibe-up"))) return;
-    [].forEach.call(document.querySelectorAll("[data-ibe-host] .ibe"), function (box) {
-      if (box.hidden) return;
+    [].forEach.call(document.querySelectorAll("[data-ibe-host]"), function (host) {
+      var box = host.querySelector(".ibe");
+      if (!box || box.hidden) return;
+
+      /* a spot running in its own frame reloads that frame */
+      if (box.querySelector("iframe")) {
+        host.dispatchEvent(new CustomEvent("befree:relang"));
+        return;
+      }
+      /* a plain element can only be re-read by an engine that really is a
+         custom element; one that scanned the page once would be handed an
+         empty replacement, so that box is left as it stands */
+      if (!(window.customElements && customElements.get("ibe-up"))) return;
       var el = box.querySelector("ibe-up");
       if (!el || el.getAttribute("language") === lang) return;
       var fresh = document.createElement("ibe-up");

@@ -382,6 +382,10 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 .ibe ibe-up{display:block;width:100%}
 .ibe ibe-up > *{max-width:100%}
 .ibe iframe{display:block;width:100%;border:0}
+/* a booking spot running in its own document: the frame follows its
+   content's height, this is only the floor while it loads */
+.ibe__frame{min-height:340px}
+@media(max-width:620px){.ibe__frame{min-height:420px}}
 
 /* an inline display would outrank the UA rule for [hidden], so the
    fallback carries its layout in CSS and hides on the attribute */

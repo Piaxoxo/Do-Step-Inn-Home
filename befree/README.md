@@ -234,16 +234,24 @@ header marks it, and `befree.js` skips a control that is already bound.
       offered in exactly one place, group bookings, where a quote has to be
       written by hand anyway, plus the contact section at the end.
 
-      **Each of the three spots is judged on its own.** An engine that fills
-      only the first `<ibe-up>` it finds is common enough, and an empty box at
-      the bottom of the page is worse than a sentence. Where a widget has
-      demonstrably rendered nothing, that spot shows one line — call this
-      number, or write to us, and we book it for you — and nothing else: a
-      `MutationObserver` accepts the moment anything lands in the box, a fresh
-      element is swapped in once as a nudge (which wakes a custom-element
-      engine and is ignored by a scanning one), and a check at four seconds,
-      plus one after `load`, decides otherwise. Any way of rendering counts —
-      a shadow root, injected children, a box with real height.
+      **Three masks on one page needs three documents.** The embed
+      initialises the element it finds when it loads, and in practice only
+      the first `<ibe-up>` on a page fills — which is exactly what happened
+      here: a mask in the gold bar and nothing in the Book band. A spot that
+      is still empty after three and a half seconds is therefore given its
+      own document: an `iframe` written with `srcdoc`, carrying UP Hotel's
+      snippet and nothing else, so the element in there is the first and only
+      one. `srcdoc` keeps the frame on this domain, so the engine sees the
+      same origin as the page, the frame's height can be read back and
+      followed, and `<base target="_top">` keeps the booking flow in the real
+      window rather than trapping it in the frame.
+
+      The order per spot is: the plain element, then its own frame, and only
+      if even that draws nothing — the engine is unreachable, not busy — one
+      line with the phone number. `language` is set on every element before
+      the engine ever loads, so a German visitor gets a German mask; a
+      language switch reloads a frame and, where the engine really is a
+      custom element, swaps a fresh element in.
 
       **Two CSS traps cost the widget its width.** A custom element the
       browser does not know is an *inline* box, so whatever the engine
