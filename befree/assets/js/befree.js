@@ -509,34 +509,40 @@
      instead of four guesses. */
   /* The booking engine is the real thing, so it is in the page visible from
      the start — including without JavaScript. Hiding it until we approve it
-     was wrong twice over: a widget inside display:none cannot draw or measure
-     itself, and the approval hung on `<ibe-up>` being registered as a custom
-     element, which an embed that simply scans the DOM and drops in an iframe
-     never does. The form steps in only once the engine has demonstrably not
-     rendered anything. */
+     was wrong twice over: a widget inside display:none can neither draw nor
+     measure itself, and the approval hung on `<ibe-up>` being registered as a
+     custom element, which an embed that simply scans the DOM and drops in an
+     iframe never does.
+
+     Each of the three spots is judged on its own, because an engine that
+     only ever fills the first element it finds is common enough — and an
+     empty box at the bottom of the page is worse than the form. */
   function bookingWidget() {
     var hosts = [].slice.call(document.querySelectorAll("[data-ibe-host]"));
     if (!hosts.length) return;
 
     bookingForm();
 
-    function show(useWidget) {
-      hosts.forEach(function (host) {
-        var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-form]");
-        if (w) w.hidden = !useWidget;
-        if (f) f.hidden = useWidget;
-      });
-      if (useWidget) syncWidgetLanguage();
+    function show(host, useWidget) {
+      var w = host.querySelector(".ibe"), f = host.querySelector("[data-ibe-form]");
+      if (w) w.hidden = !useWidget;
+      if (f) f.hidden = useWidget;
+      /* the engine gets the full width, our own form keeps its column */
+      host.classList.toggle("is-engine", !!useWidget);
     }
 
     var first = document.querySelector("[data-ibe-host] ibe-up");
     var key = first && first.getAttribute("ibe-key");
-    if (!key || !key.trim()) { show(false); return; }   /* no key, no engine */
+    if (!key || !key.trim()) {                     /* no key, no engine */
+      hosts.forEach(function (h) { show(h, false); });
+      return;
+    }
 
-    show(true);
+    hosts.forEach(function (h) { show(h, true); });
+    syncWidgetLanguage();
 
-    /* Did anything actually arrive? Every way an embed can render counts:
-       a shadow root, injected children, or a box with real height. */
+    /* Did anything actually arrive in THIS box? Every way an embed can
+       render counts: a shadow root, injected children, real height. */
     function drawn(host) {
       var el = host.querySelector("ibe-up");
       if (!el) return false;
@@ -546,35 +552,45 @@
       return el.getBoundingClientRect().height > 24;
     }
 
-    var settled = false;
-    function accept() { settled = true; }
-    function verdict() {
-      if (settled) return;
-      if (hosts.some(drawn)) { accept(); return; }
-      settled = true;
-      show(false);       /* the engine never came — the form carries the band */
+    /* A fresh element is the one nudge worth trying: an engine built on
+       custom elements picks it up, one that scanned the page ignores it. */
+    function nudge(host) {
+      var el = host.querySelector("ibe-up");
+      if (!el) return;
+      var fresh = document.createElement("ibe-up");
+      fresh.setAttribute("ibe-key", el.getAttribute("ibe-key"));
+      fresh.setAttribute("language", el.getAttribute("language") || lang);
+      el.parentNode.replaceChild(fresh, el);
     }
 
-    /* as soon as the engine puts anything in the box, stop watching */
-    if (window.MutationObserver) {
-      hosts.forEach(function (host) {
+    hosts.forEach(function (host) {
+      var settled = false, nudged = false;
+
+      function accept() { settled = true; }
+
+      function verdict() {
+        if (settled) return;
+        if (drawn(host)) { accept(); return; }
+        if (!nudged) { nudged = true; nudge(host); setTimeout(verdict, 2500); return; }
+        settled = true;
+        show(host, false);       /* this spot stays with the form */
+      }
+
+      if (window.MutationObserver) {
         var box = host.querySelector(".ibe");
-        if (!box) return;
-        var mo = new MutationObserver(function () {
-          if (drawn(host)) { accept(); mo.disconnect(); }
-        });
-        mo.observe(box, { childList: true, subtree: true });
-      });
-    }
-    if (window.customElements) {
-      customElements.whenDefined("ibe-up").then(function () {
-        setTimeout(function () { if (hosts.some(drawn)) accept(); }, 600);
-      });
-    }
+        if (box) {
+          var mo = new MutationObserver(function () {
+            if (drawn(host)) { accept(); mo.disconnect(); }
+          });
+          mo.observe(box, { childList: true, subtree: true });
+        }
+      }
 
-    setTimeout(verdict, 4000);
-    window.addEventListener("load", function () { setTimeout(verdict, 2500); });
+      setTimeout(verdict, 4000);
+      window.addEventListener("load", function () { setTimeout(verdict, 2500); });
+    });
   }
+
 
 
   /* The IBE reads its language attribute once, when it initialises, so a

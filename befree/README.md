@@ -229,13 +229,27 @@ header marks it, and `befree.js` skips a control that is already bound.
       DOM and drops in an iframe never does. Then the box stayed hidden and
       only the mail form ever showed.
 
-      **The form is the floor, not a stand-in.** Every host carries a real
-      form — check-in, check-out, guests — and it appears only once the
-      engine has demonstrably rendered nothing: a `MutationObserver` accepts
-      the moment anything lands in the box, and a check at four seconds, plus
-      one after `load`, decides otherwise. Any way of rendering counts — a
-      shadow root, injected children, a box with real height. Submitting the
-      form opens a mail with the dates filled in.
+      **Each of the three spots is judged on its own.** An engine that fills
+      only the first `<ibe-up>` it finds is common enough, and an empty box at
+      the bottom of the page is worse than a form. Every host carries a real
+      form — check-in, check-out, guests — and it appears once that host's
+      widget has demonstrably rendered nothing: a `MutationObserver` accepts
+      the moment anything lands in the box, a fresh element is swapped in once
+      as a nudge (which wakes a custom-element engine and is ignored by a
+      scanning one), and a check at four seconds, plus one after `load`,
+      decides otherwise. Any way of rendering counts — a shadow root,
+      injected children, a box with real height. Submitting the form opens a
+      mail with the dates filled in.
+
+      **Two CSS traps cost the widget its width.** A custom element the
+      browser does not know is an *inline* box, so whatever the engine
+      renders shrink-wraps: `.ibe ibe-up{display:block;width:100%}`. And the
+      Book band lays its children out with `align-items:flex-start`, which
+      sizes them to their content — `.bookband` opts out with `align-self:
+      stretch`. Where the engine actually took over, the host is marked
+      `.is-engine` and gets the full width, the gold bar dropping to a single
+      column; our own compact form was drawn for that narrow column and keeps
+      it.
 
       A language switch swaps in a fresh `<ibe-up>`, because that is what
       makes the engine re-read `language` — but only when it really is a

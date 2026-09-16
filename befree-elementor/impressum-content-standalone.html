@@ -367,6 +367,21 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
   padding:clamp(14px,2vw,20px);box-shadow:var(--shadow-sm);
 }
 .ibe[hidden]{display:none}
+/* A custom element the browser does not know is an INLINE box. The booking
+   engine then renders into something that shrink-wraps its own content, and
+   the search mask comes out squeezed. These three rules give the engine the
+   full width it expects and nothing else — no colours, no type, no borders,
+   so its own stylesheet stays in charge of how it looks. */
+/* Where the engine really took over, it gets the whole width: a search mask
+   squeezed into a column beside a headline is the "compressed" look. Our own
+   compact form was drawn for that column, so it keeps it. */
+[data-ibe-host].is-engine .ibe{max-width:none}
+@media(min-width:940px){
+  .bookbar.is-engine .bookbar__in{grid-template-columns:1fr}
+}
+.ibe ibe-up{display:block;width:100%}
+.ibe ibe-up > *{max-width:100%}
+.ibe iframe{display:block;width:100%;border:0}
 
 /* an inline display would outrank the UA rule for [hidden], so the
    fallback carries its layout in CSS and hides on the attribute */
@@ -414,7 +429,9 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
 }
 
 .bookbar__w{display:flex;flex-direction:column;gap:12px;min-width:0}
-.bookband{margin-bottom:4px}
+ /* the Book band lays its children out with align-items:flex-start, which
+   sizes them to their content — the widget has to opt out of that */
+.bookband{margin-bottom:4px;align-self:stretch;width:100%}
 
 /* the third booking spot: a quiet strip closing the rooms section */
 .bookrooms{
