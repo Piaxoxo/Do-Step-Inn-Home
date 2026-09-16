@@ -41,6 +41,38 @@ const STANDALONE = process.argv.includes('--standalone');
    widget on an ordinary (non-Canvas) page. */
 const EMBED = process.argv.includes('--embed');
 
+/* Where Impressum, Datenschutz and AGB live in WordPress. Declared once at
+   the top of every file that links them, so a different slug is a one-line
+   edit instead of a search across an inlined page. */
+const LEGAL_SWITCH = `<script>
+/* ══════════════════════════════════════════════════════════════════════
+   RECHTSSEITEN — wohin Impressum, Datenschutz und AGB führen sollen.
+   Voreingestellt sind die Seiten /impressum/, /datenschutz/ und /agb/.
+   Heißen eure WordPress-Seiten anders oder liegen sie in einem
+   Unterordner: hier den Permalink aus WordPress eintragen.
+   ══════════════════════════════════════════════════════════════════════ */
+window.BEFREE_LEGAL = {
+  impressum:   "/impressum/",
+  datenschutz: "/datenschutz/",
+  agb:         "/agb/"
+};
+
+(function () {
+  function apply() {
+    var L = window.BEFREE_LEGAL || {};
+    var a = document.querySelectorAll("a[data-legal]");
+    for (var i = 0; i < a.length; i++) {
+      var to = L[a[i].getAttribute("data-legal")];
+      if (to) a[i].setAttribute("href", to);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", apply);
+  } else { apply(); }
+})();
+</script>`;
+
+
 function dataUri(rel) {
   const ext = path.extname(rel).toLowerCase();
   const mime = ext === '.png' ? 'image/png'
@@ -330,6 +362,7 @@ function toContent(doc) {
     '     Auf eine normale Seite (kein Canvas), ein HTML-Widget, alles hier hinein.',
     '     Seitentitel und Meta-Beschreibung setzt ihr in WordPress. -->',
     ...fragmentHead(doc, EMBED_CSS), ...headScripts,
+    /data-legal="/.test(body) ? LEGAL_SWITCH : '',
     '<div class="befree-full">', body.trim(), '</div>', ...ld
   ].join('\n');
 }
@@ -355,11 +388,17 @@ function partial(doc, which) {
 
   return [
     ...note,
-    ...fragmentHead(doc, which === 'footer' ? '' : ''),
+    ...fragmentHead(doc, ''),
+    /data-legal="/.test(markup) ? LEGAL_SWITCH : '',
     '<div class="befree-full">', linked, '</div>',
     partialScript(dictFor(markup), which === 'header' ? 'header.nav' : 'footer.foot',
                   which === 'header' ? HEADER_EXTRA : FOOTER_EXTRA)
   ].filter(Boolean).join('\n');
+}
+
+/* the switch belongs in whatever file still carries the links */
+if (!EMBED && /data-legal="/.test(html)) {
+  html = html.replace('<body>', () => '<body>\n' + LEGAL_SWITCH);
 }
 
 if (EMBED) {
@@ -382,6 +421,9 @@ for (const page of ['impressum.html', 'datenschutz.html', 'agb.html']) {
   lg = lg.replace('<link rel="stylesheet" href="assets/css/legal.css" />',  () => `<style>\n${legalCss}\n</style>`);
   lg = absolutise(lg);
   if (lg.includes('"assets/css/')) throw new Error(`not inlined: ${page}`);
+  if (!EMBED && /data-legal="/.test(lg)) {
+    lg = lg.replace('<body>', () => '<body>\n' + LEGAL_SWITCH);
+  }
 
   let name = STANDALONE ? page.replace('.html', '-standalone.html') : page;
 
@@ -403,6 +445,7 @@ for (const page of ['impressum.html', 'datenschutz.html', 'agb.html']) {
       `<!-- Be Free Hostel — INHALT von ${page.replace('.html', '').toUpperCase()}.`,
       '     Header und Footer kommen vom Theme (header.html / footer.html). -->',
       ...fragmentHead(lg, EMBED_CSS),
+      /data-legal="/.test(body) ? LEGAL_SWITCH : '',
       '<div class="befree-full">', body.trim(), '</div>'
     ].join('\n');
     name = page.replace('.html', '-content' + (STANDALONE ? '-standalone' : '') + '.html');

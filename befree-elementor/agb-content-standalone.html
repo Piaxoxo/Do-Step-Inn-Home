@@ -606,6 +606,33 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
    genau das Querscrollen, das es verhindern soll. */
 .befree-full{ margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw) }
 </style>
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   RECHTSSEITEN — wohin Impressum, Datenschutz und AGB führen sollen.
+   Voreingestellt sind die Seiten /impressum/, /datenschutz/ und /agb/.
+   Heißen eure WordPress-Seiten anders oder liegen sie in einem
+   Unterordner: hier den Permalink aus WordPress eintragen.
+   ══════════════════════════════════════════════════════════════════════ */
+window.BEFREE_LEGAL = {
+  impressum:   "/impressum/",
+  datenschutz: "/datenschutz/",
+  agb:         "/agb/"
+};
+
+(function () {
+  function apply() {
+    var L = window.BEFREE_LEGAL || {};
+    var a = document.querySelectorAll("a[data-legal]");
+    for (var i = 0; i < a.length; i++) {
+      var to = L[a[i].getAttribute("data-legal")];
+      if (to) a[i].setAttribute("href", to);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", apply);
+  } else { apply(); }
+})();
+</script>
 <div class="befree-full">
 <section class="lg-head" style="--lgc:var(--pink-mid)">
   <div class="wrap">
@@ -723,7 +750,7 @@ a{color:inherit;text-decoration-thickness:.08em;text-underline-offset:.18em}
     <p>Personenbezogene Daten werden ausschließlich zur Abwicklung der Buchung, zur
       Vertragserfüllung und im Rahmen der geltenden gesetzlichen Bestimmungen
       verarbeitet. Details finden Sie in unserer
-      <a href="/datenschutz/">Datenschutzerklärung</a>.</p>
+      <a href="/datenschutz/" data-legal="datenschutz">Datenschutzerklärung</a>.</p>
 
     <h2>17. Gerichtsstand und Recht</h2>
     <p>Es gilt österreichisches Recht. Gerichtsstand ist, soweit gesetzlich

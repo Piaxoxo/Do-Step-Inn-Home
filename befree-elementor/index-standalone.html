@@ -560,6 +560,33 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
 </head>
 
 <body>
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   RECHTSSEITEN — wohin Impressum, Datenschutz und AGB führen sollen.
+   Voreingestellt sind die Seiten /impressum/, /datenschutz/ und /agb/.
+   Heißen eure WordPress-Seiten anders oder liegen sie in einem
+   Unterordner: hier den Permalink aus WordPress eintragen.
+   ══════════════════════════════════════════════════════════════════════ */
+window.BEFREE_LEGAL = {
+  impressum:   "/impressum/",
+  datenschutz: "/datenschutz/",
+  agb:         "/agb/"
+};
+
+(function () {
+  function apply() {
+    var L = window.BEFREE_LEGAL || {};
+    var a = document.querySelectorAll("a[data-legal]");
+    for (var i = 0; i < a.length; i++) {
+      var to = L[a[i].getAttribute("data-legal")];
+      if (to) a[i].setAttribute("href", to);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", apply);
+  } else { apply(); }
+})();
+</script>
 <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
 <!-- ══════════════════════════════════════ NAV ═══════════════════ -->
@@ -960,9 +987,9 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
       </div>
       <div class="foot__l">
         <span class="foot__k" data-i18n="ft.legal">Legal</span>
-        <a href="/impressum/">Impressum</a>
-        <a href="/datenschutz/">Datenschutz</a>
-        <a href="/agb/">AGB</a>
+        <a href="/impressum/" data-legal="impressum">Impressum</a>
+        <a href="/datenschutz/" data-legal="datenschutz">Datenschutz</a>
+        <a href="/agb/" data-legal="agb">AGB</a>
       </div>
     </div>
     <div class="foot__base">
@@ -1674,9 +1701,23 @@ function BF_IMG(p){ return window.__BFIMG[p] || p; }
     });
   }
 
+  /* Impressum, Datenschutz and AGB live wherever WordPress put them. The
+     addresses are declared once at the top of the file; here they land on
+     every link that carries the matching data-legal. Without the switch the
+     built-in ones stay, so the plain static site keeps working. */
+  function legalLinks() {
+    var L = window.BEFREE_LEGAL;
+    if (!L) return;
+    [].forEach.call(document.querySelectorAll("a[data-legal]"), function (a) {
+      var to = L[a.getAttribute("data-legal")];
+      if (to) a.setAttribute("href", to);
+    });
+  }
+
   /* ═══ 6. GO ═══════════════════════════════════════════════════════ */
 
   harvestEnglish();
+  legalLinks();
   buildGallery();
   parallaxGallery();
   lightbox.init();

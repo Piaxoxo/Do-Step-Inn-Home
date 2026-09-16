@@ -685,9 +685,23 @@
     });
   }
 
+  /* Impressum, Datenschutz and AGB live wherever WordPress put them. The
+     addresses are declared once at the top of the file; here they land on
+     every link that carries the matching data-legal. Without the switch the
+     built-in ones stay, so the plain static site keeps working. */
+  function legalLinks() {
+    var L = window.BEFREE_LEGAL;
+    if (!L) return;
+    [].forEach.call(document.querySelectorAll("a[data-legal]"), function (a) {
+      var to = L[a.getAttribute("data-legal")];
+      if (to) a.setAttribute("href", to);
+    });
+  }
+
   /* ═══ 6. GO ═══════════════════════════════════════════════════════ */
 
   harvestEnglish();
+  legalLinks();
   buildGallery();
   parallaxGallery();
   lightbox.init();
