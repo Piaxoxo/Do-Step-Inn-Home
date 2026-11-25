@@ -1022,7 +1022,10 @@ body{ background: var(--bg); color: var(--ink); }
 
 /* ═══ OUR HOUSES — the family (sister-house cards + shared booking) ═══ */
 .houses__grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; max-width: var(--max); margin: 0 auto; }
-.houses{ padding-top: clamp(6rem, 14vh, 10rem); }
+.houses{ padding-top: clamp(4.5rem, 8vh, 6.5rem); padding-bottom: clamp(3rem, 6vh, 5rem); }
+.houses .section__head{ margin-bottom: clamp(1.4rem, 3vw, 2.2rem); }
+.houses .section__title{ font-size: clamp(1.9rem, 4vw, 3rem); }
+.houses .section__lede{ max-width: 60ch; }
 .house-card--home{ background: linear-gradient(155deg, color-mix(in srgb, var(--accent) 10%, var(--surface)), var(--surface)); }
 .house-card{ position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .5rem;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
