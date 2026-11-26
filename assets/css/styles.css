@@ -809,7 +809,7 @@ body{ background: var(--bg); color: var(--ink); }
 @media (prefers-reduced-motion: reduce){ .footer__social .social:hover{ transform: none; } }
 
 /* ── Booking band (UP Hotel IBE) ─────────────────────────────────────── */
-.bookbar{ position: relative; z-index: 3; padding: 0 var(--gutter) clamp(2rem,5vw,3.5rem); margin-top: clamp(-5.5rem, -6vw, -3rem); }
+.bookbar{ position: relative; z-index: 3; padding: 0 var(--gutter) clamp(2rem,5vw,3.5rem); margin-top: clamp(1rem, 3vw, 2.5rem); }
 .bookbar__inner{
   max-width: var(--max); margin: 0 auto; background: var(--surface);
   border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
